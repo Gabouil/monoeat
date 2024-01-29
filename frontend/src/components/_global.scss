@@ -1,0 +1,63 @@
+html {
+  --background: #FFFEF9;
+  --text: #252013;
+  --action: #E26D00;
+  --table1: #E2E0D1;
+  --table2: #F1F1ED;
+  --danger: #E20000;
+  --success: #00E217;
+}
+
+html[data-theme='dark'] {
+  --background: #252013;
+  --text: #FFFEF9;
+  --action: #FFF7AE;
+  --table1: #171308;
+  --table2: #313029;
+  --danger: #FFAFAF;
+  --success: #AEFFB6;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  overflow-X: hidden;
+  transition: background-color 0.3s linear;
+  font-family: Gotham;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+

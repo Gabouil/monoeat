@@ -1,14 +1,16 @@
 import './components/_reset.scss'
 import './components/_global.scss'
-import logoLight from "./assets/LogoLight.svg"
-import logoDark from "./assets/LogoDark.svg"
+import Header from "./components/molecules/global/Header/Header.tsx";
 
 function App() {
 
-  return (
-    <>
-    </>
-  )
+    return (
+        <>
+            <Header/>
+            <main>
+            </main>
+        </>
+    )
 }
 
 export default App

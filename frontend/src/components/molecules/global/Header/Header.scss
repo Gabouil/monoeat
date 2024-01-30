@@ -1,0 +1,121 @@
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    height: 4rem;
+    background-color: var(--primary);
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.6);
+
+    &__logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 10rem;
+      cursor: pointer;
+
+      &--img {
+        height: 1rem;
+        width: auto;
+      }
+    }
+
+    &__content {
+      display: flex;
+      gap: 1.25rem;
+
+      @media (min-width: 1000px) {
+        flex-direction: row-reverse;
+      }
+
+      &--menuBurger {
+        @media (min-width: 1000px) {
+          display: none;
+        }
+      }
+
+      &__nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        transition: right 0.3s ease;
+        background-color: var(--primary);
+        box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.6);
+        height: 100vh;
+        padding: 4rem 1rem 1rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+
+        @media (min-width: 1000px) {
+          position: relative;
+          flex-direction: row;
+          justify-content: flex-end;
+          align-items: center;
+          gap: 1.25rem;
+          height: 4rem;
+          padding: 0;
+          right: 0;
+          box-shadow: none;
+        }
+
+        &--closeMenuButton {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          height: 2rem;
+          width: 2rem;
+          cursor: pointer;
+          z-index: 1;
+
+          @media (min-width: 1000px) {
+            display: none;
+          }
+        }
+
+        &--open {
+          right: 0;
+
+        }
+
+        &__list {
+          &__content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            @media (min-width: 1000px) {
+              flex-direction: row;
+              gap: 1.25rem;
+              padding: 0;
+              border-bottom: none;
+              align-items: center;
+
+            }
+          }
+        }
+
+        &__profile {
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
+          @media (min-width: 1000px) {
+            flex-direction: row;
+            gap: 1.25rem;
+          }
+
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  color: var(--primary);
+  width: 100%;
+
+  @media (min-width: 1000px) {
+    width: fit-content;
+  }
+
+  &:hover,&:focus {
+    outline: none;
+    cursor: pointer;
+    filter: brightness(.9);
+  }
+  &:active {
+    outline: none;
+    filter: brightness(1);
+  }
+
+  &--danger {
+    background-color: var(--danger);
+  }
+  &--success {
+    background-color: var(--success);
+  }
+  &--default {
+    background-color: var(--action);
+  }
+
+  &--small {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
+  &--medium {
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+  }
+  &--large {
+    padding: 1rem 2rem;
+    border-radius: 6px;
+  }
+}

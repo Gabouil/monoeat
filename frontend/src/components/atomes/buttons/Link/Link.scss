@@ -1,0 +1,56 @@
+.link {
+  position: relative;
+  display: inline-block;
+  transition: all 0.2s ease-in;
+
+  &--danger {
+    color: var(--danger);
+    &:focus, &:hover {
+      color: var(--danger);
+      cursor: pointer;
+    }
+    &:focus:after, &:hover:after {
+      background-color: var(--danger);
+    }
+  }
+  &--success {
+    color: var(--success);
+    &:focus, &:hover {
+      color: var(--success);
+      cursor: pointer;
+    }
+    &:focus:after, &:hover:after {
+      background-color: var(--success);
+    }
+  }
+  &--default {
+    color: var(--action);
+    &:focus, &:hover {
+      color: var(--action);
+      cursor: pointer;
+    }
+    &:focus:after, &:hover:after {
+      background-color: var(--action);
+    }
+  }
+
+  &--primary {
+    color: var(--secondary);
+
+    &:focus:after, &:hover:after {
+      width: 100%;
+      left: 0;
+    }
+
+    &:after {
+      content: "";
+      pointer-events: none;
+      bottom: -1px;
+      left: 50%;
+      position: absolute;
+      width: 0;
+      height: 2px;
+      transition: all 0.2s ease-in;
+    }
+  }
+}

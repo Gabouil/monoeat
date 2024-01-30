@@ -1,6 +1,6 @@
-html {
-  --background: #FFFEF9;
-  --text: #252013;
+:root {
+  --primary: #FFFEF9;
+  --secondary: #252013;
   --action: #E26D00;
   --table1: #E2E0D1;
   --table2: #F1F1ED;
@@ -8,9 +8,9 @@ html {
   --success: #00E217;
 }
 
-html[data-theme='dark'] {
-  --background: #252013;
-  --text: #FFFEF9;
+[data-theme='dark'] {
+  --primary: #252013;
+  --secondary: #FFFEF9;
   --action: #FFF7AE;
   --table1: #171308;
   --table2: #313029;
@@ -19,40 +19,29 @@ html[data-theme='dark'] {
 }
 
 body {
-  background: var(--background);
-  color: var(--text);
+  background: var(--primary);
+  color: var(--secondary);
   overflow-X: hidden;
   transition: background-color 0.3s linear;
-  font-family: Gotham;
+  font-family: Gotham, serif;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
-h1 {
-  font-size: 2.5rem;
+svg {
+  stroke: var(--secondary)!important;
+}
+
+h1, h2, h3, h4 {
   font-weight: 700;
   margin: 0;
   padding: 0;
 }
 
-h2 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0;
-  padding: 0;
-}
-
-h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0;
-  padding: 0;
-}
-
-h4 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0;
-  padding: 0;
-}
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
 
 p {
   font-size: 1rem;
@@ -60,4 +49,3 @@ p {
   margin: 0;
   padding: 0;
 }
-

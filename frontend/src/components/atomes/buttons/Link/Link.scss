@@ -1,7 +1,7 @@
 .link {
   position: relative;
   display: inline-block;
-  transition: all 0.2s ease-in;
+  transition: all 0.2s linear;
 
   &--danger {
     color: var(--danger);
@@ -50,7 +50,7 @@
       position: absolute;
       width: 0;
       height: 2px;
-      transition: all 0.2s ease-in;
+      transition: all 0.2s linear;
     }
   }
 }

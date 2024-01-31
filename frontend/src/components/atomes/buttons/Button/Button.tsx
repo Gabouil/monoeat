@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 interface Props {
     type?: 'button' | 'NavLink' | 'a'
     link?: string
-    label: string
+    label: string | JSX.Element
     color?: 'danger' | 'success' | 'default'
     size?: 'small' | 'medium' | 'large'
 }
@@ -16,12 +16,12 @@ export default function Button({
                                    color = "default",
                                    size = 'medium'
                                }: Props) {
-    const classes = `button button--${color} button--${size}`;
+    const classes = `button button--${color} button--${size} svg--reverse`;
 
     return (
         <>
             {type === 'button' && (
-                <button className={classes}>
+                <button className={classes }>
                     {label}
                 </button>
             )}

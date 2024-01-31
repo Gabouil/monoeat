@@ -1,6 +1,6 @@
 # React + TypeScript + Vite
 lancer le projet
 ```
-npm installe
+npm install
 npm run dev
 ```

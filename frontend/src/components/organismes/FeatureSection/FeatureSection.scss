@@ -65,6 +65,14 @@
     gap: 1.25rem;
     grid-area: content;
 
+    &--list {
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem 0;
+      gap: 1.25rem;
+      grid-area: content;
+    }
+
     &__item {
       display: flex;
       flex-direction: column;

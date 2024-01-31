@@ -13,7 +13,7 @@ export default function HeroHeaderSection() {
                 </div>
                 <div className="hero_header__content">
                     <h1 className="hero_header__content__title">
-                        <span>De délicieux</span> repas à préparés à la maison et livrés à domicile
+                        <span>De délicieux</span> repas à préparer à la maison et livrés à domicile
                     </h1>
                     <p className={"hero_header__content__text"}>
                         Découvrez la commodité des kits de repas à domicile de MonoEat. Grâce à nos boîtes d'ingrédients

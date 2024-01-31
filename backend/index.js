@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const ingredientRoutes = require('./routes/ingredient.routes');
 const recipeRoutes = require('./routes/recipe.routes');
 const userRoutes = require('./routes/user.routes');
+const orderRoutes = require('./routes/order.routes');
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 app.use('/ingredients', ingredientRoutes);
 app.use('/recipes', recipeRoutes);
 app.use('/users', userRoutes);
+app.use('/orders', orderRoutes);
 
 app.use((req, res, next) => {
     res.status(404).send('Not Found');

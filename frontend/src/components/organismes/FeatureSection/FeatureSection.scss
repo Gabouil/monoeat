@@ -1,0 +1,74 @@
+.feature_section {
+  display: grid;
+  grid-template:
+    "title"
+    "banner"
+    "content"
+    "button";
+  gap: 1.25rem;
+  padding: 10vh 1.25rem;
+  align-items: center;
+
+  &--reverse {
+
+  }
+
+  @media screen and (min-width: 1000px) {
+    grid-template:
+    "title banner"
+    "content banner"
+    "button banner";
+    padding: 25vh 1.25rem;
+
+    &--reverse {
+      grid-template:
+      "banner title"
+      "banner content"
+      "banner button";
+    }
+  }
+
+  &__banner {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    height: 15rem;
+    grid-area: banner;
+
+    @media screen and (min-width: 600px) {
+      height: 20rem;
+    }
+    @media screen and (min-width: 1000px) {
+      height: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__title {
+    grid-area: title;
+  }
+
+  &__button {
+    grid-area: button;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 2.5rem 0;
+    gap: 1.25rem;
+    grid-area: content;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+  }
+}

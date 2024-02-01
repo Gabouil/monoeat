@@ -49,13 +49,13 @@ export default function Header() {
                             <nav className="header__container__content__nav__list">
                                 <ul className="header__container__content__nav__list__content">
                                     <li className="header__container__content__nav__list--content">
-                                        <Link link={"/contact"} label={"Menu"} primary/>
+                                        <Link link={"/menu"} label={"Menu"} primary/>
                                     </li>
                                     <li className="header__container__content__nav__list--content">
-                                        <Link link={"/contact"} label={"A propos de nous"} primary/>
+                                        <Link link={"/a-propos"} label={"A propos de nous"} primary/>
                                     </li>
                                     <li className="header__container__content__nav__list--content">
-                                        <Link link={"/contact"} label={"FAQ"} primary/>
+                                        <Link link={"/faq"} label={"FAQ"} primary/>
                                     </li>
                                     <li className="header__container__content__nav__list--content">
                                         <Link link={"/contact"} label={"Nous contacter"} primary/>
@@ -63,8 +63,8 @@ export default function Header() {
                                 </ul>
                             </nav>
                             <div className="header__container__content__nav__profile">
-                                <Button label={"Se connecter"}/>
-                                <Button label={"S'inscrire"}/>
+                                <Button type={"NavLink"} link="/connexion" label={"Se connecter"}/>
+                                <Button type={"NavLink"} link="/inscritpion" label={"S'inscrire"}/>
                             </div>
                         </div>
                     </div>

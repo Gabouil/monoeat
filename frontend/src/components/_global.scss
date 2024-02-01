@@ -32,6 +32,12 @@ body {
 .svg--reverse path{
   stroke: var(--primary)!important;
 }
+.svg--fill {
+  fill: var(--secondary);
+}
+.svg--fill--reverse {
+  fill: var(--primary);
+}
 
 h1, h2, h3, h4 {
   font-weight: 700;
@@ -46,6 +52,12 @@ h4 { font-size: 1rem; }
 
 p {
   font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+.smallLink {
+  font-size: 0.75rem;
   font-weight: 400;
   margin: 0;
   padding: 0;

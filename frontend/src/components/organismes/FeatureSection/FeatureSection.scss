@@ -6,7 +6,7 @@
     "content"
     "button";
   gap: 1.25rem;
-  padding: 10vh 1.25rem;
+  padding: 0vh 1.25rem;
   align-items: center;
 
   &--reverse {
@@ -18,7 +18,7 @@
     "title banner"
     "content banner"
     "button banner";
-    padding: 25vh 1.25rem;
+    padding: 0vh 1.25rem;
 
     &--reverse {
       grid-template:

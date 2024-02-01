@@ -1,0 +1,9 @@
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+
+  @media (min-width: 1000px) {
+    gap: 20vh;
+  }
+}

@@ -39,6 +39,14 @@ body {
   fill: var(--primary);
 }
 
+.unselectable {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 h1, h2, h3, h4 {
   font-weight: 700;
   margin: 0;

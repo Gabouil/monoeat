@@ -30,10 +30,11 @@ export default function Footer({
                     <form className="footer__newsletter__form">
                         <Input
                             type="email"
-                            placeholder="Votre email"
+                            placeholder={"Votre email"}
                             name="newsletter"
                             setValue={setEmail}
                             value={email}
+                            color
                         />
                         <Button type="button" label="S'inscrire"/>
                     </form>

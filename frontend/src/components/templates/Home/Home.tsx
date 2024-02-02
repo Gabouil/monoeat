@@ -4,6 +4,7 @@ import FeatureSection from "../../organismes/FeatureSection/FeatureSection.tsx";
 import Feature2Section from "../../organismes/FeatureSection/Feature2Section.tsx";
 import Footer from "../../molecules/global/Footer/Footer.tsx";
 import Header from "../../molecules/global/Header/Header.tsx";
+import MenuPeviewSection from "../../organismes/MenuPreviewSection/MenuPeviewSection.tsx";
 
 export default function Home() {
     return (
@@ -13,6 +14,7 @@ export default function Home() {
                 <HeroHeaderSection/>
                 <FeatureSection/>
                 <Feature2Section/>
+                <MenuPeviewSection/>
             </main>
             <Footer newsLetter/>
         </>

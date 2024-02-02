@@ -1,7 +1,9 @@
 main {
   display: flex;
   flex-direction: column;
-  gap: 10vh;
+  gap: 20vh;
+  justify-content: center;
+  align-items: center;
 
   @media (min-width: 1000px) {
     gap: 20vh;

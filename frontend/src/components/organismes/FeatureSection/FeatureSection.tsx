@@ -54,7 +54,7 @@ export default function FeatureSection() {
                     <Button
                         label="Voir les recettes"
                         type="NavLink"
-                        link="/recipes"
+                        link="/menu"
                     />
                 </div>
             </section>

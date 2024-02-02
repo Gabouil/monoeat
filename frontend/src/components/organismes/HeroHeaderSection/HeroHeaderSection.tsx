@@ -4,6 +4,11 @@ import Button from "../../atomes/buttons/Button/Button.tsx";
 import ArrowDown from "../../../assets/pictos/arrow-down.tsx";
 
 export default function HeroHeaderSection() {
+    const scrollTo = (id: string) => {
+        const element = document.getElementById(id);
+        element?.scrollIntoView({ behavior: 'smooth' });
+    }
+
     return (
         <>
             <section className="hero_header">
@@ -21,11 +26,12 @@ export default function HeroHeaderSection() {
                         équilibrés et savoureux sans avoir à vous soucier de la planification ou des achats.
                     </p>
                     <div className="hero_header__content__buttons">
-                        <Button label={"Commander"} type={"NavLink"} />
-                        <Button label={<ArrowDown />} type={"NavLink"}/>
+                        <Button label={"Commander"} type={"NavLink"} link={"/menu"}/>
+                        <Button label={<ArrowDown />} onclick={() => scrollTo('suivant')}/>
                     </div>
                 </div>
             </section>
+            <span id="suivant"/>
         </>
     )
 }

@@ -13,9 +13,9 @@ export default function Accordion({Title, Content, isOpen, onHeaderClick}: defau
         <div className="accordion">
             <div className="accordion__header" onClick={() => onHeaderClick(Title)}>
                 <h3>{Title}</h3>
-                <button>
+                <span>
                     <Chevron Rotate={isOpen ? "270" : "180"} />
-                </button>
+                </span>
             </div>
             <div className={isOpen ? "accordion__text__container accordion__text__container--open" : "accordion__text__container"}>
                 <div className="accordion__text__content">

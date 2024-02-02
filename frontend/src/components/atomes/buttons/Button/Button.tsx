@@ -7,6 +7,7 @@ interface Props {
     label: string | JSX.Element
     color?: 'danger' | 'success' | 'default'
     size?: 'small' | 'medium' | 'large'
+    onclick?: () => void
 }
 
 export default function Button({
@@ -14,14 +15,15 @@ export default function Button({
                                    link="",
                                    label = "",
                                    color = "default",
-                                   size = 'medium'
+                                   size = 'medium',
+                                   onclick = () => {}
                                }: Props) {
     const classes = `button button--${color} button--${size} svg--reverse`;
 
     return (
         <>
             {type === 'button' && (
-                <button className={classes }>
+                <button className={classes } onClick={onclick}>
                     {label}
                 </button>
             )}

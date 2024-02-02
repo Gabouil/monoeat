@@ -18,7 +18,8 @@ export default function Feature2Section() {
                             Ingrédients frais
                         </h3>
                         <p className="feature_section__content__item__text">
-                            On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même.
+                            On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est
+                            source de distractions, et empêche de se concentrer sur la mise en page elle-même.
                         </p>
                     </div>
                     <div className="feature_section__content__item">
@@ -26,7 +27,9 @@ export default function Feature2Section() {
                             Repas délicieux et sains
                         </h3>
                         <p className="feature_section__content__item__text">
-                            Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du texte aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine classique datant de 45 av. J.-C., le rendant vieux de 2000 ans.
+                            Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du texte
+                            aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine classique datant
+                            de 45 av. J.-C., le rendant vieux de 2000 ans.
                         </p>
                     </div>
                 </div>
@@ -34,7 +37,7 @@ export default function Feature2Section() {
                     <Button
                         label="Voir les recettes"
                         type="NavLink"
-                        link="/recipes"
+                        link="/menu"
                     />
                 </div>
             </section>

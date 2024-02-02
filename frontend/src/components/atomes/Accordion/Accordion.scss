@@ -12,18 +12,18 @@
     }
 
     svg {
-      transition: transform 0.3s linear;
+      transition: all 0.25s cubic-bezier(0.5, 0, 0.1, 1);
     }
   }
 
   &__text__container {
     overflow: hidden;
     max-height: 0;
-    transition: all 0.3s linear;
+    transition: all 0.25s cubic-bezier(0.5, 0, 0.1, 1);
     padding:  0 1.25rem;
 
     &--open {
-      max-height: 1000px;
+      max-height: 75rem;
       padding: 1.25rem;
     }
   }

@@ -1,0 +1,18 @@
+.faq {
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 1.25rem;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  &__accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+}

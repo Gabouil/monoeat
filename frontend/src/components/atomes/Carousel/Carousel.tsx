@@ -1,7 +1,6 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState, useRef} from "react";
 import "./Carousel.scss";
-import ChevronsRight from "../../../assets/pictos/chevron-right.tsx";
-import ChevronLeft from "../../../assets/pictos/chevron-left.tsx";
+import Chevron from "../../../assets/pictos/chevron.tsx";
 
 type PropsType = {
     carouselItems: React.ReactNode;
@@ -48,7 +47,7 @@ export default function Carousel({carouselItems, carouselItemClassName}: PropsTy
 
     return (
         <div className="carousel">
-            <button className="carousel__button carousel__button--left" onClick={scrollLeftByOneCard}><ChevronLeft/>
+            <button className="carousel__button carousel__button--left" onClick={scrollLeftByOneCard}><Chevron/>
             </button>
             <div
                 className="carousel__container"
@@ -60,7 +59,7 @@ export default function Carousel({carouselItems, carouselItemClassName}: PropsTy
                     {carouselItems}
                 </div>
             </div>
-            <button className="carousel__button carousel__button--right" onClick={scrollRightByOneCard}><ChevronsRight/>
+            <button className="carousel__button carousel__button--right" onClick={scrollRightByOneCard}><Chevron  Rotate={"180"}/>
             </button>
         </div>
     );

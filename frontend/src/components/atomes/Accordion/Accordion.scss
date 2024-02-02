@@ -1,0 +1,30 @@
+.accordion {
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    svg {
+      transition: transform 0.3s linear;
+    }
+  }
+
+  &__text__container {
+    overflow: hidden;
+    max-height: 0;
+    transition: all 0.3s linear;
+    padding:  0 1.25rem;
+
+    &--open {
+      max-height: 1000px;
+      padding: 1.25rem;
+    }
+  }
+}

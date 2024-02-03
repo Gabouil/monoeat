@@ -4,6 +4,7 @@ import Home from "./components/templates/Home/Home.tsx";
 import {Route, Routes} from "react-router-dom";
 import Login from "./components/templates/Login/Login.tsx";
 import Register from "./components/templates/Register/Register.tsx";
+import NotFound from "./components/templates/404/404.tsx";
 
 function App() {
 
@@ -33,6 +34,9 @@ function App() {
                 }/>
                 <Route path="/mentions-legales" element={
                     <Home/>
+                }/>
+                <Route path="/:404" element={
+                    <NotFound/>
                 }/>
             </Routes>
         </>

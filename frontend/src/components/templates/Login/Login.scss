@@ -1,9 +1,10 @@
-.home__page {
+.login__page {
   display: flex;
   flex-direction: column;
   gap: 20vh;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 
   @media (min-width: 1000px) {
     gap: 20vh;

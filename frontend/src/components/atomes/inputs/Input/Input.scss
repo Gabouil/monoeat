@@ -1,10 +1,11 @@
 .group {
   position: relative;
+  width: 100%;
 
   .input {
     font-size: 16px;
     padding: 10px 10px 10px 5px;
-    width: 200px;
+    width: 100%;
     border: none;
     background: transparent;
     border-bottom: 1px solid var(--secondary);
@@ -13,6 +14,7 @@
     &:focus {
       outline: none;
     }
+
     &:focus ~ label, &:not(:placeholder-shown) ~ label {
       top: -20px;
       font-size: 14px;
@@ -39,7 +41,7 @@
   .bar {
     position: relative;
     display: block;
-    width: 200px;
+    width: 100%;
 
     &:before, &:after {
       content: '';
@@ -56,6 +58,7 @@
     &:before {
       left: 50%;
     }
+
     &:after {
       right: 50%;
     }
@@ -85,12 +88,15 @@
     &:invalid ~ .bar:after, &:invalid ~ .bar:before {
       background: var(--danger);
     }
+
     &:placeholder-shown {
       border-bottom: 1px solid var(--secondary);
     }
+
     &:placeholder-shown ~ label {
       color: var(--secondary);
     }
+
     &:placeholder-shown ~ .bar:before, &:placeholder-shown ~ .bar:after {
       background: var(--secondary);
     }

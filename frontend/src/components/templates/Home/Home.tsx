@@ -11,7 +11,7 @@ export default function Home() {
     return (
         <>
             <Header/>
-            <main>
+            <main className={"home__page"}>
                 <HeroHeaderSection/>
                 <FeatureSection/>
                 <Feature2Section/>

@@ -1,0 +1,12 @@
+.authentication__form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+
+  &__ligne {
+    display: flex;
+    gap: 1.25rem;
+    width: 100%;
+  }
+}

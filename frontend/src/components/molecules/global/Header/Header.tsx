@@ -64,7 +64,7 @@ export default function Header() {
                             </nav>
                             <div className="header__container__content__nav__profile">
                                 <Button type={"NavLink"} link="/connexion" label={"Se connecter"}/>
-                                <Button type={"NavLink"} link="/inscritpion" label={"S'inscrire"}/>
+                                <Button type={"NavLink"} link="/inscription" label={"S'inscrire"}/>
                             </div>
                         </div>
                     </div>

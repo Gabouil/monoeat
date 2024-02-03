@@ -1,0 +1,25 @@
+.authentication {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  width: 100%;
+  padding: 1.25rem;
+
+  @media (min-width: 1000px) {
+    width: 1000px;
+  }
+  &__header {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    .button {
+      width: 100%;
+    }
+  }
+}

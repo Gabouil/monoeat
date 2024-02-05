@@ -42,6 +42,7 @@ export default function RegisterForm({
                         value={firstname}
                         setValue={setFirstname}
                         color
+                        specialCharOFF={true}
                     />
                     <Input
                         type={"text"}
@@ -50,6 +51,7 @@ export default function RegisterForm({
                         value={lastname}
                         setValue={setLastname}
                         color
+                        specialCharOFF={true}
                     />
                 </div>
                 <Input
@@ -61,7 +63,7 @@ export default function RegisterForm({
                     color
                 />
                 <Input
-                    type={"text"}
+                    type={"tel"}
                     placeholder={"Téléphone"}
                     name={"phone"}
                     value={phone}
@@ -77,12 +79,13 @@ export default function RegisterForm({
                     color
                 />
                 <Input
-                    type={"password"}
+                    type={"cfPassword"}
                     placeholder={"Confirmer le mot de passe"}
                     name={"confirmPassword"}
                     value={confirmPassword}
                     setValue={setConfirmPassword}
                     color
+                    cfPassordValue={password}
                 />
             </form>
         </>

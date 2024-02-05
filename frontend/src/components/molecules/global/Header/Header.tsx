@@ -9,11 +9,15 @@ import Button from "../../../atomes/buttons/Button/Button.tsx";
 import Menu from "../../../../assets/pictos/menu.jsx";
 import {useState} from "react";
 import XClose from "../../../../assets/pictos/x-close.tsx";
+import Cookies from "js-cookie";
+import ProfileIcon from "../../../../assets/pictos/profileIcon.tsx";
 
 export default function Header() {
     const themeContext = useTheme();
     const theme = themeContext ? themeContext.theme : "light";
     const [menuOpen, setMenuOpen] = useState(false);
+
+    const token = Cookies.get('token');
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -63,8 +67,16 @@ export default function Header() {
                                 </ul>
                             </nav>
                             <div className="header__container__content__nav__profile">
-                                <Button type={"NavLink"} link="/connexion" label={"Se connecter"}/>
-                                <Button type={"NavLink"} link="/inscription" label={"S'inscrire"}/>
+                                {token ? (
+                                    <NavLink to={"/profile"} className="header__container__content__nav__profile--link">
+                                        <ProfileIcon />
+                                    </NavLink>
+                                ) : (
+                                    <>
+                                        <Button type={"NavLink"} link="/connexion" label={"Se connecter"}/>
+                                        <Button type={"NavLink"} link="/inscription" label={"S'inscrire"}/>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>

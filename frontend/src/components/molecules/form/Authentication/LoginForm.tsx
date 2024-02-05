@@ -26,7 +26,6 @@ export default function LoginForm({
                     name={"email"}
                     value={email}
                     setValue={setEmail}
-                    color
                 />
                 <Input
                     type={"password"}
@@ -34,7 +33,6 @@ export default function LoginForm({
                     name={"password"}
                     value={password}
                     setValue={setPassword}
-                    color
                 />
             </form>
         </>

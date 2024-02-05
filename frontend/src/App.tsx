@@ -35,6 +35,9 @@ function App() {
                 <Route path="/mentions-legales" element={
                     <Home/>
                 }/>
+                <Route path="/profile" element={
+                    <Home/>
+                }/>
                 <Route path="/:404" element={
                     <NotFound/>
                 }/>

@@ -67,6 +67,11 @@ export default function Header() {
                                     <li className="header__container__content__nav__list--content">
                                         <Link link={"/contact"} label={"Nous contacter"} primary/>
                                     </li>
+                                    {userContext.user?.role === "admin" && (
+                                        <li className="header__container__content__nav__list--content">
+                                            <Link link={"/backoffice"} label={"Backoffice"} primary/>
+                                        </li>
+                                    )}
                                 </ul>
                             </nav>
                             <div className="header__container__content__nav__profile">

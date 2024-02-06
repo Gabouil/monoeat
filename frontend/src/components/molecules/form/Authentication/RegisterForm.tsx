@@ -1,6 +1,12 @@
 import "./AuthenticationForm.scss"
-import React from "react";
+import React, {useState} from "react";
 import Input from "../../../atomes/inputs/Input/Input.tsx";
+import Button from "../../../atomes/buttons/Button/Button.tsx";
+import Link from "../../../atomes/buttons/Link/Link.tsx";
+import XClose from "../../../../assets/pictos/x-close.tsx";
+import Cookies from "js-cookie";
+import useRegister from "../../../../../services/hooks/useRegister.tsx";
+import useLogin from "../../../../../services/hooks/useLogin.tsx";
 
 type defaultProps = {
     firstname: string,
@@ -31,9 +37,50 @@ export default function RegisterForm({
                                          confirmPassword,
                                          setConfirmPassword,
                                      }: defaultProps) {
+
+    const [error, setError] = useState("");
+    const register = useRegister();
+    const login = useLogin();
+
+    const handleRegister = async (e:React.FormEvent) => {
+        e.preventDefault();
+        const formData = {
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            phone: phone,
+            password: password,
+            confirmpassword: confirmPassword
+        }
+        const result = await register(formData);
+        if (typeof result === 'string') {
+            console.error('Registration error:', result);
+            setError(result);
+        } else {
+            console.log(result);
+            const loginResult = await login(email, password);
+            if (typeof loginResult === 'string') {
+                console.error('Login error:', loginResult);
+                setError(loginResult);
+            } else {
+                console.log(loginResult);
+                Cookies.set('token', loginResult.token, { expires: 14 });
+                return window.location.href = '/';
+            }
+        }
+    }
+
     return (
         <>
             <form name={"registerForm"} className="authentication__form">
+                {error &&
+                    <div className={"alert"}>
+                        <p>{error}</p>
+                        <button onClick={() => setError("")}>
+                            <XClose/>
+                        </button>
+                    </div>
+                }
                 <div className="authentication__form__ligne">
                     <Input
                         type={"text"}
@@ -87,6 +134,8 @@ export default function RegisterForm({
                     color
                     cfPassordValue={password}
                 />
+                <Button label={"S'inscrire"} onclick={(e:React.FormEvent) => handleRegister(e)}/>
+                <Link link={"/connexion"} label={"J’ai déjà un compte"}/>
             </form>
         </>
     )

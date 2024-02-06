@@ -1,5 +1,6 @@
 import './Button.scss'
 import {NavLink} from "react-router-dom";
+import React from "react";
 
 interface Props {
     type?: 'button' | 'NavLink' | 'a'
@@ -7,7 +8,7 @@ interface Props {
     label: string | JSX.Element
     color?: 'danger' | 'success' | 'default'
     size?: 'small' | 'medium' | 'large'
-    onclick?: () => void
+    onclick?: (e: React.FormEvent) => void
 }
 
 export default function Button({

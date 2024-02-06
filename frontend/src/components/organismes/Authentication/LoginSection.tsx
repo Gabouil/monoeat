@@ -18,11 +18,10 @@ export default function LoginSection() {
     const handleLogin = async () => {
 
         const result = await login(email, password);
-        if (typeof result === 'string') {
-            console.error('Login error:', result);
-            setError(result);
+        if (result.status === 401 || result.status === 400) {
+            console.error('Login error:', result.data.error);
+            setError(result.data.error);
         } else {
-            console.log(result);
             Cookies.set('token', result.token, { expires: 14 });
             return window.location.href = '/';
         }

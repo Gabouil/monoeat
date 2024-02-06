@@ -9,15 +9,17 @@ import Button from "../../../atomes/buttons/Button/Button.tsx";
 import Menu from "../../../../assets/pictos/menu.jsx";
 import {useState} from "react";
 import XClose from "../../../../assets/pictos/x-close.tsx";
-import Cookies from "js-cookie";
 import ProfileIcon from "../../../../assets/pictos/profileIcon.tsx";
+import {useUser} from "../../../../context/UserContext.tsx";
 
 export default function Header() {
     const themeContext = useTheme();
     const theme = themeContext ? themeContext.theme : "light";
     const [menuOpen, setMenuOpen] = useState(false);
-
-    const token = Cookies.get('token');
+    const userContext = useUser();
+    if (!userContext) {
+        throw new Error("UserContext is not initialized");
+    }
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -26,6 +28,7 @@ export default function Header() {
             nav.classList.toggle("header__container__content__nav--open");
         }
     }
+    console.log(userContext);
     return (
         <>
             <header className="header">
@@ -67,7 +70,7 @@ export default function Header() {
                                 </ul>
                             </nav>
                             <div className="header__container__content__nav__profile">
-                                {token ? (
+                                {userContext.user ? (
                                     <NavLink to={"/profile"} className="header__container__content__nav__profile--link">
                                         <ProfileIcon />
                                     </NavLink>

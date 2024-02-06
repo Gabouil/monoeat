@@ -1,4 +1,4 @@
-import {createContext, useContext, useState, ReactNode, useEffect} from "react";
+import {createContext, useContext, useState, useEffect, ReactNode} from "react";
 import Cookies from "js-cookie";
 import {jwtDecode} from "jwt-decode";
 
@@ -10,8 +10,8 @@ interface IUserContext {
         lastname: string;
         phone: string;
         role: string;
-    } | undefined;
-    setUserData: (data: { id: string; email: string; firstname: string; lastname: string; phone: string; role: string; } | undefined) => void;
+    } | null;
+    setUser: (data: { id: string; email: string; firstname: string; lastname: string; phone: string; role: string; } | null) => void;
 }
 
 function checkForValidCookie() {
@@ -27,23 +27,22 @@ function checkForValidCookie() {
     return null;
 }
 
-
 const UserContext = createContext<IUserContext | undefined>(undefined);
 
-export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+export const UserProvider = ({ children }: { children: ReactNode }) => {
+    const [user, setUser] = useState<IUserContext['user']>(null);
 
     useEffect(() => {
         const userFromCookie = checkForValidCookie();
         if (userFromCookie) {
-            setUser(userFromCookie);
+            setUser(userFromCookie as IUserContext['user']);
         } else {
             setUser(null);
         }
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser  }}>
             {children}
         </UserContext.Provider>
     );

@@ -26,6 +26,41 @@ body {
   font-family: Gotham, serif;
 }
 
+table {
+  width: 100%;
+    border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    th:nth-child(3), th:nth-child(6), td:nth-child(3), td:nth-child(6) {
+      display: none;
+    }
+  }
+
+  .table__color {
+    &--1 {
+      background-color: var(--table1);
+    }
+    &--2 {
+      background-color: var(--table2);
+    }
+  }
+  thead, tbody {
+    tr {
+      th, td {
+        gap: 1rem;
+        padding: 1rem;
+        text-align: left;
+
+        div {
+          display: flex;
+          gap: 1.25rem;
+        }
+      }
+    }
+  }
+}
 .svg {
   stroke: var(--secondary);
 }

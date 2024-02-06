@@ -5,12 +5,19 @@ import {Route, Routes} from "react-router-dom";
 import Login from "./components/templates/Login/Login.tsx";
 import Register from "./components/templates/Register/Register.tsx";
 import NotFound from "./components/templates/404/404.tsx";
+import Backoffice from "./components/templates/Backoffice/Backoffice.tsx";
+import BackofficeUsers from "./components/templates/Backoffice/BackofficeUsers.tsx";
+import BackofficeRecipes from "./components/templates/Backoffice/BackofficeRecipes.tsx";
+import BackofficeIngredients from "./components/templates/Backoffice/BackofficeIngredients.tsx";
+import BackofficeOrders from "./components/templates/Backoffice/BackofficeOrders.tsx";
+import BackofficeUserId from "./components/templates/Backoffice/BackofficeUserId.tsx";
 
 function App() {
 
     return (
         <>
             <Routes>
+                {/* user */}
                 <Route path="/" element={
                     <Home/>
                 }/>
@@ -38,7 +45,29 @@ function App() {
                 <Route path="/profile" element={
                     <Home/>
                 }/>
-                <Route path="/:404" element={
+
+                {/* backoffice */}
+                <Route path="/backoffice" element={
+                    <Backoffice/>
+                }/>
+                <Route path="/backoffice/users" element={
+                    <BackofficeUsers/>
+                }/>
+                <Route path="/backoffice/users/:id" element={
+                    <BackofficeUserId/>
+                }/>
+                <Route path="/backoffice/recipes" element={
+                    <BackofficeRecipes/>
+                }/>
+                <Route path="/backoffice/ingredients" element={
+                    <BackofficeIngredients/>
+                }/>
+                <Route path="/backoffice/orders" element={
+                    <BackofficeOrders/>
+                }/>
+
+                {/* 404 */}
+                <Route path="*" element={
                     <NotFound/>
                 }/>
             </Routes>

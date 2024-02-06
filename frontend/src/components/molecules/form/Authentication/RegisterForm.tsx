@@ -5,8 +5,8 @@ import Button from "../../../atomes/buttons/Button/Button.tsx";
 import Link from "../../../atomes/buttons/Link/Link.tsx";
 import XClose from "../../../../assets/pictos/x-close.tsx";
 import Cookies from "js-cookie";
-import useRegister from "../../../../../services/hooks/useRegister.tsx";
-import useLogin from "../../../../../services/hooks/useLogin.tsx";
+import useRegister from "../../../../services/hooks/useRegister.tsx";
+import useLogin from "../../../../services/hooks/useLogin.tsx";
 
 type defaultProps = {
     firstname: string,

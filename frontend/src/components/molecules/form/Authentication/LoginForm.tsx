@@ -4,7 +4,7 @@ import Input from "../../../atomes/inputs/Input/Input.tsx";
 import Button from "../../../atomes/buttons/Button/Button.tsx";
 import Link from "../../../atomes/buttons/Link/Link.tsx";
 import Cookies from 'js-cookie';
-import useLogin from "../../../../../services/hooks/useLogin.tsx";
+import useLogin from "../../../../services/hooks/useLogin.tsx";
 import XClose from "../../../../assets/pictos/x-close.tsx";
 
 type defaultProps = {

@@ -49,27 +49,29 @@ const login = catchAsync(async (req, res) => {
     if (!email || !password) {
         return res.status(400).json({ error: 'Tous les champs sont obligatoires.' });
     }
-    const user = await User.findOne({ email });
-    if (!user) {
+    const user = await User.findOne({ email: email.toLowerCase() });
+    console.log("user = ", user);
+    if (user===null) {
         return res.status(401).json({ error: 'L\'email ou le mot de passe est incorrect.' });
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
+    console.log("passwordMatch = ", passwordMatch)
     if (!passwordMatch) {
         return res.status(401).json({ error: 'L\'email ou le mot de passe est incorrect.' });
     }
-    const token = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '14d' });
+    const token = jwt.sign({ userId: user._id, email: user.email, firstname: user.firstname, lastname: user.lastname, phone: user.phone, role: user.role }, 'your-secret-key', { expiresIn: '14d' });
     res.json({ token });
 });
 
 
 const register = catchAsync(async (req, res) => {
     console.log("req.body = ", req.body);
-    const {firstname, lastname, email,phone, password,confirmpassword} = req.body;
-    if (!email || !password || !confirmpassword || !firstname || !lastname || !phone) {
+    const {firstname, lastname, email,phone, password,confirmPassword} = req.body;
+    if (!email || !password || !confirmPassword || !firstname || !lastname || !phone) {
         return res.status(400).json({ error: 'Tous les champs sont obligatoires.' });
     }
 
-    if(password !== confirmpassword) {
+    if(password !== confirmPassword) {
         return res.status(400).json({ error: 'Les mots de passe ne correspondent pas.' });
     }
 
@@ -96,6 +98,12 @@ const register = catchAsync(async (req, res) => {
         email:email.toLowerCase(),
         phone,
         password: hashedPassword,
+        deliveryInfo: {
+            firstname: firstname.toLowerCase(),
+            lastname: lastname.toLowerCase(),
+            email: email.toLowerCase(),
+            phone,
+        }
     });
     res.send(newUser);
 });

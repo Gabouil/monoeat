@@ -24,7 +24,7 @@ export default function useRegister() {
                     "email": formData.email,
                     "phone": formData.phone,
                     "password": formData.password,
-                    "confirmpassword": formData.confirmpassword,
+                    "confirmPassword": formData.confirmpassword,
                 })
             })
             return res.data

@@ -1,0 +1,104 @@
+.group {
+  position: relative;
+  width: 100%;
+  .options {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--primary);
+    border: 1px solid var(--secondary);
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 1;
+
+    li {
+      padding: 0.5rem;
+      cursor: pointer;
+      transition: 0.2s ease background;
+      -moz-transition: 0.2s ease background;
+      -webkit-transition: 0.2s ease background;
+
+      &:hover {
+        background: var(--secondary);
+        color: var(--primary);
+      }
+    }
+
+    &--visible {
+      display: flex;
+    }
+  }
+
+  .input {
+    font-size: 16px;
+    padding: 10px 10px 10px 5px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid var(--secondary);
+    display: inline;
+
+    &__select {
+      display: flex;
+      justify-content: space-between;
+      text-align: left;
+
+      svg {
+        transition: all 0.25s cubic-bezier(0.5, 0, 0.1, 1);
+      }
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+
+  label {
+    color: var(--secondary);
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    top: -20px;
+    left: 5px;
+    font-size: 14px;
+    transition: 0.2s ease top, 0.2s ease font-size;
+    -moz-transition: 0.2s ease top, 0.2s ease font-size;
+    -webkit-transition: 0.2s ease top, 0.2s ease font-size;
+  }
+
+  .bar {
+    position: relative;
+    display: block;
+    width: 100%;
+
+    &:before, &:after {
+      content: '';
+      height: 2px;
+      width: 0;
+      bottom: 1px;
+      position: absolute;
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+      background: var(--secondary);
+    }
+
+    &:before {
+      left: 50%;
+    }
+
+    &:after {
+      right: 50%;
+    }
+  }
+  &--visible {
+    .bar:before, .bar:after {
+      width: 50%;
+    }
+  }
+}

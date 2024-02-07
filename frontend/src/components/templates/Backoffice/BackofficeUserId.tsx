@@ -7,6 +7,7 @@ import Input from "../../atomes/inputs/Input/Input.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
 import useUpdateUserById from "../../../services/hooks/useUpdateUserById.tsx";
 import useDeleteUserById from "../../../services/hooks/useDeleteUserById.tsx";
+import SelectInput from "../../atomes/inputs/SelectInput/SelectInput.tsx";
 
 type defaultUserProps = {
     id: string,
@@ -28,8 +29,18 @@ export default function BackofficeUserId() {
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
-    const [role, setRole] = useState("");
 
+    const [role, setRole] = useState("");
+    const [roleData] = useState([
+        {value: "user", option: "User"},
+        {value: "admin", option: "Admin"},
+    ])
+    const [roleSelected, setRoleSelected] = useState(0)
+
+    const changeValue = (value: string, id: number) => {
+        setRole(value)
+        setRoleSelected(id)
+    }
 
     useEffect(() => {
         (async () => {
@@ -47,7 +58,11 @@ export default function BackofficeUserId() {
             setLastname(user.lastname);
             setEmail(user.email);
             setPhone(user.phone);
-            setRole(user.role);
+            if (user.role === "user") {
+                changeValue("user", 0);
+            } else {
+                changeValue("admin", 1);
+            }
         }
     }, [user]);
 
@@ -120,16 +135,16 @@ export default function BackofficeUserId() {
                                 setValue={setPhone}
                                 color
                             />
-                            <Input
-                                type={"text"}
-                                value={role}
-                                placeholder={"Role"}
-                                name={"role"}
-                                setValue={setRole}
-                                color
+                            <SelectInput
+                                optionSelected={roleSelected}
+                                setOptionSelected={setRoleSelected}
+                                contents={roleData}
+                                setValue={changeValue}
+                                label={"Rôle"}
                             />
-                            <Button label={"Supprimer"} color={"danger"} onclick={( e: React.FormEvent) => handleDeleteUser(e)}/>
-                            <Button label={"Modifier"} onclick={( e: React.FormEvent) => handleUpdateUser(e)}/>
+                            <Button label={"Supprimer"} color={"danger"}
+                                    onclick={(e: React.FormEvent) => handleDeleteUser(e)}/>
+                            <Button label={"Modifier"} onclick={(e: React.FormEvent) => handleUpdateUser(e)}/>
                         </form>
                     }
                     link={"/backoffice/users"}

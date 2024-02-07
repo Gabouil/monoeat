@@ -1,6 +1,7 @@
-.group {
+.group__select {
   position: relative;
   width: 100%;
+
   .options {
     display: none;
     position: absolute;
@@ -14,6 +15,8 @@
     flex-direction: column;
     gap: 0.5rem;
     z-index: 1;
+    max-height: 300px;
+    overflow-y: auto;
 
     li {
       padding: 0.5rem;

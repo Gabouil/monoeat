@@ -33,7 +33,7 @@ export default function SelectInput({
 
     return (
         <>
-            <label className={showOptionTrue ? "group group--visible" : "group"}>
+            <label className={showOptionTrue ? "group__select group__select--visible" : "group__select"}>
                 <label>{label}</label>
                 <div onClick={showOptions} className="input input__select">
                     <span>{contents[optionSelected].value}</span>

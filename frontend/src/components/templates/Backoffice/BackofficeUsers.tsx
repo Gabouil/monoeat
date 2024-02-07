@@ -59,10 +59,10 @@ export default function BackofficeUsers() {
                                 <tr className={"table__color--1"}>
                                     <th scope="col">Id</th>
                                     <th scope="col">User</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Role</th>
+                                    <th scope="col" className={"table--noMobile768"}>Email</th>
+                                    <th scope="col" className={"table--noMobile450"}>Role</th>
                                     <th scope="col">Action</th>
-                                    <th scope="col"></th>
+                                    <th scope="col"  className={"table--noMobile768"}></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -72,8 +72,8 @@ export default function BackofficeUsers() {
                                             className={id % 2 === 0 ? "table__color--2" : "table__color--1"}>
                                             <td>{id + 1}</td>
                                             <td>{user.firstname + " " + user.lastname}</td>
-                                            <td>{user.email}</td>
-                                            <td>{user.role}</td>
+                                            <td  className={"table--noMobile768"}>{user.email}</td>
+                                            <td className={"table--noMobile450"}>{user.role}</td>
                                             <td>
                                                 <Button
                                                     type={"NavLink"}
@@ -82,7 +82,7 @@ export default function BackofficeUsers() {
                                                     link={"/backoffice/users/" + user._id}
                                                 />
                                             </td>
-                                            <td>
+                                            <td  className={"table--noMobile768"}>
                                                 <Button
                                                     size={"small"}
                                                     color={"danger"}

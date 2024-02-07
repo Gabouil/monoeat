@@ -1,14 +1,23 @@
 import "./Backoffice.scss"
 import BackofficeSection from "../../organismes/Backoffice/BackofficeSection.tsx";
 import useGetAllUser from "../../../services/hooks/useGetAllUser.tsx";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Button from "../../atomes/buttons/Button/Button.tsx";
+import useDeleteUserById from "../../../services/hooks/useDeleteUserById.tsx";
 
+type User = {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    role: string;
+};
 
 export default function BackofficeUsers() {
     const getUsers = useGetAllUser();
+    const deleteUser = useDeleteUserById();
 
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
         (async () => {
@@ -21,9 +30,16 @@ export default function BackofficeUsers() {
         console.log(users);
     }, [users]);
 
-    const deleteUser = () => {
+    const handleDeleteUser = async (e: React.FormEvent, id:string) => {
+        e.preventDefault();
         console.log("delete user");
-
+        const result = await deleteUser(id);
+        if (result.status === 401 || result.status === 400) {
+            console.error('Delete user error:', result.data.error);
+        } else {
+            console.log('User deleted:', result);
+            return window.location.href = "/backoffice/users";
+        }
     }
 
     return (
@@ -32,6 +48,12 @@ export default function BackofficeUsers() {
                 <BackofficeSection
                     content={
                         <>
+                            <Button
+                                type={"NavLink"}
+                                size={"small"}
+                                label={"Ajouter un utilisateur"}
+                                link={"/backoffice/users/add"}
+                            />
                             <table>
                                 <thead>
                                 <tr className={"table__color--1"}>
@@ -44,7 +66,7 @@ export default function BackofficeUsers() {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {users && users.map((user: any, id: number) => {
+                                {users.map((user: User, id: number) => {
                                     return (
                                         <tr key={user._id}
                                             className={id % 2 === 0 ? "table__color--2" : "table__color--1"}>
@@ -65,7 +87,7 @@ export default function BackofficeUsers() {
                                                     size={"small"}
                                                     color={"danger"}
                                                     label={"Supprimer"}
-                                                    onclick={deleteUser}
+                                                    onclick={(e: React.FormEvent) => {handleDeleteUser(e, user._id)}}
                                                 />
                                             </td>
                                         </tr>

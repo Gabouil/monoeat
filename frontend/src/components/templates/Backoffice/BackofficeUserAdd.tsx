@@ -1,81 +1,36 @@
 import "./Backoffice.scss"
-import {useParams} from 'react-router-dom';
 import BackofficeSection from "../../organismes/Backoffice/BackofficeSection.tsx";
-import React, {useEffect, useState} from "react";
-import useGetUserById from "../../../services/hooks/useGetUserById.tsx";
+import React, {useState} from "react";
 import Input from "../../atomes/inputs/Input/Input.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
-import useUpdateUserById from "../../../services/hooks/useUpdateUserById.tsx";
-import useDeleteUserById from "../../../services/hooks/useDeleteUserById.tsx";
+import useRegister from "../../../services/hooks/useRegister.tsx";
 
-type defaultUserProps = {
-    id: string,
-    firstname: string,
-    lastname: string,
-    email: string,
-    phone: string,
-    role: string
-}
-export default function BackofficeUserId() {
-    const getUser = useGetUserById();
-    const updateUser = useUpdateUserById();
-    const deleteUser = useDeleteUserById();
-    // const deleteUser = useDeleteUserById();
-    const id = useParams().id || ""
+export default function BackofficeUserAdd() {
+    const createUser = useRegister();
 
-    const [user, setUser] = useState<defaultUserProps | undefined>();
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
-    const [role, setRole] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
 
-    useEffect(() => {
-        (async () => {
-            if (id) {
-                const data = await getUser(id);
-                setUser(data);
-            }
-        })();
-    }, []);
 
-    useEffect(() => {
-        if (firstname === "" && user) {
-            console.log(user);
-            setFirstname(user.firstname);
-            setLastname(user.lastname);
-            setEmail(user.email);
-            setPhone(user.phone);
-            setRole(user.role);
-        }
-    }, [user]);
 
-    const handleDeleteUser = async (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log("delete user");
-        const result = await deleteUser(id);
-        if (result.status === 401 || result.status === 400) {
-            console.error('Delete user error:', result.data.error);
-        } else {
-            console.log('User deleted:', result);
-            return window.location.href = "/backoffice/users";
-        }
-    }
-
-    const handleUpdateUser = async (e: React.FormEvent) => {
+    const handleCreateUser = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("update user");
-        const result = await updateUser({
-            id: id,
+        const result = await createUser({
             firstname: firstname,
             lastname: lastname,
             email: email,
             phone: phone,
-            role: role
+            password: password,
+            confirmpassword: confirmPassword
         });
         if (result.status === 401 || result.status === 400) {
-            console.error('Update user error:', result.data.error);
+            console.error('Create user error:', result.data.error);
         } else {
             console.log('User updated:', result);
             return window.location.href = "/backoffice/users";
@@ -113,7 +68,7 @@ export default function BackofficeUserId() {
                                 color
                             />
                             <Input
-                                type={"text"}
+                                type={"tel"}
                                 value={phone}
                                 placeholder={"Téléphone"}
                                 name={"phone"}
@@ -121,19 +76,26 @@ export default function BackofficeUserId() {
                                 color
                             />
                             <Input
-                                type={"text"}
-                                value={role}
-                                placeholder={"Role"}
-                                name={"role"}
-                                setValue={setRole}
+                                type={"password"}
+                                value={password}
+                                placeholder={"Mot de passe"}
+                                name={"password"}
+                                setValue={setPassword}
                                 color
                             />
-                            <Button label={"Supprimer"} color={"danger"} onclick={( e: React.FormEvent) => handleDeleteUser(e)}/>
-                            <Button label={"Modifier"} onclick={( e: React.FormEvent) => handleUpdateUser(e)}/>
+                            <Input
+                                type={"password"}
+                                value={confirmPassword}
+                                placeholder={"Confirmer le mot de passe"}
+                                name={"confirmPassword"}
+                                setValue={setConfirmPassword}
+                                color
+                            />
+                            <Button label={"Créer le nouvelle utilisateur"} onclick={( e: React.FormEvent) => handleCreateUser(e)}/>
                         </form>
                     }
                     link={"/backoffice/users"}
-                    title={user ? user.firstname + " " + user.lastname : " "}
+                    title={"Ajouter un utilisateur"}
                 />
             </main>
         </>

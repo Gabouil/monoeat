@@ -7,12 +7,12 @@ export default function useLogin() {
                 url: '/users/login',
                 method: 'post',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'multipart/form-data'
                 },
-                data: new URLSearchParams({
+                data:{
                     "email": email,
                     "password": password
-                })
+                }
             });
             return res.data;
         } catch (err:any) {

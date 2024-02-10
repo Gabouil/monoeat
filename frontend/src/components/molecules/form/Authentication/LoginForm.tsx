@@ -49,6 +49,7 @@ export default function LoginForm({
                 <div className="authentication__form__ligne">
                 </div>
                 <Input
+                    label={"Email"}
                     type={"email"}
                     placeholder={"Email"}
                     name={"email"}
@@ -56,6 +57,7 @@ export default function LoginForm({
                     setValue={setEmail}
                 />
                 <Input
+                    label={"Mot de passe"}
                     type={"password"}
                     placeholder={"Mot de passe"}
                     name={"password"}

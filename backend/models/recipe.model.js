@@ -15,17 +15,17 @@ const recipeSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ["starter", "main course", "dessert", "other"],
-        default: 'other',
+        enum: ["entrées", "plats", "desserts", "autres"],
+        default: 'autres',
         required: true,
     },
-    images: {
+    image: {
         type: String,
         required: true,
     },
     ingredients: {
         type: [{
-            ingredients: mongoose.Schema.Types.ObjectId,
+            ingredient: mongoose.Schema.Types.ObjectId,
             quantity: Number,
         }],
         ref: 'Ingredient',
@@ -33,8 +33,8 @@ const recipeSchema = new mongoose.Schema({
     },
     difficulty: {
         type: String,
-        enum: ['easy', 'medium', 'hard'],
-        default: 'easy',
+        enum: ['facile', 'moyen', 'difficile'],
+        default: 'facile',
         required: true,
     },
     comments: {
@@ -57,14 +57,14 @@ const recipeSchema = new mongoose.Schema({
         type: [String],
         required: true,
     },
-    cookingTime: {
+    cookTime: {
         type: {
             time: Number,
             unit: String,
         },
         required: true,
     },
-    ustenciles: {
+    utensils: {
         type: [String],
         required: true,
     },
@@ -72,7 +72,7 @@ const recipeSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    nutritionalValue: {
+    nutritionalValues: {
         type: {
             calories: Number,
             lipids: Number,

@@ -44,6 +44,7 @@ export default function BackofficeUserAdd() {
                     content={
                         <form>
                             <Input
+                                label={"Prénom"}
                                 type={"text"}
                                 value={firstname}
                                 placeholder={"Prénom"}
@@ -52,6 +53,7 @@ export default function BackofficeUserAdd() {
                                 color
                             />
                             <Input
+                                label={"Nom"}
                                 type={"text"}
                                 value={lastname}
                                 placeholder={"Nom"}
@@ -60,6 +62,7 @@ export default function BackofficeUserAdd() {
                                 color
                             />
                             <Input
+                                label={"Email"}
                                 type={"email"}
                                 value={email}
                                 placeholder={"Email"}
@@ -68,6 +71,7 @@ export default function BackofficeUserAdd() {
                                 color
                             />
                             <Input
+                                label={"Téléphone"}
                                 type={"tel"}
                                 value={phone}
                                 placeholder={"Téléphone"}
@@ -76,6 +80,7 @@ export default function BackofficeUserAdd() {
                                 color
                             />
                             <Input
+                                label={"Mot de passe"}
                                 type={"password"}
                                 value={password}
                                 placeholder={"Mot de passe"}
@@ -84,6 +89,7 @@ export default function BackofficeUserAdd() {
                                 color
                             />
                             <Input
+                                label={"Confirmer le mot de passe"}
                                 type={"password"}
                                 value={confirmPassword}
                                 placeholder={"Confirmer le mot de passe"}

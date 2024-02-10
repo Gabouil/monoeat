@@ -16,16 +16,16 @@ export default function useRegister() {
                 url: '/users/register',
                 method: 'post',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type':  'multipart/form-data'
                 },
-                data: new URLSearchParams({
+                data: {
                     "firstname": formData.firstname,
                     "lastname": formData.lastname,
                     "email": formData.email,
                     "phone": formData.phone,
                     "password": formData.password,
                     "confirmPassword": formData.confirmpassword,
-                })
+                }
             })
             return res.data
         } catch (err: any) {

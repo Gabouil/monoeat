@@ -4,4 +4,11 @@
   align-items: center;
   min-height: 100vh;
   padding: 1.25rem;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    width: 100%;
+  }
 }

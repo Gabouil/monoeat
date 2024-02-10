@@ -1,6 +1,8 @@
 :root {
   --primary: #FFFEF9;
   --secondary: #252013;
+    --secondary-50: rgba(37, 32, 19, 0.5);
+    --secondary-25: rgba(37, 32, 19, 0.25);
   --action: #E26D00;
   --table1: #E2E0D1;
   --table2: #F1F1ED;
@@ -11,6 +13,8 @@
 [data-theme='dark'] {
   --primary: #252013;
   --secondary: #FFFEF9;
+  --secondary-50: rgba(255, 254, 249, 0.5);
+  --secondary-25: rgba(255, 254, 249, 0.25);
   --action: #FFF7AE;
   --table1: #171308;
   --table2: #313029;
@@ -70,7 +74,18 @@ table {
 .group__column {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+
+  &--labelmini {
+    font-size: 14px;
+  }
+}
+.group__row {
+  display: flex;
+  flex-direction: row;
   gap: 1.25rem;
+  align-items: center;
 
   &--labelmini {
     font-size: 14px;

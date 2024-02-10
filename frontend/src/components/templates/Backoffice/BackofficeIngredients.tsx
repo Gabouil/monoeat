@@ -10,7 +10,7 @@ type Ingredients = {
     name: string;
     category: string;
     allergens: boolean;
-    facutlative: boolean;
+    optional: boolean;
 };
 export default function BackofficeIngredients() {
     const getIngredients = useGetAllIngredient();

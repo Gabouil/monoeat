@@ -4,7 +4,7 @@ interface FormData {
     name: string;
     category: string;
     allergens: boolean;
-    facutlative: boolean;
+    optional: boolean;
 }
 
 export default function useCreateIngredient() {
@@ -14,14 +14,14 @@ export default function useCreateIngredient() {
                 url: '/ingredients',
                 method: 'post',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type':  'multipart/form-data'
                 },
-                data: new URLSearchParams({
+                data: {
                     name: formData.name,
                     category: formData.category,
-                    allergens: formData.allergens.toString(),
-                    facutlative: formData.facutlative.toString()
-                })
+                    allergens: formData.allergens,
+                    optional: formData.optional
+                }
             })
             return res.data
         } catch (err: any) {

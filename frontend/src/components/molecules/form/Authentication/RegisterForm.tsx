@@ -83,6 +83,7 @@ export default function RegisterForm({
                 }
                 <div className="authentication__form__ligne">
                     <Input
+                        label={"Prénom"}
                         type={"text"}
                         placeholder={"Prénom"}
                         name={"firstname"}
@@ -92,6 +93,7 @@ export default function RegisterForm({
                         specialCharOFF={true}
                     />
                     <Input
+                        label={"Nom"}
                         type={"text"}
                         placeholder={"Nom"}
                         name={"lastname"}
@@ -102,6 +104,7 @@ export default function RegisterForm({
                     />
                 </div>
                 <Input
+                    label={"Email"}
                     type={"email"}
                     placeholder={"Email"}
                     name={"email"}
@@ -110,6 +113,7 @@ export default function RegisterForm({
                     color
                 />
                 <Input
+                    label={"Téléphone"}
                     type={"tel"}
                     placeholder={"Téléphone"}
                     name={"phone"}
@@ -118,6 +122,7 @@ export default function RegisterForm({
                     color
                 />
                 <Input
+                    label={"Mot de passe"}
                     type={"password"}
                     placeholder={"Mot de passe"}
                     name={"password"}
@@ -126,13 +131,14 @@ export default function RegisterForm({
                     color
                 />
                 <Input
+                    label={"Confirmer le mot de passe"}
                     type={"cfPassword"}
                     placeholder={"Confirmer le mot de passe"}
                     name={"confirmPassword"}
                     value={confirmPassword}
                     setValue={setConfirmPassword}
                     color
-                    cfPassordValue={password}
+                    cfPasswordValue={password}
                 />
                 <Button label={"S'inscrire"} onclick={(e:React.FormEvent) => handleRegister(e)}/>
                 <Link link={"/connexion"} label={"J’ai déjà un compte"}/>

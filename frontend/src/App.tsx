@@ -14,6 +14,8 @@ import BackofficeUserId from "./components/templates/Backoffice/BackofficeUserId
 import BackofficeUserAdd from "./components/templates/Backoffice/BackofficeUserAdd.tsx";
 import BackofficeIngredientId from "./components/templates/Backoffice/BackofficeIngredientId.tsx";
 import BackofficeIngredientAdd from "./components/templates/Backoffice/BackofficeIngredientAdd.tsx";
+import BackofficeRecipeAdd from "./components/templates/Backoffice/BackofficeRecipeAdd.tsx";
+import BackofficeRecipeId from "./components/templates/Backoffice/BackofficeRecipeId.tsx";
 
 function App() {
 
@@ -64,6 +66,12 @@ function App() {
                 }/>
                 <Route path="/backoffice/recipes" element={
                     <BackofficeRecipes/>
+                }/>
+                <Route path="/backoffice/recipes/add" element={
+                    <BackofficeRecipeAdd/>
+                }/>
+                <Route path="/backoffice/recipes/:id" element={
+                    <BackofficeRecipeId/>
                 }/>
                 <Route path="/backoffice/ingredients" element={
                     <BackofficeIngredients/>

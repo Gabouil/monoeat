@@ -3,7 +3,7 @@ import BackofficeSection from "../../organismes/Backoffice/BackofficeSection.tsx
 import React, {useState} from "react";
 import Input from "../../atomes/inputs/Input/Input.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
-import SelectInput from "../../atomes/inputs/SelectInput/SelectInput.tsx";
+import SelectInput from "../../atomes/inputs/Input/SelectInput.tsx";
 import useCreateIngredient from "../../../services/hooks/useCreateIngredient.tsx";
 import SwitchButton from "../../atomes/buttons/SwitchButton/SwitchButton.tsx";
 
@@ -12,7 +12,7 @@ export default function BackofficeIngredientAdd() {
 
     const [name, setName] = useState("");
     const [allergens, setAllergens] = useState(false);
-    const [facutlative, setFacutlative] = useState(false);
+    const [optional, setOptional] = useState(false);
 
     const [category, setCategory] = useState("autres");
     const [categoryData] = useState([
@@ -38,7 +38,7 @@ export default function BackofficeIngredientAdd() {
             name: name,
             category: category,
             allergens: allergens,
-            facutlative: facutlative
+            optional: optional
         });
         if (result.status === 401 || result.status === 400) {
             console.error('Update Ingredient error:', result.data.error);
@@ -55,6 +55,7 @@ export default function BackofficeIngredientAdd() {
                     content={
                         <form>
                             <Input
+                                label={"Nom"}
                                 type={"text"}
                                 value={name}
                                 placeholder={"Nom"}
@@ -80,9 +81,9 @@ export default function BackofficeIngredientAdd() {
                             <div className={"group__column"}>
                                 <p>facutlatif</p>
                                 <SwitchButton
-                                    name={"facutlative"}
-                                    value={facutlative}
-                                    setValue={setFacutlative}
+                                    name={"optional"}
+                                    value={optional}
+                                    setValue={setOptional}
                                 />
                             </div>
                             <Button label={"Créer le nouvel ingrédient"}

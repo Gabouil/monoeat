@@ -1,0 +1,28 @@
+.select_image {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__input {
+    input {
+      display: none;
+    }
+  }
+
+  &__preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    border-radius: 10px;
+    border: 1px dashed var(--secondary);
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+  }
+}

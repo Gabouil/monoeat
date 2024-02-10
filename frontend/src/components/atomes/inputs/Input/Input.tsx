@@ -6,17 +6,20 @@ import EyeClose from "../../../../assets/pictos/input/eye-close.tsx";
 interface InputProps {
     type: string;
     placeholder: string;
+    label?: string;
     name: string;
-    value: string;
-    setValue: React.Dispatch<React.SetStateAction<string>>;
+    value: string | number;
+    setValue: any;
     required?: boolean;
     color?: boolean;
     specialCharOFF?: boolean;
-    cfPassordValue?: string;
+    cfPasswordValue?: string;
+    idInput?: string ;
 }
 
 export default function Input({
                                   type,
+                                  label,
                                   placeholder,
                                   name,
                                   value,
@@ -24,88 +27,110 @@ export default function Input({
                                   required = false,
                                   color = false,
                                   specialCharOFF = false,
-                                  cfPassordValue
+                                  cfPasswordValue,
+                                  idInput
                               }: InputProps) {
     const [showPassword, setShowPassword] = useState(false)
-    const changeValue = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setValue(event.target.value)
+
+    const changeValue = (event: { target: { value: string | number; }; }) => {
+        if (idInput !== undefined) {
+            setValue(event.target.value, idInput);
+        } else {
+            if (typeof event.target.value === 'string') {
+                (setValue as React.Dispatch<React.SetStateAction<string>>)(event.target.value);
+            } else {
+                (setValue as React.Dispatch<React.SetStateAction<number>>)(event.target.value);
+            }
+        }
     }
 
     return (
         <>
             {type === 'password' && (
-                <label className="group group__password">
-                    <input
-                        className={color ? "input color" : "input"}
-                        type={showPassword ? "text" : "password"}
-                        required={required}
-                        name={name}
-                        value={value}
-                        onChange={changeValue}
-                        placeholder="  "
-                        autoComplete={"password"}
-                        minLength={8}
-                        maxLength={30}
-                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[=_.!@#$%^&\\+]).{8,30}"
-                    />
-                    <span className="group__password__show" onClick={() => setShowPassword(!showPassword)}>
+                <div className="input">
+                    {label && <label htmlFor={name} className={"input__label"}>{label}</label>}
+                    <div className="input__container">
+                        <input
+                            className={color ?
+                                "input__container__color input__container__content input__container__content__password"
+                                : "input__container__content input__container__content__password"
+                            }
+                            type={showPassword ? "text" : "password"}
+                            required={required}
+                            name={name}
+                            value={value}
+                            onChange={changeValue}
+                            placeholder={placeholder}
+                            autoComplete={"password"}
+                            minLength={8}
+                            maxLength={30}
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[=_.!@#$%^&\\+]).{8,30}"
+                        />
+                        <span className="input__container__content__password__button"
+                              onClick={() => setShowPassword(!showPassword)}>
                             {showPassword ? <EyeClose/> : <EyeOpen/>}
-                        </span>
-                    <span className="bar"></span>
-                    <label>{placeholder}</label>
-                </label>
+                    </span>
+                    </div>
+                </div>
             )}
             {type === 'cfPassword' && (
-                <label className="group group__password">
-                    <input
-                        className={color ? "input color" : "input"}
-                        type={showPassword ? "text" : "password"}
-                        required={required}
-                        name={name}
-                        value={value}
-                        onChange={changeValue}
-                        placeholder="  "
-                        pattern={cfPassordValue === value ? ".*" : "a^"}
-                    />
-                    <span className="group__password__show" onClick={() => setShowPassword(!showPassword)}>
+                <div className="input">
+                    {label && <label htmlFor={name} className={"input__label"}>{label}</label>}
+                    <div className="input__container">
+                        <input
+                            className={color ?
+                                "input__container__color input__container__content input__container__content__password"
+                                : "input__container__content input__container__content__password"
+                            }
+                            type={showPassword ? "text" : "password"}
+                            required={required}
+                            name={name}
+                            value={value}
+                            onChange={changeValue}
+                            placeholder={placeholder}
+                            pattern={cfPasswordValue === value ? ".*" : "a^"}
+                        />
+                        <span className="input__container__content__password__button"
+                              onClick={() => setShowPassword(!showPassword)}>
                             {showPassword ? <EyeClose/> : <EyeOpen/>}
-                        </span>
-                    <span className="bar"></span>
-                    <label>{placeholder}</label>
-                </label>
+                    </span>
+                    </div>
+                </div>
             )}
             {type === 'tel' && (
-                <label className="group">
-                    <input
-                        className={color ? "input color" : "input"}
-                        pattern={"^0[1-9][0-9]{8}$"}
-                        type={type}
-                        required={required}
-                        name={name}
-                        value={value}
-                        onChange={changeValue}
-                        placeholder="  "
-                    />
-                    <span className="bar"></span>
-                    <label>{placeholder}</label>
-                </label>
+                <div className="input">
+                    {label && <label htmlFor={name} className={"input__label"}>{label}</label>}
+                    <div className="input__container">
+                        <input
+                            className={color ? "input__container__color input__container__content" : "input__container__content"}
+                            pattern={"^0[1-9][0-9]{8}$"}
+                            type={type}
+                            required={required}
+                            name={name}
+                            value={value}
+                            onChange={changeValue}
+                            placeholder={placeholder}
+                        />
+                    </div>
+                </div>
             )}
 
             {type !== 'password' && type !== 'tel' && type !== 'cfPassword' && (
-                <label className="group">
-                    <input
-                        className={color ? "input color" : "input"}
-                        type={type}
-                        required={required}
-                        name={name}
-                        value={value}
-                        onChange={changeValue}
-                        placeholder="  "
-                        pattern={specialCharOFF ? "^[a-zA-Z\\-']*$" : ".*"}
-                    />
-                    <span className="bar"></span>
-                    <label>{placeholder}</label>
-                </label>
+                <div className="input">
+                    {label && <label htmlFor={name} className={"input__label"}>{label}</label>}
+                    <div className="input__container">
+                        <input
+                            className={color ? "input__container__color input__container__content" : "input__container__content"}
+                            type={type}
+                            required={required}
+                            name={name}
+                            value={value}
+                            onChange={changeValue}
+                            placeholder={placeholder}
+                            pattern={specialCharOFF ? "^[a-zA-Z\\-']*$" : ".*"}
+                        />
+                    </div>
+                </div>
             )}
         </>
     )

@@ -5,7 +5,7 @@ interface FormData {
     name: string;
     category: string;
     allergens: boolean;
-    facutlative: boolean;
+    optional: boolean;
 }
 export default function useUpdateIngredientById() {
     return async (formData: FormData) => {
@@ -14,14 +14,14 @@ export default function useUpdateIngredientById() {
                 url: '/ingredients/' + formData.id,
                 method: 'patch',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'multipart/form-data'
                 },
-                data: new URLSearchParams({
+                data: {
                     name: formData.name,
                     category: formData.category,
-                    allergens: formData.allergens.toString(),
-                    facutlative: formData.facutlative.toString()
-                })
+                    allergens: formData.allergens,
+                    optional: formData.optional
+                }
             });
             return res.data;
         } catch (err:any) {

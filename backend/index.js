@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const fileUpload = require('express-fileupload');
 const ingredientRoutes = require('./routes/ingredient.routes');
 const recipeRoutes = require('./routes/recipe.routes');
 const userRoutes = require('./routes/user.routes');
@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(cors({
     origin: 'http://localhost:5173'
 }));
+app.use(fileUpload());
 
 mongoose.connect('mongodb://127.0.0.1:27017/monoeat')
     .then(() => console.log("Connected to MongoDB"))
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
     res.send('API server is running');
 });
 
+app.use('/images', express.static('public/uploads/images/recipes'));
 app.use('/ingredients', ingredientRoutes);
 app.use('/recipes', recipeRoutes);
 app.use('/users', userRoutes);

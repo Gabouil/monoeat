@@ -15,15 +15,15 @@ export default function useUpdateUserById() {
                 url: '/users/' + formData.id,
                 method: 'patch',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type':  'multipart/form-data'
                 },
-                data: new URLSearchParams({
+                data: {
                     "firstname": formData.firstname,
                     "lastname": formData.lastname,
                     "email": formData.email,
                     "phone": formData.phone,
                     "role": formData.role
-                })
+                }
             });
             return res.data;
         } catch (err:any) {

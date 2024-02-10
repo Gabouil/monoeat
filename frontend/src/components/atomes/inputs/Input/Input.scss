@@ -1,117 +1,94 @@
-.group {
+.input {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   width: 100%;
 
-  .input {
-    font-size: 16px;
-    padding: 10px 10px 10px 5px;
-    width: 100%;
-    border: none;
-    background: transparent;
-    border-bottom: 1px solid var(--secondary);
-    display: inline;
-
-    &:focus {
-      outline: none;
-    }
-
-    &:focus ~ label, &:not(:placeholder-shown) ~ label {
-      top: -20px;
-      font-size: 14px;
-    }
-
-    &:focus ~ .bar:before, &:focus ~ .bar:after {
-      width: 50%;
-    }
-  }
-
-  label {
-    color: var(--secondary);
-    font-size: 18px;
-    font-weight: normal;
-    position: absolute;
-    pointer-events: none;
-    left: 5px;
-    top: 10px;
-    transition: 0.2s ease top, 0.2s ease font-size;
-    -moz-transition: 0.2s ease top, 0.2s ease font-size;
-    -webkit-transition: 0.2s ease top, 0.2s ease font-size;
-  }
-
-  .bar {
+  &__container {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: row;
+    gap: 1.25rem;
     width: 100%;
+    overflow: hidden;
 
-    &:before, &:after {
-      content: '';
-      height: 2px;
-      width: 0;
-      bottom: 1px;
-      position: absolute;
-      transition: 0.2s ease all;
-      -moz-transition: 0.2s ease all;
-      -webkit-transition: 0.2s ease all;
-      background: var(--secondary);
+    &__content {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--secondary);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      color: var(--color-text);
+      background-color: var(--primary);
+      width: 100%;
+      overflow: hidden;
+      &__password, &__select {
+        padding-right: 3.5rem;
+
+        &__button {
+          position: absolute;
+          display: flex;
+          top: 50%;
+          right: 0;
+          transform: translateY(-50%);
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          width: 3.5rem;
+          box-shadow: -2px 0px 5px 0px var(--secondary-50);
+          .svg {
+            transition: all 0.25s cubic-bezier(0.5, 0, 0.1, 1);
+          }
+        }
+      }
     }
 
-    &:before {
-      left: 50%;
-    }
+    &__color {
+      &:valid {
+        border: 1px solid var(--success);
+      }
 
-    &:after {
-      right: 50%;
-    }
-  }
+      &:invalid {
+        border: 1px solid var(--danger);
+      }
 
-  .color {
-    &:valid {
-      border-bottom: 1px solid var(--success);
-    }
-
-    &:valid ~ label {;
-      color: var(--success);
-    }
-
-    &:valid ~ .bar:after, &:valid ~ .bar:before {
-      background: var(--success);
-    }
-
-    &:invalid {
-      border-bottom: 1px solid var(--danger);
-    }
-
-    &:invalid ~ label {
-      color: var(--danger);
-    }
-
-    &:invalid ~ .bar:after, &:invalid ~ .bar:before {
-      background: var(--danger);
-    }
-
-    &:placeholder-shown {
-      border-bottom: 1px solid var(--secondary);
-    }
-
-    &:placeholder-shown ~ label {
-      color: var(--secondary);
-    }
-
-    &:placeholder-shown ~ .bar:before, &:placeholder-shown ~ .bar:after {
-      background: var(--secondary);
+      &:placeholder-shown {
+        border: 1px solid var(--secondary);
+      }
     }
   }
-}
 
-.group__password {
-  .input {
-    padding-right: 2rem;
-  }
-
-  &__show {
+  &__options {
+    display: none;
     position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 110%;
+    left: 0;
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--primary);
+    border: 1px solid var(--secondary);
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 1;
+    max-height: 300px;
+    overflow-y: auto;
+
+    li {
+      padding: 0.5rem;
+      cursor: pointer;
+      transition: 0.2s ease background;
+      -moz-transition: 0.2s ease background;
+      -webkit-transition: 0.2s ease background;
+
+      &:hover {
+        background: var(--secondary);
+        color: var(--primary);
+      }
+    }
+
+    &--visible {
+      display: flex;
+    }
   }
 }

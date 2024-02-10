@@ -22,7 +22,7 @@ const ingredientSchema = new mongoose.Schema({
         default: 'other',
         required: true,
     },
-    facutlative: {
+    optional: {
         type: Boolean,
         default: false,
         required: true,

@@ -4,7 +4,7 @@ import BackofficeSection from "../../organismes/Backoffice/BackofficeSection.tsx
 import React, {useEffect, useState} from "react";
 import Input from "../../atomes/inputs/Input/Input.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
-import SelectInput from "../../atomes/inputs/SelectInput/SelectInput.tsx";
+import SelectInput from "../../atomes/inputs/Input/SelectInput.tsx";
 import useGetIngredientById from "../../../services/hooks/useGetIngredientById.tsx";
 import useDeleteIngredientById from "../../../services/hooks/useDeleteIngredientById.tsx";
 import useUpdateIngredientById from "../../../services/hooks/useUpdateIngredientById.tsx";
@@ -15,7 +15,7 @@ type defaultIngredientProps = {
     name: string,
     category: string,
     allergens: boolean,
-    facutlative: boolean
+    optional: boolean
 }
 export default function BackofficeIngredientId() {
     const getIngredient= useGetIngredientById();
@@ -26,7 +26,7 @@ export default function BackofficeIngredientId() {
     const [ingredient, setIngredient] = useState<defaultIngredientProps | undefined>();
     const [name, setName] = useState("");
     const [allergens, setAllergens] = useState(false);
-    const [facutlative, setFacutlative] = useState(false);
+    const [optional, setOptional] = useState(false);
     const [category, setCategory] = useState("");
     const [categoryData] = useState([
         {value: "légumes", option: "vegetables"},
@@ -58,7 +58,7 @@ export default function BackofficeIngredientId() {
             console.log(ingredient);
             setName(ingredient.name);
             setAllergens(ingredient.allergens);
-            setFacutlative(ingredient.facutlative);
+            setOptional(ingredient.optional);
             setCategory(ingredient.category)
             switch (ingredient.category) {
                 case "vegetables":
@@ -109,7 +109,7 @@ export default function BackofficeIngredientId() {
             name: name,
             category: category,
             allergens: allergens,
-            facutlative: facutlative
+            optional: optional
         });
         if (result.status === 401 || result.status === 400) {
             console.error('Update Ingredient error:', result.data.error);
@@ -126,6 +126,7 @@ export default function BackofficeIngredientId() {
                     content={
                         <form>
                             <Input
+                                label={"Nom"}
                                 type={"text"}
                                 value={name}
                                 placeholder={"Nom"}
@@ -151,9 +152,9 @@ export default function BackofficeIngredientId() {
                             <div className={"group__column"}>
                                 <p>facutlatif</p>
                                 <SwitchButton
-                                    name={"facutlative"}
-                                    value={facutlative}
-                                    setValue={setFacutlative}
+                                    name={"optional"}
+                                    value={optional}
+                                    setValue={setOptional}
                                 />
                             </div>
                             <Button label={"Supprimer"} color={"danger"}

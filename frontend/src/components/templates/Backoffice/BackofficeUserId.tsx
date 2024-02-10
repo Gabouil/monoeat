@@ -7,7 +7,7 @@ import Input from "../../atomes/inputs/Input/Input.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
 import useUpdateUserById from "../../../services/hooks/useUpdateUserById.tsx";
 import useDeleteUserById from "../../../services/hooks/useDeleteUserById.tsx";
-import SelectInput from "../../atomes/inputs/SelectInput/SelectInput.tsx";
+import SelectInput from "../../atomes/inputs/Input/SelectInput.tsx";
 
 type defaultUserProps = {
     id: string,
@@ -104,6 +104,7 @@ export default function BackofficeUserId() {
                     content={
                         <form>
                             <Input
+                                label={"Prénom"}
                                 type={"text"}
                                 value={firstname}
                                 placeholder={"Prénom"}
@@ -112,6 +113,7 @@ export default function BackofficeUserId() {
                                 color
                             />
                             <Input
+                                label={"Nom"}
                                 type={"text"}
                                 value={lastname}
                                 placeholder={"Nom"}
@@ -120,6 +122,7 @@ export default function BackofficeUserId() {
                                 color
                             />
                             <Input
+                                label={"Email"}
                                 type={"email"}
                                 value={email}
                                 placeholder={"Email"}
@@ -128,6 +131,7 @@ export default function BackofficeUserId() {
                                 color
                             />
                             <Input
+                                label={"Téléphone"}
                                 type={"text"}
                                 value={phone}
                                 placeholder={"Téléphone"}

@@ -159,7 +159,6 @@ export default function BackofficeRecipeAdd() {
                             />
                             <AddIngredient
                                 setValues={setIngredients}
-                                values={ingredients}
                             />
                             <AddStringList
                                 title={"Liste des étapes de la recette"}

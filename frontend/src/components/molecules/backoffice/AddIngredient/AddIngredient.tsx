@@ -17,6 +17,7 @@ type Ingredients = {
     category: string;
     allergens: boolean;
     optional: boolean;
+    unit: string;
 };
 
 export default function AddIngredient({setValues, ingredientsDefault}: props) {
@@ -207,6 +208,7 @@ export default function AddIngredient({setValues, ingredientsDefault}: props) {
                                 <th scope="col">Name</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Quantity</th>
+                                <th scope="col">Unit</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -224,10 +226,10 @@ export default function AddIngredient({setValues, ingredientsDefault}: props) {
                                                 placeholder={"Quantité"}
                                                 setValue={changeQuantity}
                                                 name={"quantity"}
-                                                label={"Quantité"}
                                                 idInput={ingredient.ingredient._id}
                                             />
                                         </td>
+                                        <td>{ingredient.ingredient.unit}</td>
                                     </tr>
                                 )
                             })}

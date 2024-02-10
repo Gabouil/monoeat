@@ -218,7 +218,6 @@ export default function BackofficeRecipeId() {
                             />
                             <AddIngredient
                                 setValues={setIngredients}
-                                values={ingredients}
                                 ingredientsDefault={recipe ? recipe.ingredients : []}
                             />
                             <AddStringList

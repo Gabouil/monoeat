@@ -26,9 +26,33 @@ export default function BackofficeIngredientAdd() {
     ])
     const [categorySelected, setCategorySelected] = useState(6)
 
-    const changeValue = (value: string, id: number) => {
-        setCategory(value)
-        setCategorySelected(id)
+    const [unit, setUnit] = useState("unite")
+    const [unitData] = useState([
+        {value: "mg", option: "mg"},
+        {value: "cg", option: "cg"},
+        {value: "g", option: "g"},
+        {value: "kg", option: "kg"},
+        {value: "ml", option: "ml"},
+        {value: "cl", option: "cl"},
+        {value: "l", option: "l"},
+        {value: "cuillère à café", option: "cuillère à café"},
+        {value: "cuillère à soupe", option: "cuillère à soupe"},
+        {value: "verre", option: "verre"},
+        {value: "tasse", option: "tasse"},
+        {value: "bol", option: "bol"},
+        {value: "pincée", option: "pincée"},
+        {value: "unite", option: "unité"},
+    ])
+    const [unitSelected, setUnitSelected] = useState(13)
+
+    const changeValue = (value: string, id: number, type?:string) => {
+        if (type === "category") {
+            setCategory(value);
+            setCategorySelected(id);
+        } else if (type === "unit") {
+            setUnit(value);
+            setUnitSelected(id);
+        }
     }
 
     const handleCreateIngredient = async (e: React.FormEvent) => {
@@ -37,6 +61,7 @@ export default function BackofficeIngredientAdd() {
         const result = await createIngredient({
             name: name,
             category: category,
+            unit: unit,
             allergens: allergens,
             optional: optional
         });
@@ -69,6 +94,15 @@ export default function BackofficeIngredientAdd() {
                                 contents={categoryData}
                                 setValue={changeValue}
                                 label={"Catégorie"}
+                                typeSetValue={"category"}
+                            />
+                            <SelectInput
+                                optionSelected={unitSelected}
+                                setOptionSelected={setUnitSelected}
+                                contents={unitData}
+                                setValue={changeValue}
+                                label={"Unité"}
+                                typeSetValue={"unit"}
                             />
                             <div className={"group__column"}>
                                 <p>allergens</p>

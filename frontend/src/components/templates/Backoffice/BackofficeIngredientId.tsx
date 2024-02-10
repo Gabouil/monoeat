@@ -14,6 +14,7 @@ type defaultIngredientProps = {
     id: string,
     name: string,
     category: string,
+    unit: string,
     allergens: boolean,
     optional: boolean
 }
@@ -39,9 +40,33 @@ export default function BackofficeIngredientId() {
     ])
     const [categorySelected, setCategorySelected] = useState(0)
 
-    const changeValue = (value: string, id: number) => {
-        setCategory(value)
-        setCategorySelected(id)
+    const [unit, setUnit] = useState("unite")
+    const [unitData] = useState([
+        {value: "mg", option: "mg"},
+        {value: "cg", option: "cg"},
+        {value: "g", option: "g"},
+        {value: "kg", option: "kg"},
+        {value: "ml", option: "ml"},
+        {value: "cl", option: "cl"},
+        {value: "l", option: "l"},
+        {value: "cuillère à café", option: "cuillère à café"},
+        {value: "cuillère à soupe", option: "cuillère à soupe"},
+        {value: "verre", option: "verre"},
+        {value: "tasse", option: "tasse"},
+        {value: "bol", option: "bol"},
+        {value: "pincée", option: "pincée"},
+        {value: "unite", option: "unité"},
+    ])
+    const [unitSelected, setUnitSelected] = useState(13)
+
+    const changeValue = (value: string, id: number, type?:string) => {
+        if (type === "category") {
+            setCategory(value);
+            setCategorySelected(id);
+        } else if (type === "unit") {
+            setUnit(value);
+            setUnitSelected(id);
+        }
     }
 
     useEffect(() => {
@@ -86,6 +111,54 @@ export default function BackofficeIngredientId() {
                     setCategorySelected(6);
                     break;
             }
+            setUnit(ingredient.unit);
+            switch (ingredient.unit) {
+                case "mg":
+                    setUnitSelected(0);
+                    break;
+                case "cg":
+                    setUnitSelected(1);
+                    break;
+                case "g":
+                    setUnitSelected(2);
+                    break;
+                case "kg":
+                    setUnitSelected(3);
+                    break;
+                case "ml":
+                    setUnitSelected(4);
+                    break;
+                case "cl":
+                    setUnitSelected(5);
+                    break;
+                case "l":
+                    setUnitSelected(6);
+                    break;
+                case "cuillère à café":
+                    setUnitSelected(7);
+                    break;
+                case "cuillère à soupe":
+                    setUnitSelected(8);
+                    break;
+                case "verre":
+                    setUnitSelected(9);
+                    break;
+                case "tasse":
+                    setUnitSelected(10);
+                    break;
+                case "bol":
+                    setUnitSelected(11);
+                    break;
+                case "pincée":
+                    setUnitSelected(12);
+                    break;
+                case "unite":
+                    setUnitSelected(13);
+                    break;
+                default:
+                    setUnitSelected(13);
+                    break;
+            }
         }
     }, [ingredient]);
 
@@ -108,6 +181,7 @@ export default function BackofficeIngredientId() {
             id: id,
             name: name,
             category: category,
+            unit: unit,
             allergens: allergens,
             optional: optional
         });
@@ -140,6 +214,14 @@ export default function BackofficeIngredientId() {
                                 contents={categoryData}
                                 setValue={changeValue}
                                 label={"Catégorie"}
+                            />
+                            <SelectInput
+                                optionSelected={unitSelected}
+                                setOptionSelected={setUnitSelected}
+                                contents={unitData}
+                                setValue={changeValue}
+                                label={"Unité"}
+                                typeSetValue={"unit"}
                             />
                             <div className={"group__column"}>
                                 <p>allergens</p>

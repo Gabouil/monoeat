@@ -11,6 +11,12 @@ const ingredientSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Recipe',
     },
+    unit: {
+        type: String,
+        enum: [ "mg", 'cg',"g", "kg", "ml", "cl", "l", "cuillère à café", "cuillère à soupe", "verre", "tasse", "bol", "pincée", "unite"],
+        default: '',
+        required: true,
+    },
     allergens: {
         type: Boolean,
         default: false,

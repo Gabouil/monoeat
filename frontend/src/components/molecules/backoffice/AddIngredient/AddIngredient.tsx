@@ -49,7 +49,7 @@ export default function AddIngredient({setValues, ingredientsDefault}: props) {
     const [totalPages, setTotalPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [limitItems, setLimitItems] = useState(3);
-    const [ingredientSelectedOnly, setIngredientSelectedOnly] = useState(true);
+    const [ingredientSelectedOnly, setIngredientSelectedOnly] = useState(false);
 
     useEffect(() => {
         (async () => {

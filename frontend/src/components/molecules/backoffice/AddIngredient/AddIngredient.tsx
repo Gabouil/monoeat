@@ -8,7 +8,6 @@ import SwitchButton from "../../../atomes/buttons/SwitchButton/SwitchButton.tsx"
 
 type props = {
     setValues: (values: { ingredient: string, quantity: number }[]) => void;
-    values: { ingredient: string, quantity: number }[];
     ingredientsDefault?: { ingredient: string, quantity: number }[];
 }
 
@@ -20,7 +19,7 @@ type Ingredients = {
     optional: boolean;
 };
 
-export default function AddIngredient({setValues, values, ingredientsDefault}: props) {
+export default function AddIngredient({setValues, ingredientsDefault}: props) {
     const getIngredients = useGetAllIngredient();
 
     const [ingredients, setIngredients] = useState<{ ingredient: Ingredients, quantity: number }[]>([]);
@@ -49,7 +48,7 @@ export default function AddIngredient({setValues, values, ingredientsDefault}: p
     const [totalPages, setTotalPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [limitItems, setLimitItems] = useState(3);
-    const [ingredientSelectedOnly, setIngredientSelectedOnly] = useState(false);
+    const [ingredientSelectedOnly, setIngredientSelectedOnly] = useState(true);
 
     useEffect(() => {
         (async () => {
@@ -66,15 +65,16 @@ export default function AddIngredient({setValues, values, ingredientsDefault}: p
     useEffect(() => {
             if (ingredientsDefault) {
                 (async () => {
-                    const data = await getIngredients();
-                    let dataNew: { ingredient: Ingredients, quantity: number }[] = [];
+                    let dataNew: { ingredient: Ingredients, quantity: number }[] = ingredients;
                     ingredientsDefault.map((ingredient: { ingredient: string, quantity: number }) => {
-                        data.map((ingredientData: Ingredients) => {
-                            if (ingredientData._id === ingredient.ingredient) {
-                                dataNew = [...dataNew, {ingredient: ingredientData, quantity: ingredient.quantity}]
+                        dataNew = dataNew.map(ingredientData => {
+                            if (ingredientData.ingredient._id === ingredient.ingredient) {
+                                return {...ingredientData, quantity: ingredient.quantity};
                             }
+                            return ingredientData;
                         });
                     });
+                    console.log(dataNew);
                     setIngredients(dataNew);
                     setFilteredIngredients(dataNew);
                 })();
@@ -139,14 +139,27 @@ export default function AddIngredient({setValues, values, ingredientsDefault}: p
     }, [search, ingredients, category, limitItems, currentPage, ingredientSelectedOnly]);
 
     const changeQuantity = (value: number, id: string) => {
-        const valueNew = ingredients.filter(ingredient => ingredient.ingredient._id === id)[0];
-        console.log(valueNew)
-        console.log("value", value)
-        if (valueNew) {
-            valueNew.quantity = value;
-            setIngredients([...ingredients.filter(ingredient => ingredient.ingredient._id !== id), valueNew]);
-            setFilteredIngredients([...filteredIngredients.filter(ingredient => ingredient.ingredient._id !== id), valueNew]);
-        }
+        const updatedIngredients = ingredients.map(ingredient => {
+            if (ingredient.ingredient._id === id) {
+                return {...ingredient, quantity: value};
+            }
+            return ingredient;
+        });
+
+        const updatedFilteredIngredients = filteredIngredients.map(ingredient => {
+            if (ingredient.ingredient._id === id) {
+                return {...ingredient, quantity: value};
+            }
+            return ingredient;
+        });
+
+        const updatedValues: { ingredient: string, quantity: number }[] = updatedIngredients
+            .filter(ingredient => ingredient.quantity > 0)
+            .map(ingredient => ({ingredient: ingredient.ingredient._id, quantity: ingredient.quantity}));
+
+        setValues(updatedValues)
+        setIngredients(updatedIngredients);
+        setFilteredIngredients(updatedFilteredIngredients);
     }
 
     return (

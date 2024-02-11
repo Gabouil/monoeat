@@ -1,4 +1,5 @@
 const Recipe = require("../models/recipe.model");
+const Ingredient = require("../models/ingredient.model");
 const catchAsync = require("../helpers/catchAsync");
 const path = require("path");
 
@@ -12,8 +13,42 @@ const create = catchAsync(async (req, res) => {
     req.body.nutritionalValues = req.body.nutritionalValues ? JSON.parse(req.body.nutritionalValues) : {};
     req.body.ingredients = req.body.ingredients ? JSON.parse(req.body.ingredients) : [];
 
-    console.log(req.body);
+
     const recipe = await Recipe.create(req.body);
+
+    console.log(recipe._id);
+    let ingredientUpdated
+    console.log("req.body.ingredients = ", req.body.ingredients.length);
+    if (req.body.ingredients.length === 0) {
+        const ingrediantExiste = await Ingredient.find({ recipe: recipe._id })
+        console.log("ingrediantExiste = ", ingrediantExiste.length);
+        ingredientUpdated = await ingrediantExiste.map(async recipe => {
+            recipe.recipe.splice(recipe._id, 1);
+            await recipe.save();
+            return "Delete : " + recipe.name;
+        });
+
+        console.log("ingredientUpdated = ", ingredientUpdated);
+    } else {
+        ingredientUpdated = await Promise.all(req.body.ingredients.map(async (ingredient) => {
+            const ingrediantExiste = await Ingredient.findById(ingredient.ingredient);
+            console.log("ingrediantExiste = ", ingrediantExiste);
+            if (!ingrediantExiste.recipe.includes(recipe._id)) {
+                ingrediantExiste.recipe.push(recipe._id);
+                await ingrediantExiste.save();
+                return "Add : " + ingrediantExiste.name;
+            }
+            ingrediantExiste.recipe.map(async recipe => {
+                if (recipe !== recipe._id) {
+                    ingrediantExiste.recipe.splice(recipe, 1);
+                    await ingrediantExiste.save();
+                    return "Delete : " + ingrediantExiste.name;
+                }
+            });
+        }));
+    }
+
+    console.log(ingredientUpdated);
     res.send(recipe);
 });
 
@@ -31,14 +66,13 @@ const getByID = catchAsync(async (req, res) => {
 
     if (recipe) {
         res.send(recipe);
-        res.sendFile(imagePath);
     } else {
         res.status(404).send('Not Found');
     }
 });
 
 const updateByID = catchAsync(async (req, res) => {
-    console.log(req.body);
+    console.clear()
     if (req.files) {
         const localPath = path.join(__dirname, '../public/uploads/images/recipes/', req.files.image.name);
         await req.files.image.mv(localPath);
@@ -49,7 +83,39 @@ const updateByID = catchAsync(async (req, res) => {
     req.body.cookTime = req.body.cookTime ? JSON.parse(req.body.cookTime) : {};
     req.body.nutritionalValues = req.body.nutritionalValues ? JSON.parse(req.body.nutritionalValues) : {};
     req.body.ingredients = req.body.ingredients ? JSON.parse(req.body.ingredients) : [];
+    let ingredientUpdated
+    console.log("req.body.ingredients = ", req.body.ingredients.length);
+    if (req.body.ingredients.length === 0) {
+        const ingrediantExiste = await Ingredient.find({ recipe: req.params.id })
+        console.log("ingrediantExiste = ", ingrediantExiste.length);
+        ingredientUpdated = await ingrediantExiste.map(async recipe => {
+            recipe.recipe.splice(req.params.id, 1);
+            await recipe.save();
+            return "Delete : " + recipe.name;
+        });
 
+        console.log("ingredientUpdated = ", ingredientUpdated);
+    } else {
+        ingredientUpdated = await Promise.all(req.body.ingredients.map(async (ingredient) => {
+            const ingrediantExiste = await Ingredient.findById(ingredient.ingredient);
+            console.log("ingrediantExiste = ", ingrediantExiste);
+            if (!ingrediantExiste.recipe.includes(req.params.id)) {
+                ingrediantExiste.recipe.push(req.params.id);
+                await ingrediantExiste.save();
+                return "Add : " + ingrediantExiste.name;
+            }
+            ingrediantExiste.recipe.map(async recipe => {
+                if (recipe !== req.params.id) {
+                    ingrediantExiste.recipe.splice(recipe, 1);
+                    await ingrediantExiste.save();
+                    return "Delete : " + ingrediantExiste.name;
+                }
+            });
+        }));
+    }
+
+
+    console.log("ingredientUpdated = ", ingredientUpdated);
     const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body);
     if (recipe) {
         res.send(recipe);

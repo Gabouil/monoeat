@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import useGetAllIngredient from "../../../services/hooks/useGetAllIngredient.tsx";
 import useDeleteIngredientById from "../../../services/hooks/useDeleteIngredientById.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
+import Notification from "../../atomes/Notification/Notification.tsx";
 
 type Ingredients = {
     _id: string;
@@ -18,6 +19,7 @@ export default function BackofficeIngredients() {
 
     const [ingredients, setIngredients] = useState<Ingredients[]>([]);
 
+    const [error, setError] = useState();
     useEffect(() => {
         (async () => {
             const data = await getIngredients();
@@ -31,10 +33,10 @@ export default function BackofficeIngredients() {
 
     const handledeleteIngredient = async (e: React.FormEvent, id: string) => {
         e.preventDefault();
-        console.log("delete user");
         const result = await deleteIngredient(id);
         if (result.status === 401 || result.status === 400) {
-            console.error('Delete user error:', result.data.error);
+            console.error('Delete user error:', result.data);
+            setError(result.data);
         } else {
             console.log('User deleted:', result);
             return window.location.href = "/backoffice/Ingredients";
@@ -51,6 +53,14 @@ export default function BackofficeIngredients() {
                             label={"Créer un ingrédient"}
                             link={"/backoffice/Ingredients/add"}
                         />
+                        {error &&
+                            <Notification
+                                title={"L'ingrédient est utilisé dans les recettes suivantes :"}
+                                contents={error}
+                                setContent={setError}
+                                type={"alert"}
+                            />
+                        }
                         <table>
                             <thead>
                             <tr className={"table__color--1"}>

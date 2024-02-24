@@ -150,53 +150,6 @@ table {
   z-index: 1;
 }
 
-.alert {
-  position: fixed;
-  top: -100%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: space-between;
-  gap: 1.25rem;
-  padding: 20px;
-  background-color: var(--danger);
-  color: var(--primary);
-  margin-bottom: 15px;
-  border-radius: 10px;
-  width: 90%;
-  animation: slideDown 0.25s cubic-bezier(0.5, 0, 0.1, 1) forwards;
-    z-index: 1000;
-
-  @media (min-width: 768px) {
-    top: 100%;
-    left: 1.25rem;
-    transform: none;
-    width: 300px;
-    animation: slideUp 0.25s cubic-bezier(0.5, 0, 0.1, 1) forwards;
-  }
-  .svg {
-    stroke: var(--primary);
-  }
-}
-
-@keyframes slideDown {
-  0% {
-    top: -100%;
-  }
-  100% {
-    top: 1.25rem;
-  }
-}
-
-@keyframes slideUp {
-    0% {
-        top: 100%;
-    }
-    100% {
-        top: 85%;
-    }
-}
-
 
 
 h1, h2, h3, h4 {

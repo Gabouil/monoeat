@@ -3,10 +3,10 @@ import React, {useState} from "react";
 import Input from "../../../atomes/inputs/Input/Input.tsx";
 import Button from "../../../atomes/buttons/Button/Button.tsx";
 import Link from "../../../atomes/buttons/Link/Link.tsx";
-import XClose from "../../../../assets/pictos/x-close.tsx";
 import Cookies from "js-cookie";
 import useRegister from "../../../../services/hooks/useRegister.tsx";
 import useLogin from "../../../../services/hooks/useLogin.tsx";
+import Notification from "../../../atomes/Notification/Notification.tsx";
 
 type defaultProps = {
     firstname: string,
@@ -74,12 +74,11 @@ export default function RegisterForm({
         <>
             <form name={"registerForm"} className="authentication__form">
                 {error &&
-                    <div className={"alert"}>
-                        <p>{error}</p>
-                        <button onClick={() => setError("")}>
-                            <XClose/>
-                        </button>
-                    </div>
+                    <Notification
+                        contents={error}
+                        setContent={setError}
+                        type={"alert"}
+                    />
                 }
                 <div className="authentication__form__ligne">
                     <Input

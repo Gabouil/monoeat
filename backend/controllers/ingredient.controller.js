@@ -1,4 +1,5 @@
 const Ingredient = require('../models/ingredient.model');
+const Recipe = require('../models/recipe.model');
 const catchAsync = require("../helpers/catchAsync");
 
 const create = catchAsync(async (req, res) => {
@@ -33,6 +34,15 @@ const updateByID = catchAsync(async (req, res) => {
 });
 
 const deleteByID = catchAsync(async (req, res) => {
+    const RecipesWithIngredient = await Recipe.find({"ingredients.ingredient": req.params.id}.name);
+
+    if (RecipesWithIngredient.length > 0) {
+        for(let key in RecipesWithIngredient) {
+            RecipesWithIngredient[key] = RecipesWithIngredient[key].name;
+        }
+        res.status(400).send(RecipesWithIngredient);
+        return;
+    }
     const ingredient = await Ingredient.findByIdAndDelete(req.params.id);
     if (ingredient) {
         console.log("user delete = ", ingredient);

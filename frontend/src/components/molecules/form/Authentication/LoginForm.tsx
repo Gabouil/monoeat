@@ -5,7 +5,7 @@ import Button from "../../../atomes/buttons/Button/Button.tsx";
 import Link from "../../../atomes/buttons/Link/Link.tsx";
 import Cookies from 'js-cookie';
 import useLogin from "../../../../services/hooks/useLogin.tsx";
-import XClose from "../../../../assets/pictos/x-close.tsx";
+import Notification from "../../../atomes/Notification/Notification.tsx";
 
 type defaultProps = {
     email: string,
@@ -39,12 +39,11 @@ export default function LoginForm({
         <>
             <form name={"loginForm"} className="authentication__form">
                 {error &&
-                    <div className={"alert"}>
-                        <p>{error}</p>
-                        <button onClick={() => setError("")}>
-                            <XClose/>
-                        </button>
-                    </div>
+                    <Notification
+                        contents={error}
+                        setContent={setError}
+                        type={"alert"}
+                    />
                 }
                 <div className="authentication__form__ligne">
                 </div>

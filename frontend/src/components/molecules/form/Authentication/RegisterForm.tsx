@@ -10,17 +10,18 @@ import Notification from "../../../atomes/Notification/Notification.tsx";
 
 type defaultProps = {
     firstname: string,
-    setFirstname:  React.Dispatch<React.SetStateAction<string>>
+    setFirstname: React.Dispatch<React.SetStateAction<string>>
     lastname: string,
     setLastname: React.Dispatch<React.SetStateAction<string>>
     email: string,
-    setEmail:  React.Dispatch<React.SetStateAction<string>>
+    setEmail: React.Dispatch<React.SetStateAction<string>>
     phone: string,
-    setPhone:  React.Dispatch<React.SetStateAction<string>>
+    setPhone: React.Dispatch<React.SetStateAction<string>>
     password: string,
-    setPassword:  React.Dispatch<React.SetStateAction<string>>
+    setPassword: React.Dispatch<React.SetStateAction<string>>
     confirmPassword: string,
-    setConfirmPassword:  React.Dispatch<React.SetStateAction<string>>
+    setConfirmPassword: React.Dispatch<React.SetStateAction<string>>
+    backoffice?: boolean
 }
 
 export default function RegisterForm({
@@ -36,13 +37,14 @@ export default function RegisterForm({
                                          setPassword,
                                          confirmPassword,
                                          setConfirmPassword,
+                                         backoffice = false
                                      }: defaultProps) {
 
-    const [error, setError] = useState("");
+    const [error, setError] = useState<string[]>([]);
     const register = useRegister();
     const login = useLogin();
 
-    const handleRegister = async (e:React.FormEvent) => {
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         const formData = {
             firstname: firstname,
@@ -55,17 +57,21 @@ export default function RegisterForm({
         const result = await register(formData);
         if (typeof result === 'string') {
             console.error('Registration error:', result);
-            setError(result);
+            setError([result]);
         } else {
             console.log(result);
-            const loginResult = await login(email, password);
-            if (typeof loginResult === 'string') {
-                console.error('Login error:', loginResult);
-                setError(loginResult);
+            if (!backoffice) {
+                const loginResult = await login(email, password);
+                if (typeof loginResult === 'string') {
+                    console.error('Login error:', loginResult);
+                    setError([loginResult]);
+                } else {
+                    console.log(loginResult);
+                    Cookies.set('token', loginResult.token, {expires: 14});
+                    return window.location.href = '/';
+                }
             } else {
-                console.log(loginResult);
-                Cookies.set('token', loginResult.token, { expires: 14 });
-                return window.location.href = '/';
+                return window.location.href = "/backoffice/users";
             }
         }
     }
@@ -73,13 +79,13 @@ export default function RegisterForm({
     return (
         <>
             <form name={"registerForm"} className="authentication__form">
-                {error &&
-                    <Notification
-                        contents={error}
-                        setContent={setError}
-                        type={"alert"}
-                    />
-                }
+
+                <Notification
+                    title={"Erreur lors de l'inscription :"}
+                    contents={error}
+                    setContent={setError}
+                    type={"alert"}
+                />
                 <div className="authentication__form__ligne">
                     <Input
                         label={"Prénom"}
@@ -139,8 +145,10 @@ export default function RegisterForm({
                     color
                     cfPasswordValue={password}
                 />
-                <Button label={"S'inscrire"} onclick={(e:React.FormEvent) => handleRegister(e)}/>
-                <Link link={"/connexion"} label={"J’ai déjà un compte"}/>
+                <Button label={backoffice?"Créer l'utilisateur":"S'inscrire"} onclick={(e: React.FormEvent) => handleRegister(e)}/>
+                {!backoffice &&
+                    <Link link={"/connexion"} label={"J’ai déjà un compte"}/>
+                }
             </form>
         </>
     )

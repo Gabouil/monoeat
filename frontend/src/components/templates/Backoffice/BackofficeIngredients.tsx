@@ -19,7 +19,7 @@ export default function BackofficeIngredients() {
 
     const [ingredients, setIngredients] = useState<Ingredients[]>([]);
 
-    const [error, setError] = useState();
+    const [error, setError] = useState<string[]>([]);
     useEffect(() => {
         (async () => {
             const data = await getIngredients();
@@ -53,14 +53,14 @@ export default function BackofficeIngredients() {
                             label={"Créer un ingrédient"}
                             link={"/backoffice/Ingredients/add"}
                         />
-                        {error &&
-                            <Notification
-                                title={"L'ingrédient est utilisé dans les recettes suivantes :"}
-                                contents={error}
-                                setContent={setError}
-                                type={"alert"}
-                            />
-                        }
+
+                        <Notification
+                            title={"L'ingrédient est utilisé dans les recettes suivantes :"}
+                            contents={error}
+                            setContent={setError}
+                            type={"alert"}
+                        />
+
                         <table>
                             <thead>
                             <tr className={"table__color--1"}>

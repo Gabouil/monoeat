@@ -9,28 +9,28 @@ import Notification from "../../../atomes/Notification/Notification.tsx";
 
 type defaultProps = {
     email: string,
-    setEmail:  React.Dispatch<React.SetStateAction<string>>
+    setEmail: React.Dispatch<React.SetStateAction<string>>
     password: string,
-    setPassword:  React.Dispatch<React.SetStateAction<string>>
+    setPassword: React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function LoginForm({
-                                         email,
-                                         setEmail,
-                                         password,
-                                         setPassword,
-                                     }: defaultProps) {
+                                      email,
+                                      setEmail,
+                                      password,
+                                      setPassword,
+                                  }: defaultProps) {
     const login = useLogin();
-    const [error, setError] = useState("");
+    const [error, setError] = useState<string[]>([]);
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const result = await login(email, password);
         if (result.status === 401 || result.status === 400) {
             console.error('Login error:', result.data.error);
-            setError(result.data.error);
+            setError([result.data.error]);
         } else {
-            Cookies.set('token', result.token, { expires: 14 });
+            Cookies.set('token', result.token, {expires: 14});
             return window.location.href = '/';
         }
     }
@@ -38,13 +38,13 @@ export default function LoginForm({
     return (
         <>
             <form name={"loginForm"} className="authentication__form">
-                {error &&
-                    <Notification
-                        contents={error}
-                        setContent={setError}
-                        type={"alert"}
-                    />
-                }
+
+                <Notification
+                    title={"Erreur lors de la connexion :"}
+                    contents={error}
+                    setContent={setError}
+                    type={"alert"}
+                />
                 <div className="authentication__form__ligne">
                 </div>
                 <Input
@@ -64,7 +64,7 @@ export default function LoginForm({
                     setValue={setPassword}
                 />
                 <Button label={"Se connecter"} onclick={(e: React.FormEvent) => handleLogin(e)}/>
-                <Link link={"/inscription"} label={"Je n’ai pas de compte"}/>            </form>
+                <Link link={"/inscription"} label={"Je n’ai pas de compte"}/></form>
         </>
     )
 }

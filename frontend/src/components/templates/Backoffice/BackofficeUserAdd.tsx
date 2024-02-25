@@ -1,12 +1,9 @@
 import "./Backoffice.scss"
 import BackofficeSection from "../../organismes/Backoffice/BackofficeSection.tsx";
-import React, {useState} from "react";
-import Input from "../../atomes/inputs/Input/Input.tsx";
-import Button from "../../atomes/buttons/Button/Button.tsx";
-import useRegister from "../../../services/hooks/useRegister.tsx";
+import {useState} from "react";
+import RegisterForm from "../../molecules/form/Authentication/RegisterForm.tsx";
 
 export default function BackofficeUserAdd() {
-    const createUser = useRegister();
 
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
@@ -16,89 +13,26 @@ export default function BackofficeUserAdd() {
     const [confirmPassword, setConfirmPassword] = useState("");
 
 
-
-
-    const handleCreateUser = async (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log("update user");
-        const result = await createUser({
-            firstname: firstname,
-            lastname: lastname,
-            email: email,
-            phone: phone,
-            password: password,
-            confirmpassword: confirmPassword
-        });
-        if (result.status === 401 || result.status === 400) {
-            console.error('Create user error:', result.data.error);
-        } else {
-            console.log('User updated:', result);
-            return window.location.href = "/backoffice/users";
-        }
-    }
-
     return (
         <>
             <main className={"backoffice"}>
                 <BackofficeSection
                     content={
-                        <form>
-                            <Input
-                                label={"Prénom"}
-                                type={"text"}
-                                value={firstname}
-                                placeholder={"Prénom"}
-                                name={"firstname"}
-                                setValue={setFirstname}
-                                color
-                            />
-                            <Input
-                                label={"Nom"}
-                                type={"text"}
-                                value={lastname}
-                                placeholder={"Nom"}
-                                name={"lastname"}
-                                setValue={setLastname}
-                                color
-                            />
-                            <Input
-                                label={"Email"}
-                                type={"email"}
-                                value={email}
-                                placeholder={"Email"}
-                                name={"email"}
-                                setValue={setEmail}
-                                color
-                            />
-                            <Input
-                                label={"Téléphone"}
-                                type={"tel"}
-                                value={phone}
-                                placeholder={"Téléphone"}
-                                name={"phone"}
-                                setValue={setPhone}
-                                color
-                            />
-                            <Input
-                                label={"Mot de passe"}
-                                type={"password"}
-                                value={password}
-                                placeholder={"Mot de passe"}
-                                name={"password"}
-                                setValue={setPassword}
-                                color
-                            />
-                            <Input
-                                label={"Confirmer le mot de passe"}
-                                type={"password"}
-                                value={confirmPassword}
-                                placeholder={"Confirmer le mot de passe"}
-                                name={"confirmPassword"}
-                                setValue={setConfirmPassword}
-                                color
-                            />
-                            <Button label={"Créer le nouvelle utilisateur"} onclick={( e: React.FormEvent) => handleCreateUser(e)}/>
-                        </form>
+                        <RegisterForm
+                            firstname={firstname}
+                            setFirstname={setFirstname}
+                            lastname={lastname}
+                            setLastname={setLastname}
+                            email={email}
+                            setEmail={setEmail}
+                            phone={phone}
+                            setPhone={setPhone}
+                            password={password}
+                            setPassword={setPassword}
+                            confirmPassword={confirmPassword}
+                            setConfirmPassword={setConfirmPassword}
+                            backoffice
+                        />
                     }
                     link={"/backoffice/users"}
                     title={"Ajouter un utilisateur"}

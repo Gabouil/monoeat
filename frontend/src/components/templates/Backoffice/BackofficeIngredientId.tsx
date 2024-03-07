@@ -9,6 +9,7 @@ import useGetIngredientById from "../../../services/hooks/useGetIngredientById.t
 import useDeleteIngredientById from "../../../services/hooks/useDeleteIngredientById.tsx";
 import useUpdateIngredientById from "../../../services/hooks/useUpdateIngredientById.tsx";
 import SwitchButton from "../../atomes/buttons/SwitchButton/SwitchButton.tsx";
+import Notification from "../../atomes/Notification/Notification.tsx";
 
 type defaultIngredientProps = {
     id: string,
@@ -16,10 +17,13 @@ type defaultIngredientProps = {
     category: string,
     unit: string,
     allergens: boolean,
-    optional: boolean
+    optional: boolean,
+    optionalUnit?: string,
+    optionalQuantity?: number,
+    optionalPrice?: number,
 }
 export default function BackofficeIngredientId() {
-    const getIngredient= useGetIngredientById();
+    const getIngredient = useGetIngredientById();
     const deleteIngredient = useDeleteIngredientById();
     const updateIngredient = useUpdateIngredientById();
     const id = useParams().id || ""
@@ -40,7 +44,7 @@ export default function BackofficeIngredientId() {
     ])
     const [categorySelected, setCategorySelected] = useState(0)
 
-    const [unit, setUnit] = useState("unite")
+    const [unit, setUnit] = useState("")
     const [unitData] = useState([
         {value: "mg", option: "mg"},
         {value: "cg", option: "cg"},
@@ -55,19 +59,31 @@ export default function BackofficeIngredientId() {
         {value: "tasse", option: "tasse"},
         {value: "bol", option: "bol"},
         {value: "pincée", option: "pincée"},
-        {value: "unite", option: "unité"},
+        {value: "unité", option: "unité"},
     ])
     const [unitSelected, setUnitSelected] = useState(13)
 
-    const changeValue = (value: string, id: number, type?:string) => {
+    const [optionalUnit, setOptionalUnit] = useState("unité")
+    const [optionalUnitSelected, setOptionalUnitSelected] = useState(13)
+    const [optionalQuantity, setOptionalQuantity] = useState(0)
+    const [optionalPrice, setOptionalPrice] = useState(0)
+
+    const changeValue = (value: string, id: number, type?: string) => {
         if (type === "category") {
+            console.log("category", value, id);
             setCategory(value);
             setCategorySelected(id);
         } else if (type === "unit") {
+            console.log("category", value, id);
             setUnit(value);
             setUnitSelected(id);
+        } else if (type === "optionalUnit") {
+            setOptionalUnit(value);
+            setOptionalUnitSelected(id);
         }
     }
+
+    const [error, setError] = useState<string[]>([]);
 
     useEffect(() => {
         (async () => {
@@ -86,25 +102,25 @@ export default function BackofficeIngredientId() {
             setOptional(ingredient.optional);
             setCategory(ingredient.category)
             switch (ingredient.category) {
-                case "vegetables":
+                case "légumes":
                     setCategorySelected(0);
                     break;
-                case "meat":
+                case "viandes":
                     setCategorySelected(1);
                     break;
-                case "fish":
+                case "poissons":
                     setCategorySelected(2);
                     break;
-                case "dairy":
+                case "produits laitiers":
                     setCategorySelected(3);
                     break;
                 case "fruits":
                     setCategorySelected(4);
                     break;
-                case "spices":
+                case "épices":
                     setCategorySelected(5);
                     break;
-                case "other":
+                case "autres":
                     setCategorySelected(6);
                     break;
                 default:
@@ -152,13 +168,66 @@ export default function BackofficeIngredientId() {
                 case "pincée":
                     setUnitSelected(12);
                     break;
-                case "unite":
+                case "unité":
                     setUnitSelected(13);
                     break;
                 default:
                     setUnitSelected(13);
                     break;
             }
+            if (ingredient.optional) {
+                setOptionalQuantity(ingredient.optionalQuantity || 0);
+                setOptionalPrice(ingredient.optionalPrice || 0);
+                switch (ingredient.optionalUnit || "unité") {
+                    case "mg":
+                        setOptionalUnitSelected(0);
+                        break;
+                    case "cg":
+                        setOptionalUnitSelected(1);
+                        break;
+                    case "g":
+                        setOptionalUnitSelected(2);
+                        break;
+                    case "kg":
+                        setOptionalUnitSelected(3);
+                        break;
+                    case "ml":
+                        setOptionalUnitSelected(4);
+                        break;
+                    case "cl":
+                        setOptionalUnitSelected(5);
+                        break;
+                    case "l":
+                        setOptionalUnitSelected(6);
+                        break;
+                    case "cuillère à café":
+                        setOptionalUnitSelected(7);
+                        break;
+                    case "cuillère à soupe":
+                        setOptionalUnitSelected(8);
+                        break;
+                    case "verre":
+                        setOptionalUnitSelected(9);
+                        break;
+                    case "tasse":
+                        setOptionalUnitSelected(10);
+                        break;
+                    case "bol":
+                        setOptionalUnitSelected(11);
+                        break;
+                    case "pincée":
+                        setOptionalUnitSelected(12);
+                        break;
+                    case "unité":
+                        setOptionalUnitSelected(13);
+                        break;
+                    default:
+                        setOptionalUnitSelected(13);
+                        break;
+                }
+                setOptionalUnit(ingredient.optionalUnit || "unité");
+            }
+
         }
     }, [ingredient]);
 
@@ -167,7 +236,8 @@ export default function BackofficeIngredientId() {
         console.log("delete ingredient");
         const result = await deleteIngredient(id);
         if (result.status === 401 || result.status === 400) {
-            console.error('Delete Ingredient error:', result.data.error);
+            console.error('Delete user error:', result.data);
+            setError(result.data);
         } else {
             console.log('Ingredient deleted:', result);
             return window.location.href = "/backoffice/ingredients";
@@ -176,14 +246,16 @@ export default function BackofficeIngredientId() {
 
     const handleUpdateIngredient = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("update Ingredient");
         const result = await updateIngredient({
             id: id,
             name: name,
             category: category,
             unit: unit,
             allergens: allergens,
-            optional: optional
+            optional: optional,
+            optionalUnit: optionalUnit,
+            optionalQuantity: optionalQuantity,
+            optionalPrice: optionalPrice
         });
         if (result.status === 401 || result.status === 400) {
             console.error('Update Ingredient error:', result.data.error);
@@ -198,51 +270,90 @@ export default function BackofficeIngredientId() {
             <main className={"backoffice"}>
                 <BackofficeSection
                     content={
-                        <form>
-                            <Input
-                                label={"Nom"}
-                                type={"text"}
-                                value={name}
-                                placeholder={"Nom"}
-                                name={"name"}
-                                setValue={setName}
-                                color
+                        <>
+                            <Notification
+                                title={"L'ingrédient est utilisé dans les recettes suivantes :"}
+                                contents={error}
+                                setContent={setError}
+                                type={"alert"}
                             />
-                            <SelectInput
-                                optionSelected={categorySelected}
-                                setOptionSelected={setCategorySelected}
-                                contents={categoryData}
-                                setValue={changeValue}
-                                label={"Catégorie"}
-                            />
-                            <SelectInput
-                                optionSelected={unitSelected}
-                                setOptionSelected={setUnitSelected}
-                                contents={unitData}
-                                setValue={changeValue}
-                                label={"Unité"}
-                                typeSetValue={"unit"}
-                            />
-                            <div className={"group__column"}>
-                                <p>allergens</p>
-                                <SwitchButton
-                                    name={"allergens"}
-                                    value={allergens}
-                                    setValue={setAllergens}
+                            <form>
+                                <Input
+                                    label={"Nom"}
+                                    type={"text"}
+                                    value={name}
+                                    placeholder={"Nom"}
+                                    name={"name"}
+                                    setValue={setName}
+                                    color
                                 />
-                            </div>
-                            <div className={"group__column"}>
-                                <p>facutlatif</p>
-                                <SwitchButton
-                                    name={"optional"}
-                                    value={optional}
-                                    setValue={setOptional}
+                                <SelectInput
+                                    optionSelected={categorySelected}
+                                    setOptionSelected={setCategorySelected}
+                                    contents={categoryData}
+                                    setValue={changeValue}
+                                    label={"Catégorie"}
+                                    typeSetValue={"category"}
                                 />
-                            </div>
-                            <Button label={"Supprimer"} color={"danger"}
-                                    onclick={(e: React.FormEvent) => handleDeleteteIngredient(e)}/>
-                            <Button label={"Modifier"} onclick={(e: React.FormEvent) => handleUpdateIngredient(e)}/>
-                        </form>
+                                <SelectInput
+                                    optionSelected={unitSelected}
+                                    setOptionSelected={setUnitSelected}
+                                    contents={unitData}
+                                    setValue={changeValue}
+                                    label={"Unité"}
+                                    typeSetValue={"unit"}
+                                />
+                                <div className={"group__column"}>
+                                    <p>allergens</p>
+                                    <SwitchButton
+                                        name={"allergens"}
+                                        value={allergens}
+                                        setValue={setAllergens}
+                                    />
+                                </div>
+                                <div className={"group__column"}>
+                                    <p>facutlatif</p>
+                                    <SwitchButton
+                                        name={"optional"}
+                                        value={optional}
+                                        setValue={setOptional}
+                                    />
+                                </div>
+                                {optional &&
+                                    <>
+                                        <Input
+                                            label={"Quantité optionnelle"}
+                                            type={"number"}
+                                            value={optionalQuantity}
+                                            placeholder={"Quantité optionnelle"}
+                                            name={"optionalQuantity"}
+                                            setValue={setOptionalQuantity}
+                                            color
+                                        />
+                                        <SelectInput
+                                            optionSelected={optionalUnitSelected}
+                                            setOptionSelected={setOptionalUnitSelected}
+                                            contents={unitData}
+                                            setValue={changeValue}
+                                            label={"Unité"}
+                                            typeSetValue={"optionalUnit"}
+                                        />
+                                        <Input
+                                            label={"Prix optionnel"}
+                                            type={"number"}
+                                            value={optionalPrice}
+                                            placeholder={"Prix optionnel"}
+                                            name={"optionalPrice"}
+                                            setValue={setOptionalPrice}
+                                            color
+                                        />
+                                    </>
+                                }
+                                <Button label={"Supprimer"} color={"danger"}
+                                        onclick={(e: React.FormEvent) => handleDeleteteIngredient(e)}/>
+                                <Button label={"Modifier"} onclick={(e: React.FormEvent) => handleUpdateIngredient(e)}/>
+                            </form>
+                        </>
                     }
                     link={"/backoffice/ingredients"}
                     title={ingredient ? ingredient.name : " "}

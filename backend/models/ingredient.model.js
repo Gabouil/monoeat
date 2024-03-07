@@ -13,7 +13,7 @@ const ingredientSchema = new mongoose.Schema({
     },
     unit: {
         type: String,
-        enum: [ "mg", 'cg',"g", "kg", "ml", "cl", "l", "cuillère à café", "cuillère à soupe", "verre", "tasse", "bol", "pincée", "unite"],
+        enum: [ "mg", 'cg',"g", "kg", "ml", "cl", "l", "cuillère à café", "cuillère à soupe", "verre", "tasse", "bol", "pincée", "unité"],
         default: '',
         required: true,
     },
@@ -33,6 +33,16 @@ const ingredientSchema = new mongoose.Schema({
         default: false,
         required: true,
     },
+    optionalUnit: {
+        type: String,
+        enum: [ "mg", 'cg',"g", "kg", "ml", "cl", "l", "cuillère à café", "cuillère à soupe", "verre", "tasse", "bol", "pincée", "unité"],
+    },
+    optionalQuantity: {
+        type: Number,
+    },
+    optionalPrice: {
+        type: Number,
+    }
 }, {timestamps: true});
 
 module.exports = mongoose.model('Ingredient', ingredientSchema);

@@ -7,6 +7,9 @@ interface FormData {
     unit: string;
     allergens: boolean;
     optional: boolean;
+    optionalUnit?: string;
+    optionalQuantity?: number;
+    optionalPrice?: number;
 }
 export default function useUpdateIngredientById() {
     return async (formData: FormData) => {
@@ -22,7 +25,10 @@ export default function useUpdateIngredientById() {
                     category: formData.category,
                     unit: formData.unit,
                     allergens: formData.allergens,
-                    optional: formData.optional
+                    optional: formData.optional,
+                    optionalUnit: formData.optional ? formData.optionalUnit : undefined,
+                    optionalQuantity: formData.optional ? formData.optionalQuantity : undefined,
+                    optionalPrice: formData.optional ? formData.optionalPrice : undefined,
                 }
             });
             return res.data;

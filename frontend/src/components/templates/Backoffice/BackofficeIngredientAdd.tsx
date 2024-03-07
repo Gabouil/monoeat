@@ -26,7 +26,7 @@ export default function BackofficeIngredientAdd() {
     ])
     const [categorySelected, setCategorySelected] = useState(6)
 
-    const [unit, setUnit] = useState("unite")
+    const [unit, setUnit] = useState("unité")
     const [unitData] = useState([
         {value: "mg", option: "mg"},
         {value: "cg", option: "cg"},
@@ -41,9 +41,15 @@ export default function BackofficeIngredientAdd() {
         {value: "tasse", option: "tasse"},
         {value: "bol", option: "bol"},
         {value: "pincée", option: "pincée"},
-        {value: "unite", option: "unité"},
+        {value: "unité", option: "unité"},
     ])
     const [unitSelected, setUnitSelected] = useState(13)
+
+
+    const [optionalUnit, setOptionalUnit] = useState("unité")
+    const [optionalUnitSelected, setOptionalUnitSelected] = useState(13)
+    const [optionalQuantity, setOptionalQuantity] = useState(0)
+    const [optionalPrice, setOptionalPrice] = useState(0)
 
     const changeValue = (value: string, id: number, type?:string) => {
         if (type === "category") {
@@ -52,6 +58,9 @@ export default function BackofficeIngredientAdd() {
         } else if (type === "unit") {
             setUnit(value);
             setUnitSelected(id);
+        } else if (type === "optionalUnit") {
+            setOptionalUnit(value);
+            setOptionalUnitSelected(id);
         }
     }
 
@@ -63,7 +72,10 @@ export default function BackofficeIngredientAdd() {
             category: category,
             unit: unit,
             allergens: allergens,
-            optional: optional
+            optional: optional,
+            optionalUnit: optionalUnit,
+            optionalQuantity: optionalQuantity,
+            optionalPrice: optionalPrice
         });
         if (result.status === 401 || result.status === 400) {
             console.error('Update Ingredient error:', result.data.error);
@@ -120,6 +132,36 @@ export default function BackofficeIngredientAdd() {
                                     setValue={setOptional}
                                 />
                             </div>
+                            {optional &&
+                                <>
+                                    <Input
+                                        label={"Quantité optionnelle"}
+                                        type={"number"}
+                                        value={optionalQuantity}
+                                        placeholder={"Quantité optionnelle"}
+                                        name={"optionalQuantity"}
+                                        setValue={setOptionalQuantity}
+                                        color
+                                    />
+                                    <SelectInput
+                                        optionSelected={optionalUnitSelected}
+                                        setOptionSelected={setOptionalUnitSelected}
+                                        contents={unitData}
+                                        setValue={changeValue}
+                                        label={"Unité"}
+                                        typeSetValue={"optionalUnit"}
+                                    />
+                                    <Input
+                                        label={"Prix optionnel"}
+                                        type={"number"}
+                                        value={optionalPrice}
+                                        placeholder={"Prix optionnel"}
+                                        name={"optionalPrice"}
+                                        setValue={setOptionalPrice}
+                                        color
+                                    />
+                                </>
+                            }
                             <Button label={"Créer le nouvel ingrédient"}
                                     onclick={(e: React.FormEvent) => handleCreateIngredient(e)}/>
                         </form>

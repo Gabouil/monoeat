@@ -6,12 +6,16 @@ interface FormData {
     unit: string;
     allergens: boolean;
     optional: boolean;
+    optionalUnit?: string;
+    optionalQuantity?: number;
+    optionalPrice?: number;
 }
 
 export default function useCreateIngredient() {
     return async (formData: FormData) => {
         try {
             console.log(formData)
+
             const res = await AxiosInstance({
                 url: '/ingredients',
                 method: 'post',
@@ -23,7 +27,10 @@ export default function useCreateIngredient() {
                     category: formData.category,
                     unit: formData.unit,
                     allergens: formData.allergens,
-                    optional: formData.optional
+                    optional: formData.optional,
+                    optionalUnit: formData.optional ? formData.optionalUnit : undefined,
+                    optionalQuantity: formData.optional ? formData.optionalQuantity : undefined,
+                    optionalPrice: formData.optional ? formData.optionalPrice : undefined,
                 }
             })
             return res.data

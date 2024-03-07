@@ -58,13 +58,11 @@ const getAll = catchAsync(async (req, res) => {
         let RecetteNew = recipe.toObject();
         RecetteNew.ingredients = await Promise.all(recipe.ingredients.map(async ingredient => {
             const ingredientsDetails = await Ingredient.findById(ingredient.ingredient);
-            return ingredientsDetails;
+            return {ingredients:ingredientsDetails, quantity: ingredient.quantity};
         }));
         RecetteNew.image = "http://localhost:3000/images/" + RecetteNew.image;
-        console.log("RecetteIngrediant = ", RecetteNew.ingredients);
         return RecetteNew;
     }));
-
     res.send(recipesDetails);
 });
 
@@ -83,7 +81,6 @@ const getByID = catchAsync(async (req, res) => {
 });
 
 const updateByID = catchAsync(async (req, res) => {
-    console.clear()
     if (req.files) {
         const localPath = path.join(__dirname, '../public/uploads/images/recipes/', req.files.image.name);
         await req.files.image.mv(localPath);
@@ -95,21 +92,16 @@ const updateByID = catchAsync(async (req, res) => {
     req.body.nutritionalValues = req.body.nutritionalValues ? JSON.parse(req.body.nutritionalValues) : {};
     req.body.ingredients = req.body.ingredients ? JSON.parse(req.body.ingredients) : [];
     let ingredientUpdated
-    console.log("req.body.ingredients = ", req.body.ingredients.length);
     if (req.body.ingredients.length === 0) {
         const ingrediantExiste = await Ingredient.find({ recipe: req.params.id })
-        console.log("ingrediantExiste = ", ingrediantExiste.length);
         ingredientUpdated = await ingrediantExiste.map(async recipe => {
             recipe.recipe.splice(req.params.id, 1);
             await recipe.save();
             return "Delete : " + recipe.name;
         });
-
-        console.log("ingredientUpdated = ", ingredientUpdated);
     } else {
         ingredientUpdated = await Promise.all(req.body.ingredients.map(async (ingredient) => {
             const ingrediantExiste = await Ingredient.findById(ingredient.ingredient);
-            console.log("ingrediantExiste = ", ingrediantExiste);
             if (!ingrediantExiste.recipe.includes(req.params.id)) {
                 ingrediantExiste.recipe.push(req.params.id);
                 await ingrediantExiste.save();
@@ -125,8 +117,6 @@ const updateByID = catchAsync(async (req, res) => {
         }));
     }
 
-
-    console.log("ingredientUpdated = ", ingredientUpdated);
     const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body);
     if (recipe) {
         res.send(recipe);
@@ -136,7 +126,16 @@ const updateByID = catchAsync(async (req, res) => {
 });
 
 const deleteByID = catchAsync(async (req, res) => {
-    const recipe = await Recipe.findByIdAndDelete(req.params.id);
+    let recipe = await Recipe.findById(req.params.id);
+
+    for (let key in recipe.ingredients) {
+        const ingredient = await Ingredient.findById(recipe.ingredients[key].ingredient);
+        const index = ingredient.recipe.indexOf(req.params.id);
+        ingredient.recipe.splice(index, 1);
+        Ingredient.findByIdAndUpdate(recipe.ingredients[key].ingredient, ingredient);
+    }
+
+    recipe = await Recipe.deleteOne({ _id: req.params.id });
     if (recipe) {
         console.log("recipe delete = ", recipe);
         res.send(recipe);

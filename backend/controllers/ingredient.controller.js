@@ -34,16 +34,20 @@ const updateByID = catchAsync(async (req, res) => {
 });
 
 const deleteByID = catchAsync(async (req, res) => {
-    const RecipesWithIngredient = await Recipe.find({"ingredients.ingredient": req.params.id}.name);
+    console.log("req.params.id = ", req.params.id);
+    let ingredient = await Ingredient.findById(req.params.id);
+    let recipes = [];
+    for (let key in ingredient.recipe) {
+        const recipe = await Recipe.findById(ingredient.recipe[key]);
+        recipes.push(recipe.name);
+    }
+    console.log("recipes = ", recipes);
 
-    if (RecipesWithIngredient.length > 0) {
-        for(let key in RecipesWithIngredient) {
-            RecipesWithIngredient[key] = RecipesWithIngredient[key].name;
-        }
-        res.status(400).send(RecipesWithIngredient);
+    if (recipes.length > 0) {
+        res.status(400).send(recipes);
         return;
     }
-    const ingredient = await Ingredient.findByIdAndDelete(req.params.id);
+    ingredient = await Ingredient.deleteOne({ _id: req.params.id });
     if (ingredient) {
         console.log("user delete = ", ingredient);
         res.send(ingredient);

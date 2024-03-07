@@ -127,7 +127,9 @@ export default function Input({
                             value={value}
                             onChange={changeValue}
                             placeholder={placeholder}
-                            pattern={specialCharOFF ? "^[a-zA-Z\\-']*$" : ".*"}
+                            min={type === 'number' ? 0 : undefined}
+                            pattern={specialCharOFF ? "^[a-zA-Z\\-']*$" : undefined}
+                            step={type === 'number' ? "any" : undefined}
                         />
                     </div>
                 </div>

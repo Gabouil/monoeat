@@ -24,7 +24,7 @@ export default function SelectImage({setImage, imageDefault}: SelectImageProps) 
         <div className="select_image">
             <div className="select_image__preview">
                 {imagePreview ? <img src={imagePreview} alt="image preview"/>
-                    : <p>Image preview</p>}
+                    : <p>Sélectionner une image</p>}
             </div>
             <div className="select_image__input">
                 <input

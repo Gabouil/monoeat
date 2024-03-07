@@ -248,7 +248,7 @@ export default function BackofficeIngredientsForm({formType = "create"}: { formT
         console.log("delete ingredient");
         const result = await deleteIngredient(id);
         if (result.status === 401 || result.status === 400) {
-            console.error('Delete user error:', result.data);
+            console.error('Delete ingredient error:', result.data);
             setError(result.data);
         } else {
             console.log('Ingredient deleted:', result);
@@ -383,9 +383,9 @@ export default function BackofficeIngredientsForm({formType = "create"}: { formT
                         }
                         {formType === "update" ?
                             <>
-                                <Button label={"Supprimer"} color={"danger"}
+                                <Button label={"Supprimer l'ingrédient"} color={"danger"}
                                         onclick={(e: React.FormEvent) => handleDeleteteIngredient(e)}/>
-                                <Button label={"Modifier"} onclick={(e: React.FormEvent) => handleUpdateIngredient(e)}/>
+                                <Button label={"Modifier l'ingrédient"} onclick={(e: React.FormEvent) => handleUpdateIngredient(e)}/>
                             </>
                             :
                             <Button label={"Créer le nouvel ingrédient"}

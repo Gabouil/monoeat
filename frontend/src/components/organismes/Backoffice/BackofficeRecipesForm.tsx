@@ -282,6 +282,7 @@ export default function BackofficeRecipesForm({formType = "create"}: { formType:
                         />
                         <AddIngredient
                             setValues={setIngredients}
+                            ingredientsDefault={recipe ? recipe.ingredients : []}
                         />
                         <AddStringList
                             title={"Liste des étapes de la recette"}
@@ -396,7 +397,7 @@ export default function BackofficeRecipesForm({formType = "create"}: { formType:
                             </>
                             :
 
-                            <Button label={"Créer le nouvel ingrédient"}
+                            <Button label={"Créer une nouvel recette"}
                                     onclick={(e: React.FormEvent) => handleCreateRecipe(e)}/>
                         }
                     </form>

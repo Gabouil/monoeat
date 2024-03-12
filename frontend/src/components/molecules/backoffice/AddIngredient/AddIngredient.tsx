@@ -81,8 +81,7 @@ export default function AddIngredient({setValues, ingredientsDefault}: props) {
                 })();
             }
         }, [ingredientsDefault]
-    )
-    ;
+    );
 
     useEffect(() => {
         let limitItemsNew = limitItems;

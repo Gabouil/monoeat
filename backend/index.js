@@ -6,6 +6,7 @@ const ingredientRoutes = require('./routes/ingredient.routes');
 const recipeRoutes = require('./routes/recipe.routes');
 const userRoutes = require('./routes/user.routes');
 const orderRoutes = require('./routes/order.routes');
+const menuRoutes = require('./routes/menu.routes');
 
 const app = express();
 const cors = require('cors');
@@ -30,6 +31,7 @@ app.use('/ingredients', ingredientRoutes);
 app.use('/recipes', recipeRoutes);
 app.use('/users', userRoutes);
 app.use('/orders', orderRoutes);
+app.use('/menus', menuRoutes);
 
 app.use((req, res, next) => {
     res.status(404).send('Not Found');

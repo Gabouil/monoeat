@@ -58,10 +58,6 @@ export default function BackofficeRecipes() {
         })();
     }, []);
 
-    useEffect(() => {
-        console.log(recipes);
-    }, [recipes]);
-
     const handleDeleteRecipe = async (e: React.FormEvent, id:string) => {
         e.preventDefault();
         console.log("delete recipe");
@@ -90,7 +86,7 @@ export default function BackofficeRecipes() {
                                 <thead>
                                 <tr className={"table__color--1"}>
                                     <th scope="col">Id</th>
-                                    <th scope="col">Nam</th>
+                                    <th scope="col">Name</th>
                                     <th scope="col" className={"table--noMobile450"}>category</th>
                                     <th scope="col">Action</th>
                                     <th scope="col"  className={"table--noMobile768"}></th>

@@ -16,6 +16,8 @@ import BackofficeIngredientId from "./components/templates/Backoffice/Backoffice
 import BackofficeIngredientAdd from "./components/templates/Backoffice/BackofficeIngredientAdd.tsx";
 import BackofficeRecipeAdd from "./components/templates/Backoffice/BackofficeRecipeAdd.tsx";
 import BackofficeRecipeId from "./components/templates/Backoffice/BackofficeRecipeId.tsx";
+import BackofficeMenus from "./components/templates/Backoffice/BackofficeMenus.tsx";
+import BackofficeMenuEdit from "./components/templates/Backoffice/BackofficeMenuEdit.tsx";
 
 function App() {
 
@@ -84,6 +86,12 @@ function App() {
                 }/>
                 <Route path="/backoffice/orders" element={
                     <BackofficeOrders/>
+                }/>
+                <Route path="/backoffice/menus" element={
+                    <BackofficeMenus/>
+                }/>
+                <Route path="/backoffice/menus/:date" element={
+                    <BackofficeMenuEdit/>
                 }/>
 
                 {/* 404 */}

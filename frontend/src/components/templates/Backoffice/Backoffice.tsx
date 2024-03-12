@@ -15,6 +15,7 @@ export default function Backoffice() {
                             <Button label={"Gestion des commandes"} link={"/backoffice/orders"} type={"NavLink"}/>
                             <Button label={"Gestion des recettes"} link={"/backoffice/recipes"} type={"NavLink"}/>
                             <Button label={"Gestion des ingrédients"} link={"/backoffice/ingredients"} type={"NavLink"}/>
+                            <Button label={"Gestion des menus"} link={"/backoffice/menus"} type={"NavLink"}/>
                         </>
                     }
                     link={"/"}

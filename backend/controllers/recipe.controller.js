@@ -13,7 +13,6 @@ const create = catchAsync(async (req, res) => {
     req.body.nutritionalValues = req.body.nutritionalValues ? JSON.parse(req.body.nutritionalValues) : {};
     req.body.ingredients = req.body.ingredients ? JSON.parse(req.body.ingredients) : [];
 
-
     const recipe = await Recipe.create(req.body);
 
     console.log(recipe._id);

@@ -135,7 +135,6 @@ export default function AddIngredient({setValues, ingredientsDefault}: props) {
         } else {
             setFilteredIngredients(pageFiltered);
         }
-
     }, [search, ingredients, category, limitItems, currentPage, ingredientSelectedOnly]);
 
     const changeQuantity = (value: number, id: string) => {

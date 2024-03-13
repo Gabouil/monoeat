@@ -5,6 +5,23 @@
   min-height: 100vh;
   padding: 1.25rem;
 
+  &__header {
+    &__filter {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+      align-items: end;
+    }
+  }
+  &__footer {
+    &__navigation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.25rem;
+    }
+  }
+
   form {
     display: flex;
     flex-direction: column;

@@ -2,12 +2,14 @@ import "./Backoffice.scss"
 import BackofficeSection from "../../organismes/Backoffice/BackofficeSection.tsx";
 import {useParams} from "react-router-dom";
 import useGetAllRecipe from "../../../services/hooks/useGetAllRecipe.tsx";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import SwitchButton from "../../atomes/buttons/SwitchButton/SwitchButton.tsx";
 import useGetMenuByDate from "../../../services/hooks/useGetMenuByDate.tsx";
 import useCreateMenu from "../../../services/hooks/useCreateMenu.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
 import useUpdateMenuByDate from "../../../services/hooks/useUpdateMenuByDate.tsx";
+import Input from "../../atomes/inputs/Input/Input.tsx";
+import SelectInput from "../../atomes/inputs/Input/SelectInput.tsx";
 
 type Recipe = {
     _id: string;
@@ -56,7 +58,7 @@ export default function BackofficeMenuEdit() {
     const createMenu = useCreateMenu();
     const updateMenu = useUpdateMenuByDate()
 
-    const { date: dateParam } = useParams<{ date?: string }>();
+    const {date: dateParam} = useParams<{ date?: string }>();
     const date = dateParam || "2000-01-01";
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [filteredRecipes, setFilteredRecipes] = useState<{ onLine: boolean, id: string }[]>([]);
@@ -116,12 +118,65 @@ export default function BackofficeMenuEdit() {
         })();
     }, []);
 
+    useEffect(() => {
+        let limitItemsNew = limitItems;
+        const filtered = recipes.filter(recipe =>
+            recipe.name.toLowerCase().includes(search.toLowerCase()) &&
+            (category === "Selectionner une catégorie" || recipe.category === category)
+        );
+        const pageFiltered = [];
+
+        if (recipeSelectedOnly) {
+            const filteredSelected = filtered.filter(recipe => menu.includes(recipe._id));
+            if (filteredSelected.length !== 0) {
+                if (filteredSelected.length <= limitItemsNew) {
+                    limitItemsNew = filteredSelected.length
+                }
+                if (limitItems < 1) {
+                    setLimitItems(1);
+                }
+                if (totalPages !== Math.ceil(filteredSelected.length / limitItemsNew)) {
+                    setCurrentPage(1);
+                }
+                setTotalPages(Math.ceil(filteredSelected.length / limitItemsNew));
+                for (let i = (currentPage * limitItemsNew) - limitItemsNew; i < (limitItemsNew * currentPage); i++) {
+                    if (filteredSelected[i] !== undefined) {
+                        pageFiltered.push(filteredSelected[i]);
+                    }
+                }
+            }
+        } else {
+            if (filtered.length !== 0) {
+                if (filtered.length <= limitItemsNew) {
+                    limitItemsNew = filtered.length
+                }
+                if (limitItems < 1) {
+                    setLimitItems(1);
+                }
+                if (totalPages !== Math.ceil(filtered.length / limitItemsNew)) {
+                    setCurrentPage(1);
+                }
+                setTotalPages(Math.ceil(filtered.length / limitItemsNew));
+                for (let i = (currentPage * limitItemsNew) - limitItemsNew; i < (limitItemsNew * currentPage); i++) {
+                    if (filtered[i] !== undefined) {
+                        pageFiltered.push(filtered[i]);
+                    }
+                }
+            }
+        }
+
+        if (pageFiltered[0] === undefined) {
+            setFilteredRecipes(filtered.map(recipe => ({onLine: menu.includes(recipe._id), id: recipe._id})));
+        } else {
+            setFilteredRecipes(pageFiltered.map(recipe => ({onLine: menu.includes(recipe._id), id: recipe._id})));
+        }
+    }, [search, recipes, category, limitItems, currentPage, recipeSelectedOnly]);
+
     const handleAddRecipe = (id: string) => {
         const newMenu = [...menu];
         if (newMenu.includes(id)) {
             newMenu.splice(newMenu.indexOf(id), 1);
-        }
-        else {
+        } else {
             newMenu.push(id);
         }
         setMenu(newMenu);
@@ -154,7 +209,37 @@ export default function BackofficeMenuEdit() {
             <main className={"backoffice"}>
                 <BackofficeSection content={
                     <>
-                        <Button  label={"Enregistrer"} onclick={saveMenu}/>
+                        <Button label={"Enregistrer"} onclick={saveMenu}/>
+                        <header className={"backoffice__header__filter"}>
+                            <Input
+                                type={"text"}
+                                placeholder={"Rechercher une recette"}
+                                value={search}
+                                setValue={setSearch}
+                                name={"search"}
+                                label={"Rechercher"}
+                            />
+                            <SelectInput
+                                optionSelected={categorySelected}
+                                setOptionSelected={setCategorySelected}
+                                contents={categoryData}
+                                setValue={changeValue}
+                                label={"Catégorie"}
+                            />
+                            <Input
+                                type={"number"}
+                                value={limitItems}
+                                placeholder={"Nombre de recettes par page"}
+                                setValue={setLimitItems}
+                                name={"limitItems"}
+                                label={"Nombre de recettes par page"}
+                            />
+                            <SwitchButton
+                                name={"recipeSelectedOnly"}
+                                value={recipeSelectedOnly}
+                                setValue={setRecipeSelectedOnly}
+                            />
+                        </header>
                         <table>
                             <thead>
                             <tr className={"table__color--1"}>
@@ -183,6 +268,29 @@ export default function BackofficeMenuEdit() {
                             })}
                             </tbody>
                         </table>
+                        <footer className={"backoffice__footer__navigation"}>
+                            <Button
+                                size={"small"}
+                                label={"Précédent"}
+                                onclick={(e: React.FormEvent) => {
+                                    e.preventDefault();
+                                    if (currentPage > 1) {
+                                        setCurrentPage(currentPage - 1);
+                                    }
+                                }}
+                            />
+                            <p>{currentPage}/{totalPages}</p>
+                            <Button
+                                size={"small"}
+                                label={"Suivant"}
+                                onclick={(e: React.FormEvent) => {
+                                    e.preventDefault();
+                                    if (currentPage < totalPages) {
+                                        setCurrentPage(currentPage + 1);
+                                    }
+                                }}
+                            />
+                        </footer>
                     </>
                 } link={"/backoffice/menus"} title={"Gestion du menu du " + date}/>
             </main>

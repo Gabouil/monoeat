@@ -10,6 +10,7 @@ import Button from "../../atomes/buttons/Button/Button.tsx";
 import useUpdateMenuByDate from "../../../services/hooks/useUpdateMenuByDate.tsx";
 import Input from "../../atomes/inputs/Input/Input.tsx";
 import SelectInput from "../../atomes/inputs/Input/SelectInput.tsx";
+import Notification from "../../atomes/Notification/Notification.tsx";
 
 type Recipe = {
     _id: string;
@@ -85,6 +86,8 @@ export default function BackofficeMenuEdit() {
     const [limitItems, setLimitItems] = useState(20);
     const [recipeSelectedOnly, setRecipeSelectedOnly] = useState(false);
 
+    const [notificationTitle, setNotificationTitle] = useState("");
+    const [notification, setNotification] = useState([""]);
 
     useEffect(() => {
         (async () => {
@@ -107,6 +110,12 @@ export default function BackofficeMenuEdit() {
                     const result = await createMenu({date, recipes: []});
                     if (result.status === 401 || result.status === 400) {
                         console.error('Create menu error:', result.data.error);
+                        setNotificationTitle("Erreur");
+                        setNotification([result.data.error]);
+                        setTimeout(() => {
+                            setNotificationTitle("");
+                            setNotification([""]);
+                        }, 1500);
                     } else {
                         console.log('Menu create:', result);
                     }
@@ -199,9 +208,17 @@ export default function BackofficeMenuEdit() {
         const result = await updateMenu(data);
         if (result.status === 401 || result.status === 400) {
             console.error('Update menu error:', result.data.error);
+            setNotificationTitle("Erreur");
+            setNotification([result.data.error]);
         } else {
             console.log('Menu update:', result);
+            setNotificationTitle("Information");
+            setNotification(["Le menu a bien été enregistré"]);
         }
+        setTimeout(() => {
+            setNotificationTitle("");
+            setNotification([""]);
+        }, 1500);
     }
 
     return (
@@ -209,6 +226,12 @@ export default function BackofficeMenuEdit() {
             <main className={"backoffice"}>
                 <BackofficeSection content={
                     <>
+                        <Notification
+                            title={"Information"}
+                            contents={notification}
+                            setContent={setNotification}
+                            type={"success"}
+                        />
                         <Button label={"Enregistrer"} onclick={saveMenu}/>
                         <header className={"backoffice__header__filter"}>
                             <Input

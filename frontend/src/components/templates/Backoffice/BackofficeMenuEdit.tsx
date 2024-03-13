@@ -227,7 +227,7 @@ export default function BackofficeMenuEdit() {
                 <BackofficeSection content={
                     <>
                         <Notification
-                            title={"Information"}
+                            title={notificationTitle}
                             contents={notification}
                             setContent={setNotification}
                             type={"success"}

@@ -3,7 +3,7 @@ import Banner from "../../../assets/images/banniere_monoeat.png"
 import Button from "../../atomes/buttons/Button/Button.tsx";
 import ArrowDown from "../../../assets/pictos/arrow-down.tsx";
 
-export default function HeroHeaderSection() {
+export default function HeroHeaderMenuSection() {
     const scrollTo = (id: string) => {
         const element = document.getElementById(id);
         element?.scrollIntoView({ behavior: 'smooth' });

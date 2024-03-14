@@ -18,6 +18,7 @@ import BackofficeRecipeAdd from "./components/templates/Backoffice/BackofficeRec
 import BackofficeRecipeId from "./components/templates/Backoffice/BackofficeRecipeId.tsx";
 import BackofficeMenus from "./components/templates/Backoffice/BackofficeMenus.tsx";
 import BackofficeMenuEdit from "./components/templates/Backoffice/BackofficeMenuEdit.tsx";
+import Menu from "./components/templates/Menu/Menu.tsx";
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
                     <Register/>
                 }/>
                 <Route path="/menu" element={
-                    <Home/>
+                    <Menu/>
                 }/>
                 <Route path="/a-propos" element={
                     <Home/>

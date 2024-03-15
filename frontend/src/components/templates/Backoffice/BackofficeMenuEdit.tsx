@@ -117,7 +117,7 @@ export default function BackofficeMenuEdit() {
                             setNotification([""]);
                         }, 1500);
                     } else {
-                        console.log('Menu create:', result);
+                        console.log('MenuSection create:', result);
                     }
                 }
             }
@@ -211,7 +211,7 @@ export default function BackofficeMenuEdit() {
             setNotificationTitle("Erreur");
             setNotification([result.data.error]);
         } else {
-            console.log('Menu update:', result);
+            console.log('MenuSection update:', result);
             setNotificationTitle("Information");
             setNotification(["Le menu a bien été enregistré"]);
         }

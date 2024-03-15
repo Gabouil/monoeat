@@ -53,21 +53,10 @@ const create = catchAsync(async (req, res) => {
 
 const getAll = catchAsync(async (req, res) => {
     const recipes = await Recipe.find(req.query);
-    const recipesDetails = await Promise.all(recipes.map(async recipe => {
-        let RecetteNew = recipe.toObject();
-        RecetteNew.ingredients = await Promise.all(recipe.ingredients.map(async ingredient => {
-            const ingredientsDetails = await Ingredient.findById(ingredient.ingredient);
-            return {ingredients:ingredientsDetails, quantity: ingredient.quantity};
-        }));
-        RecetteNew.image = "http://localhost:3000/images/" + RecetteNew.image;
-        return RecetteNew;
-    }));
-    res.send(recipesDetails);
+    res.send(recipes);
 });
 
 const getByID = catchAsync(async (req, res) => {
-
-
     const recipe = await Recipe.findById(req.params.id);
     recipe.image = "http://localhost:3000/images/" + recipe.image;
     console.log(recipe);

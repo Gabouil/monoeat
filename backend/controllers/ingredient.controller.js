@@ -1,3 +1,4 @@
+const { fakerFR } = require('@faker-js/faker');
 const Ingredient = require('../models/ingredient.model');
 const Recipe = require('../models/recipe.model');
 const catchAsync = require("../helpers/catchAsync");
@@ -56,10 +57,39 @@ const deleteByID = catchAsync(async (req, res) => {
     }
 });
 
+const fakeIngredient = catchAsync(async (req, res) => {
+    const ingredients = []
+    for (let i = 0; i < req.params.number; i++) {
+        const unit = [ "mg", 'cg',"g", "kg", "ml", "cl", "l", "cuillère à café", "cuillère à soupe", "verre", "tasse", "bol", "pincée", "unité"];
+        const unitChoose = Math.floor(Math.random() * unit.length);
+        const category = ["légumes", "viandes", "poissons", "produits laitiers", "fruits", "épices", "autres"];
+        const optional = fakerFR.datatype.boolean();
+        const categoryChoose = Math.floor(Math.random() * category.length);
+        const ingredient = {
+            name: fakerFR.commerce.productMaterial(),
+            unit: unit[unitChoose],
+            allergens: fakerFR.datatype.boolean(),
+            category: category[categoryChoose],
+            optional: optional
+        };
+        if (optional) {
+            ingredient.optionalUnit = unit[Math.floor(Math.random() * unit.length)];
+            ingredient.optionalQuantity = Math.floor(Math.random() * 100);
+            ingredient.optionalPrice = Math.floor(Math.random() * 100);
+        }
+
+        console.log("ingredient = ", ingredient);
+        ingredients.push(ingredient);
+        await Ingredient.create(ingredient);
+    }
+    res.send(ingredients);
+});
+
 module.exports = {
     create,
     getAll,
     getByID,
     updateByID,
     deleteByID,
+    fakeIngredient,
 }

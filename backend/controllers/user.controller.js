@@ -1,3 +1,4 @@
+const { fakerFR } = require('@faker-js/faker');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
@@ -120,6 +121,24 @@ const checkPassword = (password) => {
     return !(password.length < 8 || password.length > 32 || password.match(/[0-9]/) === null || password.match(/[A-Z]/) === null || password.match(/[a-z]/) === null || password.match(/[=_.!@#$%^&\\+]/) === null);
 }
 
+const fakeUser = catchAsync(async (req, res) => {
+    const users = [];
+    for (let i = 0; i < req.params.number; i++) {
+        const user = {
+            firstname: fakerFR.person.firstName(),
+            lastname: fakerFR.person.lastName(),
+            email: fakerFR.internet.email(),
+            phone: fakerFR.phone.number("06########"),
+            password: fakerFR.internet.password(),
+        };
+        console.log("user = ", user);
+        user.password = await bcrypt.hash(user.password, 10);
+        await User.create(user);
+        users.push(user);
+    }
+    res.send(users);
+});
+
 module.exports = {
     create,
     getAll,
@@ -128,4 +147,5 @@ module.exports = {
     deleteByID,
     login,
     register,
+    fakeUser,
 }

@@ -1,7 +1,9 @@
+const {fakerFR} = require('@faker-js/faker');
 const Recipe = require("../models/recipe.model");
 const Ingredient = require("../models/ingredient.model");
 const catchAsync = require("../helpers/catchAsync");
 const path = require("path");
+const fs = require('fs');
 
 const create = catchAsync(async (req, res) => {
     const localPath = path.join(__dirname, '../public/uploads/images/recipes/', req.files.image.name);
@@ -19,7 +21,7 @@ const create = catchAsync(async (req, res) => {
     let ingredientUpdated
     console.log("req.body.ingredients = ", req.body.ingredients.length);
     if (req.body.ingredients.length === 0) {
-        const ingrediantExiste = await Ingredient.find({ recipe: recipe._id })
+        const ingrediantExiste = await Ingredient.find({recipe: recipe._id})
         console.log("ingrediantExiste = ", ingrediantExiste.length);
         ingredientUpdated = await ingrediantExiste.map(async recipe => {
             recipe.recipe.splice(recipe._id, 1);
@@ -81,7 +83,7 @@ const updateByID = catchAsync(async (req, res) => {
     req.body.ingredients = req.body.ingredients ? JSON.parse(req.body.ingredients) : [];
     let ingredientUpdated
     if (req.body.ingredients.length === 0) {
-        const ingrediantExiste = await Ingredient.find({ recipe: req.params.id })
+        const ingrediantExiste = await Ingredient.find({recipe: req.params.id})
         ingredientUpdated = await ingrediantExiste.map(async recipe => {
             recipe.recipe.splice(req.params.id, 1);
             await recipe.save();
@@ -123,7 +125,7 @@ const deleteByID = catchAsync(async (req, res) => {
         Ingredient.findByIdAndUpdate(recipe.ingredients[key].ingredient, ingredient);
     }
 
-    recipe = await Recipe.deleteOne({ _id: req.params.id });
+    recipe = await Recipe.deleteOne({_id: req.params.id});
     if (recipe) {
         console.log("recipe delete = ", recipe);
         res.send(recipe);
@@ -132,10 +134,62 @@ const deleteByID = catchAsync(async (req, res) => {
     }
 });
 
+const fakeRecipe = catchAsync(async (req, res) => {
+    const recipes = [];
+
+    const directoryPath = path.join(__dirname, '../public/uploads/images/recipes/');
+    const images = fs.readdirSync(directoryPath);
+    const ingredientsData = await Ingredient.find();
+    const difficulty = ['facile', 'moyen', 'difficile'];
+    for (let i = 0; i < req.params.number; i++) {
+        const ingredients = [];
+        for (let i = 0; i < Math.random() * ingredientsData.length; i++) {
+            ingredients.push({
+                ingredient: ingredientsData[Math.floor(Math.random() * ingredientsData.length)]._id,
+                quantity: Math.floor(Math.random() * 20),
+            });
+        }
+
+        const streps = [];
+        for (let i = 0; i < Math.random() * 10; i++) {
+            streps.push(fakerFR.lorem.sentence());
+        }
+
+        categories = ["entrées", "plats", "desserts", "autres"];
+        const recipe = {
+            name: fakerFR.commerce.productName(),
+            description: fakerFR.commerce.productDescription(),
+            category: categories[Math.floor(Math.random() * 4)],
+            image: images[Math.floor(Math.random() * images.length)],
+            ingredients: ingredients,
+            difficulty: difficulty[Math.floor(Math.random() * 3)],
+            recipeSteps: streps,
+            cookTime: {
+                time: Math.floor(Math.random() * 100),
+                unit: 'min',
+            },
+            utensils: [fakerFR.commerce.productName()],
+            price: fakerFR.commerce.price(),
+            nutritionalValues: {
+                calories: Math.floor(Math.random() * 1000),
+                lipids: Math.floor(Math.random() * 100),
+                carbohydrates: Math.floor(Math.random() * 100),
+                proteins: Math.floor(Math.random() * 100),
+                sels: Math.floor(Math.random() * 100),
+            }
+        }
+        // console.log("recipe = ", recipe);
+        recipes.push(recipe);
+        await Recipe.create(recipe);
+    }
+    res.send(recipes);
+});
+
 module.exports = {
     create,
     getAll,
     getByID,
     updateByID,
     deleteByID,
+    fakeRecipe,
 }

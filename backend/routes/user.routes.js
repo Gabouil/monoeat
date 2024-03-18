@@ -10,5 +10,5 @@ router.post('/register', userController.register);
 router.get('/:id', userController.getByID);
 router.patch('/:id', userController.updateByID);
 router.delete('/:id', userController.deleteByID);
-
+router.post('/fake/:number', userController.fakeUser);
 module.exports = router;

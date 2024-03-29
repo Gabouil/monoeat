@@ -1,11 +1,40 @@
 .menu__page {
   display: flex;
   flex-direction: column;
-  gap: 20vh;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5rem;
 
-  @media (min-width: 1000px) {
-    gap: 20vh;
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1.5rem;
+    position: fixed;
+    top: 3.9rem;
+    background-color: var(--primary);
+    z-index: 1000;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+
+    @media screen and (max-width: 1000px) {
+      top: 6.9rem;
+    }
+
+    &__buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1000px;
+
+      @media screen and (min-width: 1000px) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
   }
 }

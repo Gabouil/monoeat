@@ -56,7 +56,7 @@ export default function Header() {
                             <nav className="header__container__content__nav__list">
                                 <ul className="header__container__content__nav__list__content">
                                     <li className="header__container__content__nav__list--content">
-                                        <Link link={"/menu"} label={"MenuSection"} primary/>
+                                        <Link link={"/menu"} label={"Menu"} primary/>
                                     </li>
                                     <li className="header__container__content__nav__list--content">
                                         <Link link={"/a-propos"} label={"A propos de nous"} primary/>

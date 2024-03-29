@@ -1,12 +1,13 @@
 import "./Menu.scss"
 import Footer from "../../molecules/global/Footer/Footer.tsx";
-import Header from "../../molecules/global/Header/Header.tsx";
+import HeaderMenu from "../../molecules/menu/HeaderMenu/HeaderMenu.tsx";
 import MenuSection from "../../organismes/MenuSection/MenuSection.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
 import React from "react";
-// import HeroHeaderMenuSection from "../../organismes/HeroHeaderSection/HeroHeaderMenuSection.tsx";
 
 export default function Menu() {
+    // const cartContext = useCart();
+
     const newDate = new Date();
     const day = newDate.getDay();
     const diff = newDate.getDate() - day + (day == 0 ? -6 : 1);
@@ -16,20 +17,22 @@ export default function Menu() {
     const menuTypes = ["plats", "entrées", "desserts", "autres"];
     return (
         <>
-            <Header/>
+            <HeaderMenu section={"menu"}/>
             <main className={"menu__page"}>
-                <header className={"menu__header"}>
-                    {menuTypes.map((type) => {
-                        return (
-                            <React.Fragment key={type + "_button"}>
-                                <Button
-                                    type={"a"}
-                                    label={type.charAt(0).toUpperCase() + type.slice(1)}
-                                    link={"/menu#" + type}
-                                />
-                            </React.Fragment>
-                        )
-                    })}
+                <header className={"menu__page__header"}>
+                    <div className={"menu__page__header__buttons"}>
+                        {menuTypes.map((type) => {
+                            return (
+                                <React.Fragment key={type + "_button"}>
+                                    <Button
+                                        type={"a"}
+                                        label={type.charAt(0).toUpperCase() + type.slice(1)}
+                                        link={"/menu#" + type}
+                                    />
+                                </React.Fragment>
+                            )
+                        })}
+                    </div>
                 </header>
                 {/*<HeroHeaderMenuSection/>*/}
                 {menuTypes.map((type) => {

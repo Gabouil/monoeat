@@ -1,8 +1,8 @@
 :root {
   --primary: #FFFEF9;
   --secondary: #252013;
-    --secondary-50: rgba(37, 32, 19, 0.5);
-    --secondary-25: rgba(37, 32, 19, 0.25);
+  --secondary-50: rgba(37, 32, 19, 0.5);
+  --secondary-25: rgba(37, 32, 19, 0.25);
   --action: #E26D00;
   --table1: #E2E0D1;
   --table2: #F1F1ED;
@@ -32,7 +32,7 @@ body {
 
 table {
   width: 100%;
-    border-collapse: collapse;
+  border-collapse: collapse;
   border-radius: 10px;
   overflow: hidden;
 
@@ -51,10 +51,12 @@ table {
     &--1 {
       background-color: var(--table1);
     }
+
     &--2 {
       background-color: var(--table2);
     }
   }
+
   thead, tbody {
     tr {
       th, td {
@@ -81,6 +83,7 @@ table {
     font-size: 14px;
   }
 }
+
 .group__row {
   display: flex;
   flex-direction: row;
@@ -94,6 +97,14 @@ table {
 
 .svg {
   stroke: var(--secondary);
+
+  &--danger {
+    stroke: var(--danger);
+  }
+
+  &--active {
+    stroke: var(--action);
+  }
 }
 
 .svg--reverse path {
@@ -102,6 +113,14 @@ table {
 
 .svg--fill {
   fill: var(--secondary);
+
+  &--danger {
+    fill: var(--danger);
+  }
+
+  &--active {
+    fill: var(--action);
+  }
 }
 
 .svg--fill--reverse {
@@ -132,6 +151,36 @@ table {
   transform: rotate(-270deg);
 }
 
+.tooltip {
+    position: relative;
+    cursor: help;
+
+  &:focus::after,
+  &:hover::after {
+    content: attr(aria-label);
+    position: absolute;
+    top: -2.4em;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    white-space: nowrap;
+    background: var(--table1);
+    padding: 0.125rem 0.5rem;
+    border-radius: 100000px;
+  }
+
+  &:hover:before,
+  &:focus:before {
+    content: "▼";
+    position: absolute;
+    top: -1em;
+    left: 50%;
+    transform: translateX(-50%); /* on centre horizontalement  */
+    font-size: 20px;
+    color: var(--table1);
+  }
+
+}
 .unselectable {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -149,7 +198,6 @@ table {
   /*background-color: rgba(18, 21, 37, 0.3);*/
   z-index: 1;
 }
-
 
 
 h1, h2, h3, h4 {

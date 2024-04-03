@@ -1,12 +1,28 @@
 import {AxiosInstance} from "../axios/axiosInstance";
 
-interface FormData {
-    id: string;
+interface DeliveryInfo {
     firstname: string;
     lastname: string;
     email: string;
     phone: string;
-    role: string;
+    company: string;
+    country: string;
+    address: string;
+    address2: string;
+    postalCode: string;
+    city: string;
+}
+
+interface FormData {
+    id: string;
+    firstname?: string;
+    lastname?: string;
+    email?: string;
+    phone?: string;
+    password?: string;
+    favorites?: string[];
+    role?: 'user' | 'admin';
+    deliveryInfo?: DeliveryInfo;
 }
 export default function useUpdateUserById() {
     return async (formData: FormData) => {
@@ -18,11 +34,14 @@ export default function useUpdateUserById() {
                     'Content-Type':  'multipart/form-data'
                 },
                 data: {
-                    "firstname": formData.firstname,
-                    "lastname": formData.lastname,
-                    "email": formData.email,
-                    "phone": formData.phone,
-                    "role": formData.role
+                    firstname: formData.firstname,
+                    lastname: formData.lastname,
+                    email: formData.email,
+                    phone: formData.phone,
+                    password: formData.password,
+                    favorites: formData.favorites,
+                    role: formData.role,
+                    deliveryInfo: formData.deliveryInfo
                 }
             });
             return res.data;

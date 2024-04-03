@@ -26,7 +26,12 @@ const getByID = catchAsync(async (req, res) => {
 const updateByID = catchAsync(async (req, res) => {
     console.log("req.body = ", req.body);
     console.log("req.params = ", req.params);
-    const user = await User.findByIdAndUpdate(req.params.id, req.body);
+    const updateData = {...req.body};
+    if (req.body['favorites[]']) {
+        updateData.favorites = req.body['favorites[]'];
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
     if (user) {
         res.send(user);
     } else {

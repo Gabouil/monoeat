@@ -1,6 +1,6 @@
 import "./MenuSection.scss";
 import useGetMenuByDate from "../../../services/hooks/useGetMenuByDate.tsx";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import FavoriteOn from "../../../assets/pictos/Menu/favoriteOn.tsx";
 import FavoriteOff from "../../../assets/pictos/Menu/favoriteOff.tsx";
 import Alergene from "../../../assets/pictos/Menu/alergene.tsx";
@@ -10,6 +10,7 @@ import Milk from "../../../assets/pictos/Menu/milk.tsx";
 import {useUser} from "../../../context/UserContext.tsx";
 import useGetUserById from "../../../services/hooks/useGetUserById.tsx";
 import useUpdateUserById from "../../../services/hooks/useUpdateUserById.tsx";
+import PopupRecipe from "../../molecules/menu/PopupRecipe/PopupRecipe.tsx";
 
 interface MenuSectionProps {
     type: string;
@@ -99,11 +100,13 @@ export default function MenuSection({type, date}: MenuSectionProps) {
     const updateUserById = useUpdateUserById();
 
     const [user, setUser] = useState<User>();
-    const [menuData, setMenuData] = useState<any>([]);
+    const [menuData, setMenuData] = useState<Recipe[]>([]);
     const userContext = useUser();
     if (!userContext) {
         throw new Error("UserContext is not initialized");
     }
+
+    const [previewIsOpen, setPreviewIsOpen] = useState<Record<string, boolean>>({});
 
     useEffect(() => {
         (async () => {
@@ -115,21 +118,22 @@ export default function MenuSection({type, date}: MenuSectionProps) {
     }, [date]);
 
     useEffect(() => {
-        if (userContext.user) {
-            (async () => {
+        (async () => {
+            if (userContext.user) {
                 const user = await getUserById(userContext.user.userId);
                 setUser(user);
-            })()
-        }
+            }
+        })()
     }, [userContext]);
 
 
-    const updateFavorite = (productId:string) => {
+    const updateFavorite = (e: React.MouseEvent, productId: string) => {
+        e.stopPropagation();
         if (user && user.favorites) {
-            const newUserData :User = {...user};
+            const newUserData: User = {...user};
             if (newUserData.favorites.includes(productId)) {
                 newUserData.favorites = newUserData.favorites.filter((id) => id !== productId);
-            }else{
+            } else {
                 newUserData.favorites.push(productId);
             }
 
@@ -142,10 +146,6 @@ export default function MenuSection({type, date}: MenuSectionProps) {
             })
         }
     }
-
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
 
     const ingredientPicto = (ingredients: [{ ingredient: ingredient; quantity: string; }]) => {
         const pictos = [""];
@@ -182,19 +182,28 @@ export default function MenuSection({type, date}: MenuSectionProps) {
             if (pictos.includes(picto)) {
                 switch (picto) {
                     case "allergens":
-                        return <span key={id + "_picto"} className={"tooltip"} aria-label={"Contient des allergènes"}><Alergene/></span>
+                        return <span key={id + "_picto"} className={"tooltip"}
+                                     onClick={(e) => e.stopPropagation()}
+                                     aria-label={"Contient des allergènes"}><Alergene/></span>
                     case "meat":
-                        return <span key={id + "_picto"} className={"tooltip"} aria-label={"Contient de la viande"}><Beef/></span>
+                        return <span key={id + "_picto"} className={"tooltip"}
+                                     onClick={(e) => e.stopPropagation()}
+                                     aria-label={"Contient de la viande"}><Beef/></span>
                     case "fish":
-                        return <span key={id + "_picto"} className={"tooltip"} aria-label={"Contient du poisson"}><Fish/></span>
+                        return <span key={id + "_picto"} className={"tooltip"}
+                                     onClick={(e) => e.stopPropagation()}
+                                     aria-label={"Contient du poisson"}><Fish/></span>
                     case "milk":
-                        return <span key={id + "_picto"} className={"tooltip"} aria-label={"Contient des produits laitiers"}><Milk/></span>
+                        return <span key={id + "_picto"} className={"tooltip"}
+                                     onClick={(e) => e.stopPropagation()}
+                                     aria-label={"Contient des produits laitiers"}><Milk/></span>
                     default:
                         return <></>
                 }
             }
         }).filter(Boolean);
     }
+
     return (
         <section className="menu__section" id={type} key={type}>
             <h1>{type.charAt(0).toUpperCase() + type.slice(1)}</h1>
@@ -202,25 +211,43 @@ export default function MenuSection({type, date}: MenuSectionProps) {
                 {menuData && menuData.length > 0 ?
                     menuData.map((recipe: Recipe) => {
                         return (
-                            <article key={recipe._id} className="menu__section__content__card">
-                                <div className={"menu__section__content__card__image"}>
-                                    <div className={"menu__section__content__card__image__favorite"} onClick={() => updateFavorite(recipe._id)}>
-                                        {user && user.favorites.includes(recipe._id) ? <FavoriteOn/> : <FavoriteOff/>}
+                            <>
+                                <article key={recipe._id} className="menu__section__content__card"
+                                         onClick={() => setPreviewIsOpen(prevState => ({
+                                             ...prevState,
+                                             [recipe._id]: !prevState[recipe._id]
+                                         }))}
+                                >
+                                    <div className={"menu__section__content__card__image"}>
+                                        <div className={"menu__section__content__card__image__favorite"}
+                                             onClick={(e) => updateFavorite(e, recipe._id)}>
+                                            {user && user.favorites.includes(recipe._id) ? <FavoriteOn/> :
+                                                <FavoriteOff/>}
+                                        </div>
+                                        <div className={"menu__section__content__card__image__content "}>
+                                            <img src={recipe.image} alt={recipe.name}/>
+                                        </div>
+                                        <div className={"menu__section__content__card__image__ingredients"}>
+                                            {ingredientPicto(recipe.ingredients)}
+                                        </div>
                                     </div>
-                                    <div className={"menu__section__content__card__image__content "}>
-                                        <img src={recipe.image} alt={recipe.name}/>
+                                    <div className={"menu__section__content__card__infos"}>
+                                        <h4>{recipe.name}</h4>
+                                        <p>{recipe.price}€/pers</p>
+                                        <p>Temps de préparation : {recipe.cookTime.time} {recipe.cookTime.unit}</p>
+                                        <p>Difficulté : {recipe.difficulty}</p>
                                     </div>
-                                    <div className={"menu__section__content__card__image__ingredients"}>
-                                        {ingredientPicto(recipe.ingredients)}
-                                    </div>
-                                </div>
-                                <div className={"menu__section__content__card__infos"}>
-                                    <h4>{recipe.name}</h4>
-                                    <p>{recipe.price}€/pers</p>
-                                    <p>Temps de préparation : {recipe.cookTime.time} {recipe.cookTime.unit}</p>
-                                    <p>Difficulté : {recipe.difficulty}</p>
-                                </div>
-                            </article>
+                                </article>
+                                <span className={previewIsOpen[recipe._id] ? "menu__section__content__card__popup menu__section__content__card__popup--open" : "menu__section__content__card__popup"}>
+                                {
+                                    previewIsOpen[recipe._id] &&
+                                    <PopupRecipe
+                                        recipe={recipe}
+                                        setPreviewIsOpen={setPreviewIsOpen}
+                                    />
+                                }
+                                </span>
+                            </>
                         )
                     }) : <p className={"menu__section__content__card--noitem"}>Pas de {type} cette semaine</p>}
             </div>

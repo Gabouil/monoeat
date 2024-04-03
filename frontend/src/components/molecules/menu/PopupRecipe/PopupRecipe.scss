@@ -1,0 +1,59 @@
+.popup_recipe {
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  cursor: pointer;
+
+  &__container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary);
+    cursor: auto;
+    overflow: auto;
+    padding: 6rem 1.5rem 1.5rem 1.5rem;
+
+    @media screen and (min-width: 1000px) {
+      width: 80%;
+      max-width: 1000px;
+    }
+
+
+    &__header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      background-color: var(--primary);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+      padding: 1rem 1.5rem;
+
+      @media screen and (min-width: 1000px) {
+        width: 80%;
+        max-width: 1000px;
+      }
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      img {
+        width: 100%;
+        height: 20rem;
+        border-radius: 1rem;
+        object-fit: cover;
+
+        @media screen and (min-width: 1000px) {
+          height: 30rem;
+          width: 30rem;
+          align-self: center;
+        }
+      }
+    }
+  }
+}

@@ -4,14 +4,14 @@ import {jwtDecode} from "jwt-decode";
 
 interface IUserContext {
     user: {
-        id: string;
+        userId: string;
         email: string;
         firstname: string;
         lastname: string;
         phone: string;
         role: string;
     } | null;
-    setUser: (data: { id: string; email: string; firstname: string; lastname: string; phone: string; role: string; } | null) => void;
+    setUser: (data: { userId: string; email: string; firstname: string; lastname: string; phone: string; role: string; } | null) => void;
 }
 
 function checkForValidCookie() {

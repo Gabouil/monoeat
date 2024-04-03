@@ -22,12 +22,13 @@
   --success: #AEFFB6;
 }
 
-body {
+#root {
   background: var(--primary);
   color: var(--secondary);
   overflow-X: hidden;
   //transition: background-color 0.3s linear;
   font-family: Gotham, serif;
+  padding-top: 4rem;
 }
 
 table {
@@ -152,8 +153,8 @@ table {
 }
 
 .tooltip {
-    position: relative;
-    cursor: help;
+  position: relative;
+  cursor: help;
 
   &:focus::after,
   &:hover::after {
@@ -181,6 +182,7 @@ table {
   }
 
 }
+
 .unselectable {
   -webkit-user-select: none;
   -webkit-touch-callout: none;

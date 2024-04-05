@@ -19,51 +19,62 @@
     }
 
     &__header {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      background-color: var(--primary);
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
-      padding: 1rem 1.5rem;
 
-      @media screen and (min-width: 1000px) {
-        width: 80%;
-        max-width: 1000px;
+      & > div {
+        position: fixed;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        background-color: var(--primary);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+        padding: 1rem 1.5rem;
+
+        @media screen and (min-width: 1000px) {
+          width: 80%;
+          max-width: 1000px;
+        }
       }
     }
 
     &__footer {
-      position: fixed;
-      bottom: 0;
+      position: absolute;
+      bottom: 178px;
       left: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      background-color: var(--primary);
-      box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.5);
-      padding: 1rem 1.5rem;
-
-      @media screen and (min-width: 450px) {
-        padding: 1rem 4rem;
-      }
 
       @media screen and (min-width: 768px) {
-        justify-content: space-between;
-        padding: 1rem 1.5rem;
+        bottom: 100px;
       }
 
+        & > div {
+          position: fixed;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          background-color: var(--primary);
+          box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.5);
+          padding: 1rem 1.5rem;
 
-      @media screen and (min-width: 1000px) {
-        width: 80%;
-        max-width: 1000px;
-      }
+          @media screen and (min-width: 450px) {
+            padding: 1rem 4rem;
+          }
+
+          @media screen and (min-width: 768px) {
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+          }
+
+          @media screen and (min-width: 1000px) {
+            width: 80%;
+            max-width: 1000px;
+          }
+        }
 
       &__buttons {
         display: flex;

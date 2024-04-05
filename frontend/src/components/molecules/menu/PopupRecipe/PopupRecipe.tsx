@@ -129,17 +129,19 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
             <div className={"popup_recipe__container "}
                  onClick={e => e.stopPropagation()}>
                 <header className="popup_recipe__container__header">
-                    <h2>{recipe.name}</h2>
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            setPreviewIsOpen(prevState => ({
-                                ...prevState,
-                                [recipe._id]: !prevState[recipe._id]
-                            }))
-                        }}>
-                        X
-                    </button>
+                    <div>
+                        <h2>{recipe.name}</h2>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setPreviewIsOpen(prevState => ({
+                                    ...prevState,
+                                    [recipe._id]: !prevState[recipe._id]
+                                }))
+                            }}>
+                            X
+                        </button>
+                    </div>
                 </header>
                 <div className="popup_recipe__container__content">
                     <img src={recipe.image} alt={recipe.name}/>
@@ -222,29 +224,31 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
                     </div>
                 </div>
                 <footer className="popup_recipe__container__footer">
-                    <div className="popup_recipe__container__footer__people">
-                        <button onClick={() => changePeople("remove")}>
-                            <Remove/>
-                        </button>
-                        <Input
-                            type={"number"}
-                            placeholder={"Nombre de personnes"}
-                            label={"Nombre de personnes"}
-                            name={"nbPeople"}
-                            value={nbPeople}
-                            setValue={setNbPeople}
-                        />
-                        <button onClick={() => changePeople("add")}>
-                            <Add/>
-                        </button>
-                    </div>
-                    <div className="popup_recipe__container__footer__buttons">
-                        <p>{recipe.price * nbPeople} €</p>
-                        <Button
-                            label={"Ajouter au panier"}
-                            type={"button"}
-                            onclick={() => addToCart()}
-                        />
+                    <div>
+                        <div className="popup_recipe__container__footer__people">
+                            <button onClick={() => changePeople("remove")}>
+                                <Remove/>
+                            </button>
+                            <Input
+                                type={"number"}
+                                placeholder={"Nombre de personnes"}
+                                label={"Nombre de personnes"}
+                                name={"nbPeople"}
+                                value={nbPeople}
+                                setValue={setNbPeople}
+                            />
+                            <button onClick={() => changePeople("add")}>
+                                <Add/>
+                            </button>
+                        </div>
+                        <div className="popup_recipe__container__footer__buttons">
+                            <p>{recipe.price * nbPeople} €</p>
+                            <Button
+                                label={"Ajouter au panier"}
+                                type={"button"}
+                                onclick={() => addToCart()}
+                            />
+                        </div>
                     </div>
                 </footer>
             </div>

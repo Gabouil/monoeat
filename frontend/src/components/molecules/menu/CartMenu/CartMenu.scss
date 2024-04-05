@@ -1,0 +1,139 @@
+.cart_menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: end;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  cursor: pointer;
+  background-color: var(--secondary-25);
+
+  &__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 0;
+    height: 0;
+    background-color: var(--primary);
+    cursor: auto;
+    overflow: auto;
+    padding: 7rem 1.5rem 7rem 1.5rem;
+    animation: scale 0.2s forwards;
+    z-index: 1;
+
+    @keyframes scale {
+      0% {
+        height: 0;
+        width: 0;
+      }
+      100% {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    @media screen and (min-width: 1000px) {
+      margin: 2rem 2rem 0 0;
+      border-radius: 1rem;
+      max-width: 1000px;
+
+      @keyframes scale {
+        0% {
+          height: 0;
+          width: 0;
+        }
+        100% {
+          height: 70%;
+          width: 40%;
+        }
+      }
+    }
+
+    &__header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: inherit;
+
+      & > div {
+        position: fixed;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: inherit;
+        background-color: var(--primary);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+        padding: 1rem 1.5rem;
+        border-radius: 1rem 1rem 0 0;
+      }
+    }
+
+    &__footer {
+      position: absolute;
+      bottom: 80px;
+      left: 0;
+      width: inherit;
+
+      & > div {
+        position: fixed;
+        width: inherit;
+        background-color: var(--primary);
+        box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.5);
+        padding: 1rem 1.5rem;
+        border-radius: 0 0 1rem 1rem;
+
+        & > .button {
+          width: 100%;
+        }
+      }
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+
+      &__product {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: center;
+
+        img {
+          width: 5rem;
+          height: 5rem;
+          object-fit: cover;
+          border-radius: 0.3125rem;
+        }
+
+        &__info {
+          display: flex;
+          flex-direction: column;
+          gap: .5rem;
+          width: 100%;
+
+          & > div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            & > div {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              gap: .5rem;
+            }
+
+            & > .button {
+              width: fit-content;
+              height: fit-content;
+            }
+          }
+        }
+      }
+    }
+  }
+}

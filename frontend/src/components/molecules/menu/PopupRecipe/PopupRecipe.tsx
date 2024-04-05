@@ -4,6 +4,7 @@ import Button from "../../../atomes/buttons/Button/Button.tsx";
 import Input from "../../../atomes/inputs/Input/Input.tsx";
 import Add from "../../../../assets/pictos/Menu/Add.tsx";
 import Remove from "../../../../assets/pictos/Menu/Remove.tsx";
+import {useCart} from "../../../../context/CartContext.tsx";
 
 type ingredient = {
     id: string,
@@ -62,6 +63,7 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
     setPreviewIsOpen: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
 }) {
     const [nbPeople, setNbPeople] = useState(2);
+    const CartContext = useCart()
 
     useEffect(() => {
         document.body.style.overflowY = 'hidden';
@@ -81,7 +83,30 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
     }
 
     const addToCart = () => {
-        console.log(recipe, nbPeople);
+        if (CartContext) {
+            const newCart = [...CartContext.cart];
+            const existingProductIndex = newCart.findIndex(item => item.id === recipe._id);
+
+            if (existingProductIndex >= 0) {
+                console.log(recipe)
+                newCart[existingProductIndex].quantity += nbPeople;
+            } else {
+                console.log(recipe)
+                newCart.push({
+                    id: recipe._id,
+                    name: recipe.name,
+                    price: recipe.price,
+                    image: recipe.image,
+                    quantity: nbPeople
+                });
+            }
+
+            CartContext.setCart(newCart);
+            setPreviewIsOpen(prevState => ({
+                ...prevState,
+                [recipe._id]: !prevState[recipe._id]
+            }))
+        }
     }
 
     useEffect(() => {
@@ -148,7 +173,7 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
                     <div
                         className="popup_recipe__container__content__infos popup_recipe__container__content__ingredients">
                         <h3>Ingrédients</h3>
-                        <span>Les ingredients <span className={"badges badges--danger"}>optionnel</span> ne sont pas inclus dans le prix et sont à ajouter si besoin après avoir ajouté la recette au panier.</span>
+                        <span>Les ingredients <span className={"badges badges--danger"}>optionnel</span> ne sont pas inclus dans le prix et sont à ajouter si besoin après avoir valider le panier.</span>
                         <ul>
                             {recipe.ingredients.map((ingredient, id) => {
                                 return (

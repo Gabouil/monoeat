@@ -3,24 +3,33 @@ import {createContext, useContext, useState, useEffect, ReactNode} from "react";
 interface IThemeContext {
     cart: {
         id: string;
+        name: string;
+        price: number;
+        image: string;
         quantity: number;
     }[]
-    setCart: (data: { id: string; quantity: number; }[]) => void;
+    setCart: (data: { id: string; name: string; price: number; image: string; quantity: number }[]) => void;
 }
 
 const CartContext = createContext<IThemeContext | undefined>(undefined);
 
 export const CartProvider = ({children}: { children: ReactNode }) => {
-    const [cart, setCart] = useState<IThemeContext['cart']>(() => {
-        const localData = localStorage.getItem('cart');
-        return localData ? JSON.parse(localData) : [];
-    });
+    const [cart, setCart] = useState<IThemeContext['cart']>([]);
+
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart]);
+        const cartFromLocalStorage = localStorage.getItem('cart');
+        if (cartFromLocalStorage) {
+            setCart(JSON.parse(cartFromLocalStorage));
+        }
+    }, []);
+
+    const updateCart = (newCart: IThemeContext['cart']) => {
+        setCart(newCart);
+        localStorage.setItem('cart', JSON.stringify(newCart));
+    }
 
     return (
-        <CartContext.Provider value={{cart, setCart}}>
+        <CartContext.Provider value={{cart, setCart: updateCart}}>
             {children}
         </CartContext.Provider>
     );

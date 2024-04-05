@@ -71,6 +71,21 @@
         gap: .25rem;
       }
 
+      & > div > button{
+        position: relative;
+      }
+      & > div > button > span {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--danger);
+        color: var(--primary);
+        border-radius: 10000px;
+        width: .7rem;
+        height: .7rem;
+        font-size: 0.75rem;
+      }
+
       &__progress {
         position: relative;
         display: flex;

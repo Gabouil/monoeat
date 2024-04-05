@@ -7,6 +7,8 @@ import {useEffect, useState} from "react";
 import {useUser} from "../../../../context/UserContext.tsx";
 import Chevron from "../../../../assets/pictos/chevron.tsx";
 import Cart from "../../../../assets/pictos/cart.tsx";
+import CartMenu from "../CartMenu/CartMenu.tsx";
+import {useCart} from "../../../../context/CartContext.tsx";
 
 type props = {
     section: "menu" | "information" | "paiement";
@@ -19,6 +21,8 @@ export default function HeaderMenu({section}: props) {
     if (!userContext) {
         throw new Error("UserContext is not initialized");
     }
+    const CartContext = useCart()
+    const cart = CartContext ? CartContext.cart : [];
 
     const [activeMenu, setActiveMenu] = useState("");
     const [activeInformation, setActiveInformation] = useState("");
@@ -87,11 +91,12 @@ export default function HeaderMenu({section}: props) {
                             <li className={"header__menu__container__content__progress__item " + activePaiement}><span>Paiement</span></li>
                         </ul>
                         <div>
-                            <button><Cart/></button>
+                            <button onClick={() => setCartIsOpen(!cartIsOpen)}><Cart/> {cart.length > 0 &&<span></span>}</button>
                         </div>
                     </div>
                 </div>
             </header>
+            {cartIsOpen && <CartMenu setIsOpen={setCartIsOpen}/>}
         </>
     );
 }

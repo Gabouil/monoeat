@@ -14,7 +14,7 @@
     position: fixed;
     top: 3.9rem;
     background-color: var(--primary);
-    z-index: 1000;
+    z-index: 100;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 
     @media screen and (max-width: 1000px) {

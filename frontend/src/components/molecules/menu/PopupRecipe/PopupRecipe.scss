@@ -11,13 +11,12 @@
     background-color: var(--primary);
     cursor: auto;
     overflow: auto;
-    padding: 6rem 1.5rem 1.5rem 1.5rem;
+    padding: 7rem 1.5rem 9rem 1.5rem;
 
     @media screen and (min-width: 1000px) {
       width: 80%;
       max-width: 1000px;
     }
-
 
     &__header {
       position: fixed;
@@ -37,10 +36,113 @@
       }
     }
 
+    &__footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      background-color: var(--primary);
+      box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.5);
+      padding: 1rem 1.5rem;
+
+      @media screen and (min-width: 450px) {
+        padding: 1rem 4rem;
+      }
+
+      @media screen and (min-width: 768px) {
+        justify-content: space-between;
+        padding: 1rem 1.5rem;
+      }
+
+
+      @media screen and (min-width: 1000px) {
+        width: 80%;
+        max-width: 1000px;
+      }
+
+      &__buttons {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        @media screen and (min-width: 768px) {
+          justify-content: center;
+          width: auto;
+        }
+
+        & > .button {
+          width: fit-content;
+        }
+      }
+
+      &__people {
+        display: flex;
+        gap: 1.5rem;
+        align-items: end;
+        width: 100%;
+
+        @media screen and (min-width: 768px) {
+          width: auto;
+        }
+
+        button {
+          margin-bottom: .7rem;
+        }
+      }
+    }
+
     &__content {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+
+
+      @media screen and (max-width: 768px) {
+        table {
+          display: flex;
+          width: fit-content;
+          margin-bottom: 3rem;
+
+          tr {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+          }
+        }
+      }
+
+      &--row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 2.5rem;
+
+        @media screen and (max-width: 768px) {
+          gap: 1.5rem;
+        }
+      }
+
+      &__infos {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+      }
+
+      &__ingredients {
+        & > span {
+          font-size: .9rem;
+          font-weight: 400;
+          color: var(--danger);
+          margin-top: -.5rem;
+        }
+      }
 
       img {
         width: 100%;

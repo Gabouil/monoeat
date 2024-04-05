@@ -96,6 +96,30 @@ table {
   }
 }
 
+.badges {
+  padding: 0.2rem 0.5rem;
+  border-radius: 100000px;
+  font-size: 0.75rem;
+  width: fit-content;
+  align-self: center;
+  justify-self: center;
+
+  &--danger {
+    background-color: var(--danger);
+    color: var(--primary);
+  }
+
+  &--success {
+    background-color: var(--success);
+    color: var(--primary);
+  }
+
+  &--action {
+    background-color: var(--action);
+    color: var(--primary);
+  }
+}
+
 .svg {
   stroke: var(--secondary);
 

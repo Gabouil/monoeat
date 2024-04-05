@@ -1,6 +1,9 @@
 import "./PopupRecipe.scss";
-import {NavLink} from "react-router-dom";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
+import Button from "../../../atomes/buttons/Button/Button.tsx";
+import Input from "../../../atomes/inputs/Input/Input.tsx";
+import Add from "../../../../assets/pictos/Menu/Add.tsx";
+import Remove from "../../../../assets/pictos/Menu/Remove.tsx";
 
 type ingredient = {
     id: string,
@@ -22,7 +25,7 @@ type Recipe = {
     ingredients: [
         {
             ingredient: ingredient;
-            quantity: string;
+            quantity: number;
         }
     ];
     difficulty: string;
@@ -58,6 +61,7 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
     recipe: Recipe,
     setPreviewIsOpen: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
 }) {
+    const [nbPeople, setNbPeople] = useState(2);
 
     useEffect(() => {
         document.body.style.overflowY = 'hidden';
@@ -65,6 +69,22 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
             document.body.style.overflowY = 'auto';
         };
     }, []);
+
+    const changePeople = (type: string) => {
+        if (type === "add") {
+            setNbPeople(nbPeople + 1);
+        } else if (type === "remove") {
+            if (nbPeople > 1) {
+                setNbPeople(nbPeople - 1);
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (nbPeople < 1) {
+            setNbPeople(1);
+        }
+    }, [nbPeople])
 
     return (
         <div
@@ -79,7 +99,7 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
         >
             <div className={"popup_recipe__container "}
                  onClick={e => e.stopPropagation()}>
-                <div className="popup_recipe__container__header">
+                <header className="popup_recipe__container__header">
                     <h2>{recipe.name}</h2>
                     <button
                         onClick={(e) => {
@@ -88,38 +108,117 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
                                 ...prevState,
                                 [recipe._id]: !prevState[recipe._id]
                             }))
-                        }} >
+                        }}>
                         X
                     </button>
-                </div>
+                </header>
                 <div className="popup_recipe__container__content">
                     <img src={recipe.image} alt={recipe.name}/>
                     <p>{recipe.description}</p>
-                    <div className="popup_recipe__container__content__ingredients">
+                    <div className="popup_recipe__container__content__price">
+                        <h3>Prix</h3>
+                        <p>{recipe.price} € / personne</p>
+                    </div>
+                    <div className="popup_recipe__container__content--row">
+                        <div className="popup_recipe__container__content__time">
+                            <h3>Temps de préparation</h3>
+                            <p>{recipe.cookTime.time} {recipe.cookTime.unit}</p>
+                        </div>
+                        <div className="popup_recipe__container__content__difficulty">
+                            <h3>Difficulté</h3>
+                            <p>{recipe.difficulty}</p>
+                        </div>
+                        <div className="popup_recipe__container__content__utensils">
+                            <h3>Ustensiles</h3>
+                            <ul>
+                                {recipe.utensils.map((utensil) => {
+                                    return (
+                                        <li key={utensil}>
+                                            {utensil}
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
+                    </div>
+                    <div
+                        className="popup_recipe__container__content__infos popup_recipe__container__content__ingredients">
                         <h3>Ingrédients</h3>
+                        <span>Les ingredients <span className={"badges badges--danger"}>optionnel</span> ne sont pas inclus dans le prix et sont à ajouter si besoin après avoir ajouté la recette au panier.</span>
                         <ul>
                             {recipe.ingredients.map((ingredient) => {
                                 return (
                                     <li key={ingredient.ingredient.id}>
-                                        {ingredient.quantity} {ingredient.ingredient.unit} {ingredient.ingredient.name}
+                                        {ingredient.quantity * nbPeople} {ingredient.ingredient.unit} {ingredient.ingredient.name} {ingredient.ingredient.optional &&
+                                        <span className={"badges badges--danger"}>optionnel</span>}
                                     </li>
                                 )
                             })}
                         </ul>
                     </div>
-                    <div className="popup_recipe__container__content__steps">
+                    <div className="popup_recipe__container__content__infos popup_recipe__container__content__steps">
                         <h3>Etapes</h3>
                         <ol>
                             {recipe.recipeSteps.map((step, index) => {
                                 return (
                                     <li key={index}>
-                                        {step}
+                                        {index + 1} : {step}
                                     </li>
                                 )
                             })}
                         </ol>
                     </div>
+                    <div
+                        className="popup_recipe__container__content__infos popup_recipe__container__content__nutritionalValues">
+                        <h3>Valeurs nutritionnelles</h3>
+                        <p>Calories : {recipe.nutritionalValues.calories} Kcal / 100g</p>
+                        <table>
+                            <thead>
+                            <tr className={"table__color--1"}>
+                                <th>Lipides</th>
+                                <th>Glucides</th>
+                                <th>Protéines</th>
+                                <th>Sels</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr className={"table__color--2"}>
+                                <td>{recipe.nutritionalValues.lipids} g</td>
+                                <td>{recipe.nutritionalValues.carbohydrates} g</td>
+                                <td>{recipe.nutritionalValues.proteins} g</td>
+                                <td>{recipe.nutritionalValues.sels} g</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                <footer className="popup_recipe__container__footer">
+                    <div className="popup_recipe__container__footer__people">
+                        <button onClick={() => changePeople("remove")}>
+                            <Remove/>
+                        </button>
+                        <Input
+                            type={"number"}
+                            placeholder={"Nombre de personnes"}
+                            label={"Nombre de personnes"}
+                            name={"nbPeople"}
+                            value={nbPeople}
+                            setValue={setNbPeople}
+                        />
+                        <button onClick={() => changePeople("add")}>
+                            <Add/>
+                        </button>
+                    </div>
+                    <div className="popup_recipe__container__footer__buttons">
+                        <p>{recipe.price * nbPeople} €</p>
+                        <Button
+                            label={"Ajouter au panier"}
+                            type={"button"}
+                            onclick={() => {
+                            }}
+                        />
+                    </div>
+                </footer>
             </div>
         </div>
     )

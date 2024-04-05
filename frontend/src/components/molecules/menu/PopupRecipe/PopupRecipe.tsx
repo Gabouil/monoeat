@@ -80,6 +80,10 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
         }
     }
 
+    const addToCart = () => {
+        console.log(recipe, nbPeople);
+    }
+
     useEffect(() => {
         if (nbPeople < 1) {
             setNbPeople(1);
@@ -146,9 +150,9 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
                         <h3>Ingrédients</h3>
                         <span>Les ingredients <span className={"badges badges--danger"}>optionnel</span> ne sont pas inclus dans le prix et sont à ajouter si besoin après avoir ajouté la recette au panier.</span>
                         <ul>
-                            {recipe.ingredients.map((ingredient) => {
+                            {recipe.ingredients.map((ingredient, id) => {
                                 return (
-                                    <li key={ingredient.ingredient.id}>
+                                    <li key={"ingredient_" + id}>
                                         {ingredient.quantity * nbPeople} {ingredient.ingredient.unit} {ingredient.ingredient.name} {ingredient.ingredient.optional &&
                                         <span className={"badges badges--danger"}>optionnel</span>}
                                     </li>
@@ -214,8 +218,7 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
                         <Button
                             label={"Ajouter au panier"}
                             type={"button"}
-                            onclick={() => {
-                            }}
+                            onclick={() => addToCart()}
                         />
                     </div>
                 </footer>

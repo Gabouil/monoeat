@@ -37,7 +37,7 @@ type Recipe = {
     ingredients: [
         {
             ingredient: ingredient;
-            quantity: string;
+            quantity: number;
         }
     ];
     difficulty: string;
@@ -147,7 +147,7 @@ export default function MenuSection({type, date}: MenuSectionProps) {
         }
     }
 
-    const ingredientPicto = (ingredients: [{ ingredient: ingredient; quantity: string; }]) => {
+    const ingredientPicto = (ingredients: [{ ingredient: ingredient; quantity: number; }]) => {
         const pictos = [""];
         ingredients.map((ingredient) => {
             if (ingredient.ingredient.allergens) {
@@ -211,8 +211,8 @@ export default function MenuSection({type, date}: MenuSectionProps) {
                 {menuData && menuData.length > 0 ?
                     menuData.map((recipe: Recipe) => {
                         return (
-                            <>
-                                <article key={recipe._id} className="menu__section__content__card"
+                            <article key={recipe._id}>
+                                <div className="menu__section__content__card"
                                          onClick={() => setPreviewIsOpen(prevState => ({
                                              ...prevState,
                                              [recipe._id]: !prevState[recipe._id]
@@ -237,7 +237,7 @@ export default function MenuSection({type, date}: MenuSectionProps) {
                                         <p>Temps de préparation : {recipe.cookTime.time} {recipe.cookTime.unit}</p>
                                         <p>Difficulté : {recipe.difficulty}</p>
                                     </div>
-                                </article>
+                                </div>
                                 <span className={previewIsOpen[recipe._id] ? "menu__section__content__card__popup menu__section__content__card__popup--open" : "menu__section__content__card__popup"}>
                                 {
                                     previewIsOpen[recipe._id] &&
@@ -247,7 +247,7 @@ export default function MenuSection({type, date}: MenuSectionProps) {
                                     />
                                 }
                                 </span>
-                            </>
+                            </article>
                         )
                     }) : <p className={"menu__section__content__card--noitem"}>Pas de {type} cette semaine</p>}
             </div>

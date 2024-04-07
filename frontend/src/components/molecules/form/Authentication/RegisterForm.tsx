@@ -22,6 +22,7 @@ type defaultProps = {
     confirmPassword: string,
     setConfirmPassword: React.Dispatch<React.SetStateAction<string>>
     backoffice?: boolean
+    comeFrom: string
 }
 
 export default function RegisterForm({
@@ -37,12 +38,23 @@ export default function RegisterForm({
                                          setPassword,
                                          confirmPassword,
                                          setConfirmPassword,
-                                         backoffice = false
+                                         backoffice = false,
+                                         comeFrom
                                      }: defaultProps) {
 
     const [error, setError] = useState<string[]>([]);
     const register = useRegister();
     const login = useLogin();
+
+    const navigateTo = () => {
+        switch (comeFrom) {
+            case "menu":
+                return "/information";
+            default:
+                return "/";
+
+        }
+    }
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -68,7 +80,7 @@ export default function RegisterForm({
                 } else {
                     console.log(loginResult);
                     Cookies.set('token', loginResult.token, {expires: 14});
-                    return window.location.href = '/';
+                    return window.location.href = navigateTo();
                 }
             } else {
                 return window.location.href = "/backoffice/users";
@@ -147,7 +159,7 @@ export default function RegisterForm({
                 />
                 <Button label={backoffice?"Créer l'utilisateur":"S'inscrire"} onclick={(e: React.FormEvent) => handleRegister(e)}/>
                 {!backoffice &&
-                    <Link link={"/connexion"} label={"J’ai déjà un compte"}/>
+                    <Link link={comeFrom ? `/connexion?redirect=${comeFrom}` : "/connexion"} label={"J’ai déjà un compte"}/>
                 }
             </form>
         </>

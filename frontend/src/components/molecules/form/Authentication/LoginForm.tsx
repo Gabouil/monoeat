@@ -76,7 +76,7 @@ export default function LoginForm({
                     setValue={setPassword}
                 />
                 <Button label={"Se connecter"} onclick={(e: React.FormEvent) => handleLogin(e)}/>
-                <Link link={"/inscription"} label={"Je n’ai pas de compte"}/></form>
+                <Link link={comeFrom ? `/inscription?redirect=${comeFrom}` : "/inscription"} label={"Je n’ai pas de compte"}/></form>
         </>
     )
 }

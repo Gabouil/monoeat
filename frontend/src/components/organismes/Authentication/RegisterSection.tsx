@@ -12,11 +12,21 @@ export default function RegisterSection() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const params =  new URLSearchParams(document.location.search).get("redirect") || "/";
+
+    const returnBack = () => {
+        switch (params) {
+            case "menu":
+                return "/menu";
+            default:
+                return "/";
+        }
+    }
 
     return (
         <section className="authentication">
             <div className={"authentication__header"}>
-                <NavLink to={"/"}><Chevron/></NavLink>
+                <NavLink to={returnBack()}><Chevron/></NavLink>
                 <h1>Créer son compte</h1>
 
             </div>
@@ -34,6 +44,7 @@ export default function RegisterSection() {
                     setPassword={setPassword}
                     confirmPassword={confirmPassword}
                     setConfirmPassword={setConfirmPassword}
+                    comeFrom={params}
                 />
             </div>
         </section>

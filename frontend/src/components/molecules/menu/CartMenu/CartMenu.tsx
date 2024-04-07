@@ -2,7 +2,9 @@ import "./CartMenu.scss";
 import React, {useEffect, useState} from "react";
 import {useCart} from "../../../../context/CartContext.tsx";
 import Button from "../../../atomes/buttons/Button/Button.tsx";
+import {useUser} from "../../../../context/UserContext.tsx";
 
+import {useNavigate} from 'react-router-dom';
 
 type Cart = {
     id: string;
@@ -13,6 +15,12 @@ type Cart = {
 }
 
 export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+    const navigate = useNavigate();
+    const userContext = useUser();
+    if (!userContext) {
+        throw new Error("UserContext is not initialized");
+    }
+
     const CartContext = useCart()
     const [cart, setCart] = useState<Cart[]>([]);
     useEffect(() => {
@@ -36,6 +44,14 @@ export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.
                 newCart.splice(existingProductIndex, 1);
             }
             CartContext.setCart(newCart);
+        }
+    }
+
+    const validateCart = () => {
+        if (userContext.user) {
+            navigate("/information");
+        } else {
+            navigate("/connexion?redirect=menu");
         }
     }
     return (
@@ -80,14 +96,16 @@ export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.
                         )
                     })}
                 </div>
-                <footer className="cart_menu__container__footer">
-                    <div>
-                        <Button
-                            label={"Valider le panier"}
-                            onclick={() => setIsOpen(false)}
-                        />
-                    </div>
-                </footer>
+                {window.location.pathname == "/menu" && (
+                    <footer className="cart_menu__container__footer">
+                        <div>
+                            <Button
+                                label={"Valider le panier"}
+                                onclick={validateCart}
+                            />
+                        </div>
+                    </footer>
+                )}
             </div>
         </div>
     )

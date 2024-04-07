@@ -4,7 +4,6 @@ import LogoLight from "../../../../assets/LogoLight.svg";
 import LogoDark from "../../../../assets/LogoDark.svg";
 import {NavLink} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {useUser} from "../../../../context/UserContext.tsx";
 import Chevron from "../../../../assets/pictos/chevron.tsx";
 import Cart from "../../../../assets/pictos/cart.tsx";
 import CartMenu from "../CartMenu/CartMenu.tsx";
@@ -17,10 +16,6 @@ export default function HeaderMenu({section}: props) {
     const themeContext = useTheme();
     const theme = themeContext ? themeContext.theme : "light";
     const [cartIsOpen, setCartIsOpen] = useState(false);
-    const userContext = useUser();
-    if (!userContext) {
-        throw new Error("UserContext is not initialized");
-    }
     const CartContext = useCart()
     const cart = CartContext ? CartContext.cart : [];
 

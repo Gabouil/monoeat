@@ -8,12 +8,20 @@ export default function LoginSection() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const params =  new URLSearchParams(document.location.search).get("redirect") || "/";
 
-
+    const returnBack = () => {
+        switch (params) {
+            case "menu":
+                return "/menu";
+            default:
+                return "/";
+        }
+    }
     return (
         <section className="authentication">
             <div className={"authentication__header"}>
-                <NavLink to={"/"}><Chevron/></NavLink>
+                <NavLink to={returnBack()}><Chevron/></NavLink>
                 <h1>Se connecter</h1>
             </div>
 
@@ -23,6 +31,7 @@ export default function LoginSection() {
                     setEmail={setEmail}
                     password={password}
                     setPassword={setPassword}
+                    comeFrom={params}
                 />
             </div>
         </section>

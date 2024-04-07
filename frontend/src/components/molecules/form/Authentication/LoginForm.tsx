@@ -12,6 +12,7 @@ type defaultProps = {
     setEmail: React.Dispatch<React.SetStateAction<string>>
     password: string,
     setPassword: React.Dispatch<React.SetStateAction<string>>
+    comeFrom: string
 }
 
 export default function LoginForm({
@@ -19,9 +20,20 @@ export default function LoginForm({
                                       setEmail,
                                       password,
                                       setPassword,
+                                      comeFrom
                                   }: defaultProps) {
     const login = useLogin();
     const [error, setError] = useState<string[]>([]);
+
+    const navigateTo = () => {
+        switch (comeFrom) {
+            case "menu":
+                return "/information";
+            default:
+                return "/";
+
+        }
+    }
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -31,7 +43,7 @@ export default function LoginForm({
             setError([result.data.error]);
         } else {
             Cookies.set('token', result.token, {expires: 14});
-            return window.location.href = '/';
+            return window.location.href = navigateTo();
         }
     }
 

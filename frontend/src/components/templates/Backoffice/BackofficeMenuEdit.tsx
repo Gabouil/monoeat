@@ -212,7 +212,7 @@ export default function BackofficeMenuEdit() {
             setNotification([result.data.error]);
         } else {
             console.log('MenuSection update:', result);
-            setNotificationTitle("Information");
+            setNotificationTitle("Tunnel");
             setNotification(["Le menu a bien été enregistré"]);
         }
         setTimeout(() => {

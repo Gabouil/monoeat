@@ -131,15 +131,15 @@ export default function Information() {
     return (
         <>
             <HeaderMenu section={"information"}/>
-            <main className={"information_page"}>
+            <main className={"tunnel_page"}>
                 <Notification
                     title={"Erreur de formulaire"}
                     contents={error}
                     setContent={setError}
                     type={"alert"}
                 />
-                <div className={"information_page__content"}>
-                    <div className={"information_page__content__form"}>
+                <div className={"tunnel_page__content"}>
+                    <div className={"tunnel_page__content__item"}>
                         <h2>Informations de facturation</h2>
                         <InformationForm
                             firstname={firstname}
@@ -163,7 +163,7 @@ export default function Information() {
                             email={email}
                             setEmail={setEmail}
                         />
-                        <div className={"information_page__content__form__another_address"}>
+                        <div className={"tunnel_page__content__item__another_address"}>
                             <SwitchButton
                                 name={"anotherAddress"}
                                 value={anotherAddress}
@@ -174,7 +174,7 @@ export default function Information() {
                         </div>
                     </div>
                     {anotherAddress && (
-                        <div className={"information_page__content__form"}>
+                        <div className={"tunnel_page__content__item"}>
                             <h2>Informations de livraison</h2>
                             <InformationForm
                                 firstname={livraisonFirstname}
@@ -200,7 +200,7 @@ export default function Information() {
                             />
                         </div>
                     )}
-                    <div className={"information_page__content__comment"}>
+                    <div className={"tunnel_page__content__comment"}>
                         <Input
                             label="Commentaire (facultatif)"
                             type="text"
@@ -210,7 +210,7 @@ export default function Information() {
                             placeholder={"Commentaire"}
                         />
                     </div>
-                    <div className={"information_page__content__validation"}>
+                    <div className={"tunnel_page__content__validation"}>
                         <Button onclick={handleSubmit} label={"Aller au paiement"}/>
                     </div>
                 </div>

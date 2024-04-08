@@ -89,10 +89,8 @@ export default function PopupRecipe({date, recipe, setPreviewIsOpen}: {
             const existingProductIndex = newCart.findIndex(item => item.id === recipe._id);
 
             if (existingProductIndex >= 0) {
-                console.log(recipe)
                 newCart[existingProductIndex].quantity += nbPeople;
             } else {
-                console.log(recipe)
                 newCart.push({
                     id: recipe._id,
                     name: recipe.name,

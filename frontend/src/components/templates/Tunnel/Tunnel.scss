@@ -1,4 +1,4 @@
-.information_page {
+.tunnel_page {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,7 +13,7 @@
     width: 100%;
     padding: 1.5rem;
 
-    &__form {
+    &__item {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
@@ -26,6 +26,22 @@
         gap: 1.5rem;
         width: 100%;
         max-width: 1000px;
+      }
+
+      &__total {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 1000px;
+
+        & > div {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          max-width: 1000px;
+        }
       }
     }
   }

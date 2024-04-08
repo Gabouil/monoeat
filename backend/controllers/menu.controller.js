@@ -9,18 +9,32 @@ const create = catchAsync(async (req, res) => {
 
 const getMenu = catchAsync(async (req, res) => {
     if (req.query.category) {
-        const menu = await Menu.findOne({ date: req.params.date }).populate({
-            path: 'recipes',
-            populate: {
-                path: 'ingredients.ingredient',
-                model: 'Ingredient'
-            }
-        });
-        const recipes = menu.recipes.filter((recipe) => recipe.category === req.query.category);
-        recipes.forEach(recipe => {
-            recipe.image = "http://localhost:3000/images/" + recipe.image;
-        });
-        res.status(200).json(recipes);
+        if (req.query.category === 'all') {
+            const menu = await Menu.findOne({ date: req.params.date }).populate({
+                path: 'recipes',
+                populate: {
+                    path: 'ingredients.ingredient',
+                    model: 'Ingredient'
+                }
+            });
+            menu.recipes.forEach(recipe => {
+                recipe.image = "http://localhost:3000/images/" + recipe.image;
+            });
+            res.status(200).json(menu);
+        } else {
+            const menu = await Menu.findOne({ date: req.params.date }).populate({
+                path: 'recipes',
+                populate: {
+                    path: 'ingredients.ingredient',
+                    model: 'Ingredient'
+                }
+            });
+            const recipes = menu.recipes.filter((recipe) => recipe.category === req.query.category);
+            recipes.forEach(recipe => {
+                recipe.image = "http://localhost:3000/images/" + recipe.image;
+            });
+            res.status(200).json(recipes);
+        }
     } else {
         const menu = await Menu.findOne({date: req.params.date});
         res.status(200).json(menu);

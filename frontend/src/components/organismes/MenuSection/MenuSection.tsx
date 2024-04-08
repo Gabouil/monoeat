@@ -103,10 +103,7 @@ export default function MenuSection({type, date}: MenuSectionProps) {
             if (cart.length > 0) {
                 if (cart[0].date < new Date().toISOString().split('T')[0]) {
                     cart = [];
-                    console.log("cart cleared");
                     CartContext.setCart(cart);
-                } else {
-                    console.log("cart no cleared");
                 }
             }
         }

@@ -6,6 +6,7 @@ import {useUser} from "../../../../context/UserContext.tsx";
 
 import {useNavigate} from 'react-router-dom';
 import EmptyCart from "../../../../assets/empty_cart.tsx";
+import CartMenuProduct from "../../../atomes/CartMenuProduct/CartMenuProduct.tsx";
 
 type Cart = {
     id: string;
@@ -13,6 +14,7 @@ type Cart = {
     price: number;
     image: string;
     quantity: number;
+    date:string;
 }
 export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
     const navigate = useNavigate();
@@ -36,10 +38,8 @@ export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.
             if (cart.length > 0) {
                 if (cart[0].date < new Date().toISOString().split('T')[0]) {
                     cart = [];
-                    console.log("cart cleared");
                     CartContext.setCart(cart);
                 } else {
-                    console.log("cart no cleared");
                     setCart(CartContext.cart);
                 }
             }
@@ -54,6 +54,7 @@ export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.
                 newCart.splice(existingProductIndex, 1);
             }
             CartContext.setCart(newCart);
+            setCart(newCart);
         }
     }
 
@@ -90,25 +91,12 @@ export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.
                             Votre panier est vide
                         </p>
                     )}
-                    {cart.map((product) => {
+                    {cart.map((product:Cart) => {
                         return (
-                            <div key={product.id} className="cart_menu__container__content__product">
-                                <img src={product.image} alt={product.name}/>
-                                <div className="cart_menu__container__content__product__info">
-                                    <p className="cart_menu__container__content__product__info__name">{product.name}</p>
-                                    <div>
-                                        <div>
-                                            <p className="cart_menu__container__content__product__info__price">{product.price}€</p>
-                                            <p className="cart_menu__container__content__product__info__quantity">Quantité: {product.quantity}</p>
-                                        </div>
-                                        <Button
-                                            label={"Supprimer"}
-                                            onclick={() => deleteProduct(product)}
-                                            color={"danger"}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
+                            <CartMenuProduct
+                                product={product}
+                                deleteProduct={deleteProduct}
+                            />
                         )
                     })}
                 </div>

@@ -1,0 +1,38 @@
+.cart_menu__product {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+
+  img {
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+    border-radius: 0.3125rem;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    width: 100%;
+
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      & > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: .5rem;
+      }
+
+      & > .button {
+        width: fit-content;
+        height: fit-content;
+      }
+    }
+  }
+}

@@ -1,11 +1,9 @@
 import "./Tunnel.scss"
 import Footer from "../../molecules/global/Footer/Footer.tsx";
 import HeaderMenu from "../../molecules/menu/HeaderMenu/HeaderMenu.tsx";
-import Notification from "../../atomes/Notification/Notification.tsx";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useCart} from "../../../context/CartContext.tsx";
 import {useEffect, useState} from "react";
-import useGetMenuByDate from "../../../services/hooks/useGetMenuByDate.tsx";
 import Accordion from "../../atomes/Accordion/Accordion.tsx";
 import CartMenuProduct from "../../atomes/CartMenuProduct/CartMenuProduct.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
@@ -23,17 +21,10 @@ type Cart = {
 export default function Payment() {
     const CartContext = useCart()
     const [cart, setCart] = useState<Cart[]>(CartContext ? CartContext.cart : []);
-    const getMenu = useGetMenuByDate();
     const newDate = new Date();
     const day = newDate.getDay();
     const diff = newDate.getDate() - day + (day == 0 ? -6 : 1);
     newDate.setDate(diff)
-    const date = newDate.toISOString().split('T')[0];
-
-    const navigate = useNavigate();
-
-    const [notification, setNotification] = useState<string[]>([]);
-    const [notificationTitle, setNotificationTitle] = useState<string>("");
 
     const [openAccordionCart, setOpenAccordionCart] = useState<boolean>(false);
     const handleAccordionCartClick = () => {
@@ -42,58 +33,34 @@ export default function Payment() {
 
     const [openAccordionPayment, setOpenAccordionPayment] = useState<string | null>("Paiement par carte bancaire");
     const handleAccordionPaymentClick = (title: string) => {
-        setOpenAccordionPayment(prevTitle => prevTitle === title ? null : title);
+        setOpenAccordionPayment(title);
     };
 
-    useEffect(() => {
-        if (CartContext) {
-            setCart(CartContext.cart);
-        }
-    }, [])
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        if (cart.length > 0) {
-            (async () => {
-                let menu = await getMenu(date, 'all');
-                menu= menu.recipes
-
-                console.log("menu : ", menu);
-                const newCart: Cart[] = [];
-                const newCartDeleted: Cart[] = [];
-
-                cart.forEach(item => {
-                    const menuItem = menu.find((recipe: { _id: string }) => recipe._id === item.id);
-                    if (menuItem) {
-                        newCart.push({
-                            id: menuItem._id,
-                            name: menuItem.name,
-                            price: menuItem.price,
-                            image: menuItem.image,
-                            quantity: item.quantity,
-                            date: item.date,
-                            category: menuItem.category
-                        });
-                    } else if (menuItem === undefined) {
-                        newCartDeleted.push(item);
-                    }
-                });
-
-                const categoryOrder = ["plats", "entrées", "desserts", "autres"];
-                const sortedCart: Cart[] = newCart.sort((a: Cart, b: Cart) => {
-                    const categoryComparison = categoryOrder.indexOf(a.category || "") - categoryOrder.indexOf(b.category || "");
-                    if (categoryComparison !== 0) return categoryComparison;
-                    return a.name.localeCompare(b.name);
-                });
-                CartContext?.setCart(sortedCart);
-                setCart(sortedCart);
-
-                setNotificationTitle("Les plats suivants ne sont plus disponibles à la carte et ont étaient retirés de votre panier : ");
-                setNotification(newCartDeleted.map(item => item.name));
-            })()
-        } else {
+        const fromPath = location.state?.from
+        console.log("fromPath : ", fromPath);
+        if (fromPath !== "/information" && fromPath !== "/paiement") {
             navigate("/menu");
         }
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (CartContext && CartContext.cart && CartContext.cart.length > 0) {
+            let cart = CartContext.cart;
+            // console.log("cart : ", cart);
+            if (cart.length > 0) {
+                if (cart[0].date < new Date().toISOString().split('T')[0]) {
+                    cart = [];
+                    CartContext.setCart(cart);
+                } else {
+                    setCart(CartContext.cart);
+                }
+            }
+        }
+    }, [CartContext])
 
 
     const handleSubmit = async () => {
@@ -104,17 +71,11 @@ export default function Payment() {
             <HeaderMenu section={"paiement"}/>
 
             <main className={"tunnel_page"}>
-                <Notification
-                    title={notificationTitle ? notificationTitle : "Notification"}
-                    contents={notification}
-                    setContent={setNotification}
-                    type={'info'}
-                />
                 <div className={"tunnel_page__content"}>
                     <div className={"tunnel_page__content__item"}>
                         <h1>Résumé de la commande</h1>
                         <Accordion
-                            Title={"Récapitulatif de la commande"}
+                            Title={"Détail de la commande"}
                             Content={cart.map(item => {
                                 return (
                                     <CartMenuProduct

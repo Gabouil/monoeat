@@ -9,14 +9,14 @@ import Button from "../../atomes/buttons/Button/Button.tsx";
 import useUpdateUserById from "../../../services/hooks/useUpdateUserById.tsx";
 import {useUser} from "../../../context/UserContext.tsx";
 import Notification from "../../atomes/Notification/Notification.tsx";
-import {useNavigate} from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom';
 import useGetUserById from "../../../services/hooks/useGetUserById.tsx";
 
 export default function Information() {
+
     const UserContext = useUser();
     const UpdateUser = useUpdateUserById();
     const GetUsers = useGetUserById();
-    const navigate = useNavigate();
 
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
@@ -46,6 +46,16 @@ export default function Information() {
 
     const [error, setError] = useState<string[]>([]);
 
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        const fromPath = location.state?.from
+        console.log("fromPath : ", fromPath);
+        if (fromPath !== "/menu" && fromPath !== "/information") {
+            navigate("/menu");
+        }
+    }, []);
 
     useEffect(() => {
             (async () => {
@@ -124,7 +134,7 @@ export default function Information() {
                 setError(["Erreur lors de la mise à jour de l'utilisateur"]);
             } else {
                 console.log("User updated");
-                navigate("/paiement");
+                navigate("/paiement", { state: { from: "/information" } });
             }
         }
     }

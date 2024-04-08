@@ -6,6 +6,7 @@ import Link from "../../../atomes/buttons/Link/Link.tsx";
 import Cookies from 'js-cookie';
 import useLogin from "../../../../services/hooks/useLogin.tsx";
 import Notification from "../../../atomes/Notification/Notification.tsx";
+import {useNavigate} from "react-router-dom";
 
 type defaultProps = {
     email: string,
@@ -25,6 +26,8 @@ export default function LoginForm({
     const login = useLogin();
     const [error, setError] = useState<string[]>([]);
 
+    const navigate = useNavigate();
+
     const navigateTo = () => {
         switch (comeFrom) {
             case "menu":
@@ -43,7 +46,7 @@ export default function LoginForm({
             setError([result.data.error]);
         } else {
             Cookies.set('token', result.token, {expires: 14});
-            return window.location.href = navigateTo();
+            navigate(navigateTo(), comeFrom === "menu" ? {state: {from: "/menu"}} : {});
         }
     }
 

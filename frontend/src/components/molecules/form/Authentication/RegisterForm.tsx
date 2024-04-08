@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import useRegister from "../../../../services/hooks/useRegister.tsx";
 import useLogin from "../../../../services/hooks/useLogin.tsx";
 import Notification from "../../../atomes/Notification/Notification.tsx";
+import {useNavigate} from "react-router-dom";
 
 type defaultProps = {
     firstname: string,
@@ -46,6 +47,8 @@ export default function RegisterForm({
     const register = useRegister();
     const login = useLogin();
 
+    const navigate = useNavigate();
+
     const navigateTo = () => {
         switch (comeFrom) {
             case "menu":
@@ -80,10 +83,10 @@ export default function RegisterForm({
                 } else {
                     console.log(loginResult);
                     Cookies.set('token', loginResult.token, {expires: 14});
-                    return window.location.href = navigateTo();
+                    navigate(navigateTo(), comeFrom === "menu" ? {state: {from: "/menu"}} : {});
                 }
             } else {
-                return window.location.href = "/backoffice/users";
+                navigate(navigateTo(), comeFrom === "menu" ? {state: {from: "/menu"}} : {});
             }
         }
     }

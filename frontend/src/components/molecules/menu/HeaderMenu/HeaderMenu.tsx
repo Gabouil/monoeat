@@ -11,8 +11,9 @@ import {useCart} from "../../../../context/CartContext.tsx";
 
 type props = {
     section: "menu" | "information" | "paiement";
+    date?: string;
 }
-export default function HeaderMenu({section}: props) {
+export default function HeaderMenu({section, date}: props) {
     const themeContext = useTheme();
     const theme = themeContext ? themeContext.theme : "light";
     const [cartIsOpen, setCartIsOpen] = useState(false);
@@ -91,7 +92,7 @@ export default function HeaderMenu({section}: props) {
                     </div>
                 </div>
             </header>
-            {cartIsOpen && <CartMenu setIsOpen={setCartIsOpen}/>}
+            {cartIsOpen && <CartMenu setIsOpen={setCartIsOpen} date={date}/>}
         </>
     );
 }

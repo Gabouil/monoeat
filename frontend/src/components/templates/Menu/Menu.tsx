@@ -17,7 +17,7 @@ export default function Menu() {
     const menuTypes = ["plats", "entrées", "desserts", "autres"];
     return (
         <>
-            <HeaderMenu section={"menu"}/>
+            <HeaderMenu section={"menu"} date={date}/>
             <main className={"menu__page"}>
                 <header className={"menu__page__header"}>
                     <div className={"menu__page__header__buttons"}>

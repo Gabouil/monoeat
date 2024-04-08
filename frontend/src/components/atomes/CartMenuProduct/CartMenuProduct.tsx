@@ -24,7 +24,7 @@ export default function CartMenuProduct({product, deleteProduct}: Props) {
                         <p className="cart_menu__product__info__price">{product.price * product.quantity}€</p>
                         <p className="cart_menu__product__info__quantity">Quantité: {product.quantity}</p>
                     </div>
-                    {deleteProduct &&
+                    {deleteProduct && window.location.pathname == "/menu"  &&
                         <Button
                             label={"Supprimer"}
                             onclick={() => deleteProduct(product)}

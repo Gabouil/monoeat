@@ -66,6 +66,7 @@ export default function LoginForm({
                     name={"email"}
                     value={email}
                     setValue={setEmail}
+                    required={true}
                 />
                 <Input
                     label={"Mot de passe"}
@@ -74,6 +75,7 @@ export default function LoginForm({
                     name={"password"}
                     value={password}
                     setValue={setPassword}
+                    required={true}
                 />
                 <Button label={"Se connecter"} onclick={(e: React.FormEvent) => handleLogin(e)}/>
                 <Link link={comeFrom ? `/inscription?redirect=${comeFrom}` : "/inscription"} label={"Je n’ai pas de compte"}/></form>

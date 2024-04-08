@@ -1,5 +1,6 @@
 import {AxiosInstance} from "../axios/axiosInstance";
 
+
 interface DeliveryInfo {
     firstname: string;
     lastname: string;
@@ -22,27 +23,31 @@ interface FormData {
     password?: string;
     favorites?: string[];
     role?: 'user' | 'admin';
+    billingInfo?: DeliveryInfo;
     deliveryInfo?: DeliveryInfo;
 }
 export default function useUpdateUserById() {
     return async (formData: FormData) => {
         try {
+            const data = new FormData();
+            data.append('id', formData.id);
+            data.append('firstname', formData.firstname || '');
+            data.append('lastname', formData.lastname || '');
+            data.append('email', formData.email || '');
+            data.append('phone', formData.phone || '');
+            data.append('password', formData.password || '');
+            data.append('favorites', JSON.stringify(formData.favorites || undefined));
+            data.append('role', formData.role || '');
+            data.append('billingInfo', JSON.stringify(formData.billingInfo || undefined));
+            data.append('deliveryInfo', JSON.stringify(formData.deliveryInfo || undefined));
+
             const res = await AxiosInstance({
                 url: '/users/' + formData.id,
                 method: 'patch',
                 headers: {
                     'Content-Type':  'multipart/form-data'
                 },
-                data: {
-                    firstname: formData.firstname,
-                    lastname: formData.lastname,
-                    email: formData.email,
-                    phone: formData.phone,
-                    password: formData.password,
-                    favorites: formData.favorites,
-                    role: formData.role,
-                    deliveryInfo: formData.deliveryInfo
-                }
+                data: data
             });
             return res.data;
         } catch (err:any) {

@@ -9,34 +9,36 @@ interface Props {
     color?: 'danger' | 'success' | 'default'
     size?: 'small' | 'medium' | 'large'
     onclick?: (e: React.FormEvent) => void
+    disabled?: boolean
 }
 
 export default function Button({
                                    type = "button",
-                                   link="",
+                                   link = "",
                                    label = "",
                                    color = "default",
                                    size = 'medium',
-                                   onclick = () => {}
+                                   onclick = () => {},
+                                   disabled = false
                                }: Props) {
-    const classes = `button button--${color} button--${size} svg--reverse`;
+    const classes = `button button--${color} button--${size} svg--reverse ${disabled ? 'button--disabled' : ''}`;
 
     return (
         <>
             {type === 'button' && (
-                <button className={classes } onClick={onclick}>
+                <button className={classes} onClick={onclick} disabled={disabled}>
                     {label}
                 </button>
             )}
 
             {type === 'NavLink' && (
-                <NavLink to={link} className={classes}>
+                <NavLink to={disabled ? '' : link} className={classes}>
                     {label}
                 </NavLink>
             )}
 
             {type === 'a' && (
-                <a href={link} className={classes}>
+                <a href={disabled ? '' : link} className={classes}>
                     {label}
                 </a>
             )}

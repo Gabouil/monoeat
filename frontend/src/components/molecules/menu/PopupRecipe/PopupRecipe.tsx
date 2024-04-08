@@ -58,7 +58,8 @@ type Recipe = {
     }
 }
 
-export default function PopupRecipe({recipe, setPreviewIsOpen}: {
+export default function PopupRecipe({date, recipe, setPreviewIsOpen}: {
+    date: string,
     recipe: Recipe,
     setPreviewIsOpen: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
 }) {
@@ -97,7 +98,8 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
                     name: recipe.name,
                     price: recipe.price,
                     image: recipe.image,
-                    quantity: nbPeople
+                    quantity: nbPeople,
+                    date: date
                 });
             }
 
@@ -236,6 +238,7 @@ export default function PopupRecipe({recipe, setPreviewIsOpen}: {
                                 name={"nbPeople"}
                                 value={nbPeople}
                                 setValue={setNbPeople}
+                                required={true}
                             />
                             <button onClick={() => changePeople("add")}>
                                 <Add/>

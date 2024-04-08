@@ -34,6 +34,7 @@ export default function Footer({
                             name="newsletter"
                             setValue={setEmail}
                             value={email}
+                            required={true}
                         />
                         <Button type="button" label="S'inscrire"/>
                     </form>

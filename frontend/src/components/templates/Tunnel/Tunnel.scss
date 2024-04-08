@@ -1,3 +1,32 @@
-.menu__page {
+.information_page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5rem 0;
 
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 1000px;
+    width: 100%;
+    padding: 1.5rem;
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1000px;
+
+      &__another_address {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 1000px;
+      }
+    }
+  }
 }

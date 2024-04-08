@@ -5,6 +5,7 @@ import Button from "../../../atomes/buttons/Button/Button.tsx";
 import {useUser} from "../../../../context/UserContext.tsx";
 
 import {useNavigate} from 'react-router-dom';
+import EmptyCart from "../../../../assets/empty_cart.tsx";
 
 type Cart = {
     id: string;
@@ -13,7 +14,6 @@ type Cart = {
     image: string;
     quantity: number;
 }
-
 export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
     const navigate = useNavigate();
     const userContext = useUser();
@@ -32,7 +32,17 @@ export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.
 
     useEffect(() => {
         if (CartContext) {
-            setCart(CartContext.cart);
+            let cart = CartContext.cart;
+            if (cart.length > 0) {
+                if (cart[0].date < new Date().toISOString().split('T')[0]) {
+                    cart = [];
+                    console.log("cart cleared");
+                    CartContext.setCart(cart);
+                } else {
+                    console.log("cart no cleared");
+                    setCart(CartContext.cart);
+                }
+            }
         }
     }, [CartContext])
 
@@ -74,6 +84,12 @@ export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.
                     </div>
                 </header>
                 <div className="cart_menu__container__content">
+                    {cart.length === 0 && (
+                        <p className={"cart_menu__container__content__empty"}>
+                            <EmptyCart/>
+                            Votre panier est vide
+                        </p>
+                    )}
                     {cart.map((product) => {
                         return (
                             <div key={product.id} className="cart_menu__container__content__product">
@@ -102,6 +118,7 @@ export default function CartMenu({setIsOpen}: { setIsOpen: React.Dispatch<React.
                             <Button
                                 label={"Valider le panier"}
                                 onclick={validateCart}
+                                disabled={cart.length === 0}
                             />
                         </div>
                     </footer>

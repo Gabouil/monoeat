@@ -1,0 +1,13 @@
+.information_form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+
+  &--row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
+  }
+}

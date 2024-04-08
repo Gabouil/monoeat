@@ -96,6 +96,14 @@
       flex-direction: column;
       gap: 1.25rem;
 
+      &__empty {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-self: center;
+        justify-self: center;
+        text-align: center;
+      }
       &__product {
         display: flex;
         gap: 1rem;

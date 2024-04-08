@@ -7,8 +7,9 @@ interface IThemeContext {
         price: number;
         image: string;
         quantity: number;
+        date: string;
     }[]
-    setCart: (data: { id: string; name: string; price: number; image: string; quantity: number }[]) => void;
+    setCart: (data: { id: string; name: string; price: number; image: string; quantity: number, date:string }[]) => void;
 }
 
 const CartContext = createContext<IThemeContext | undefined>(undefined);

@@ -11,6 +11,7 @@ import {useUser} from "../../../context/UserContext.tsx";
 import useGetUserById from "../../../services/hooks/useGetUserById.tsx";
 import useUpdateUserById from "../../../services/hooks/useUpdateUserById.tsx";
 import PopupRecipe from "../../molecules/menu/PopupRecipe/PopupRecipe.tsx";
+import {useCart} from "../../../context/CartContext.tsx";
 
 interface MenuSectionProps {
     type: string;
@@ -93,8 +94,24 @@ type User = {
     role: 'user' | 'admin';
     deliveryInfo: DeliveryInfo;
 }
-
 export default function MenuSection({type, date}: MenuSectionProps) {
+    const CartContext = useCart()
+
+    useEffect(() => {
+        if (CartContext) {
+            let cart = CartContext.cart;
+            if (cart.length > 0) {
+                if (cart[0].date < new Date().toISOString().split('T')[0]) {
+                    cart = [];
+                    console.log("cart cleared");
+                    CartContext.setCart(cart);
+                } else {
+                    console.log("cart no cleared");
+                }
+            }
+        }
+    }, [CartContext])
+
     const getMenu = useGetMenuByDate();
     const getUserById = useGetUserById();
     const updateUserById = useUpdateUserById();
@@ -242,6 +259,7 @@ export default function MenuSection({type, date}: MenuSectionProps) {
                                 {
                                     previewIsOpen[recipe._id] &&
                                     <PopupRecipe
+                                        date={date}
                                         recipe={recipe}
                                         setPreviewIsOpen={setPreviewIsOpen}
                                     />

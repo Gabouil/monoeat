@@ -108,6 +108,7 @@ export default function RegisterForm({
                         setValue={setFirstname}
                         color
                         specialCharOFF={true}
+                        required={true}
                     />
                     <Input
                         label={"Nom"}
@@ -118,6 +119,7 @@ export default function RegisterForm({
                         setValue={setLastname}
                         color
                         specialCharOFF={true}
+                        required={true}
                     />
                 </div>
                 <Input
@@ -128,6 +130,7 @@ export default function RegisterForm({
                     value={email}
                     setValue={setEmail}
                     color
+                    required={true}
                 />
                 <Input
                     label={"Téléphone"}
@@ -137,6 +140,7 @@ export default function RegisterForm({
                     value={phone}
                     setValue={setPhone}
                     color
+                    required={true}
                 />
                 <Input
                     label={"Mot de passe"}
@@ -146,6 +150,7 @@ export default function RegisterForm({
                     value={password}
                     setValue={setPassword}
                     color
+                    required={true}
                 />
                 <Input
                     label={"Confirmer le mot de passe"}
@@ -156,6 +161,7 @@ export default function RegisterForm({
                     setValue={setConfirmPassword}
                     color
                     cfPasswordValue={password}
+                    required={true}
                 />
                 <Button label={backoffice?"Créer l'utilisateur":"S'inscrire"} onclick={(e: React.FormEvent) => handleRegister(e)}/>
                 {!backoffice &&

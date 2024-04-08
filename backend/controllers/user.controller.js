@@ -23,20 +23,37 @@ const getByID = catchAsync(async (req, res) => {
     }
 });
 
-const updateByID = catchAsync(async (req, res) => {
-    console.log("req.body = ", req.body);
-    console.log("req.params = ", req.params);
-    const updateData = {...req.body};
-    if (req.body['favorites[]']) {
-        updateData.favorites = req.body['favorites[]'];
+const updateByID = catchAsync( async (req, res) => {
+    const data = req.body;
+    console.log("updatedUser = ", {
+        firstname: data.firstname ? data.firstname : undefined,
+        lastname: data.lastname ? data.lastname : undefined,
+        email: data.email ? data.email : undefined,
+        phone: data.phone ? data.phone : undefined,
+        password: data.password ? await bcrypt.hash(data.password, 10) : undefined,
+        favorites: data.favorites !== 'undefined' ? JSON.parse(data.favorites) : undefined,
+        role: data.role ? data.role : undefined,
+        billingInfo: data.billingInfo !== 'undefined' ? JSON.parse(data.billingInfo) : undefined,
+        deliveryInfo: data.deliveryInfo !== 'undefined' ? JSON.parse(data.deliveryInfo) : undefined,
+    });
+
+    const updated = await User.findByIdAndUpdate(req.params.id, {
+        firstname: data.firstname ? data.firstname : undefined,
+        lastname: data.lastname ? data.lastname : undefined,
+        email: data.email ? data.email : undefined,
+        phone: data.phone ? data.phone : undefined,
+        password: data.password ? await bcrypt.hash(data.password, 10) : undefined,
+        favorites: data.favorites !== 'undefined' ? JSON.parse(data.favorites) : undefined,
+        role: data.role ? data.role : undefined,
+        billingInfo: data.billingInfo !== 'undefined' ? JSON.parse(data.billingInfo) : undefined,
+        deliveryInfo: data.deliveryInfo !== 'undefined' ? JSON.parse(data.deliveryInfo) : undefined,
+    });
+
+    if (!updated) {
+        return res.status(404).send('User not found');
     }
 
-    const user = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
-    if (user) {
-        res.send(user);
-    } else {
-        res.status(404).send('Not Found');
-    }
+    res.status(200).send(updated);
 });
 
 const deleteByID = catchAsync(async (req, res) => {

@@ -52,6 +52,7 @@ export default function Information() {
     useEffect(() => {
         const fromPath = location.state?.from
         console.log("fromPath : ", fromPath);
+        console.log("location : ", location);
         if (fromPath !== "/menu" && fromPath !== "/information") {
             navigate("/menu");
         }

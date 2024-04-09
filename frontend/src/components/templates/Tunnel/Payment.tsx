@@ -49,21 +49,14 @@ export default function Payment() {
 
     useEffect(() => {
         if (CartContext && CartContext.cart && CartContext.cart.length > 0) {
-            let cart = CartContext.cart;
-            // console.log("cart : ", cart);
-            if (cart.length > 0) {
-                if (cart[0].date < new Date().toISOString().split('T')[0]) {
-                    cart = [];
-                    CartContext.setCart(cart);
-                } else {
-                    setCart(CartContext.cart);
-                }
-            }
+            setCart(CartContext.cart);
         }
     }, [CartContext])
 
 
     const handleSubmit = async () => {
+        // setCart([]);
+        // CartContext?.setCart([]);
         navigate("/confirmation")
     }
     return (

@@ -101,13 +101,11 @@ export default function MenuSection({type, date}: MenuSectionProps) {
         if (CartContext) {
             let cart = CartContext.cart;
             if (cart.length > 0) {
-                if (cart[0].date < new Date().toISOString().split('T')[0]) {
-                    cart = [];
-                    CartContext.setCart(cart);
-                }
+                cart = cart.filter((item) => item.date === date);
+                CartContext.setCart(cart);
             }
         }
-    }, [CartContext])
+    }, [])
 
     const getMenu = useGetMenuByDate();
     const getUserById = useGetUserById();

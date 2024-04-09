@@ -47,15 +47,7 @@ export default function CartMenu({setIsOpen, date}: Props) {
 
     useEffect(() => {
         if (CartContext) {
-            let cart = CartContext.cart;
-            if (cart.length > 0) {
-                if (cart[0].date < new Date().toISOString().split('T')[0]) {
-                    cart = [];
-                    CartContext.setCart(cart);
-                } else {
-                    setCart(CartContext.cart);
-                }
-            }
+            setCart(CartContext.cart);
         }
     }, [CartContext])
 

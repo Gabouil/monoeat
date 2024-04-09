@@ -44,7 +44,6 @@ export default function HeaderMenu({section, date}: props) {
     }
 
 
-
     useEffect(() => {
         isActive();
     }, [section]);
@@ -52,11 +51,17 @@ export default function HeaderMenu({section, date}: props) {
     const goBack = () => {
         switch (section) {
             case "menu":
-                return "/";
+                return {
+                    pathname: '/',
+                };
             case "information":
-                return "/menu";
+                return {
+                    pathname: '/menu',
+                };
             case "paiement":
-                return "/information";
+                return {
+                    pathname: "/information"
+                };
             default:
                 return "/";
         }
@@ -68,26 +73,32 @@ export default function HeaderMenu({section, date}: props) {
                     <div className="header__menu__container__logo">
                         <NavLink to="/" className="header__menu__container__logo--link">
                             {theme === "light" ? (
-                                <img src={LogoLight} className={"header__menu__container__logo--img"} alt={"Logo MonoEat"}/>
+                                <img src={LogoLight} className={"header__menu__container__logo--img"}
+                                     alt={"Logo MonoEat"}/>
 
                             ) : (
-                                <img src={LogoDark} className={"header__menu__container__logo--img"} alt={"Logo MonoEat"}/>
+                                <img src={LogoDark} className={"header__menu__container__logo--img"}
+                                     alt={"Logo MonoEat"}/>
                             )}
                         </NavLink>
                     </div>
                     <div className="header__menu__container__content">
                         <div>
-                            <NavLink to={goBack()}>
+                            <NavLink to={goBack()} state={section == "paiement" ? {from: "/menu"} : {}}>
                                 <Chevron/> Retour
                             </NavLink>
                         </div>
                         <ul className="header__menu__container__content__progress">
-                            <li className={"header__menu__container__content__progress__item " + activeMenu}><span>Menu</span></li>
-                            <li className={"header__menu__container__content__progress__item " + activeInformation}><span>Information</span></li>
-                            <li className={"header__menu__container__content__progress__item " + activePaiement}><span>Paiement</span></li>
+                            <li className={"header__menu__container__content__progress__item " + activeMenu}>
+                                <span>Menu</span></li>
+                            <li className={"header__menu__container__content__progress__item " + activeInformation}>
+                                <span>Information</span></li>
+                            <li className={"header__menu__container__content__progress__item " + activePaiement}>
+                                <span>Paiement</span></li>
                         </ul>
                         <div>
-                            <button onClick={() => setCartIsOpen(!cartIsOpen)}><Cart/> {cart.length > 0 &&<span></span>}</button>
+                            <button onClick={() => setCartIsOpen(!cartIsOpen)}><Cart/> {cart.length > 0 &&
+                                <span></span>}</button>
                         </div>
                     </div>
                 </div>

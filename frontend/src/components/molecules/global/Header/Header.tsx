@@ -28,7 +28,7 @@ export default function Header() {
             nav.classList.toggle("header__container__content__nav--open");
         }
     }
-    console.log(userContext);
+
     return (
         <>
             <header className="header">

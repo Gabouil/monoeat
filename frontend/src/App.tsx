@@ -21,6 +21,7 @@ import BackofficeMenuEdit from "./components/templates/Backoffice/BackofficeMenu
 import Menu from "./components/templates/Menu/Menu.tsx";
 import Information from "./components/templates/Tunnel/Information.tsx";
 import Payment from "./components/templates/Tunnel/Payment.tsx";
+import Confirmation from "./components/templates/Tunnel/Confirmation.tsx";
 
 function App() {
 
@@ -45,6 +46,9 @@ function App() {
                 }/>
                 <Route path="/paiement" element={
                     <Payment/>
+                }/>
+                <Route path="/confirmation" element={
+                    <Confirmation/>
                 }/>
                 <Route path="/a-propos" element={
                     <Home/>

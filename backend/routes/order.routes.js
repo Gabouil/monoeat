@@ -6,6 +6,7 @@ const orderController = require('../controllers/order.controller');
 router.post('/', orderController.create);
 router.get('/', orderController.getAll);
 router.get('/:id', orderController.getByID);
+router.get('/user/:id', orderController.getLastOrderByUser);
 router.patch('/:id', orderController.updateByID);
 router.delete('/:id', orderController.deleteByID);
 

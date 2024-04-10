@@ -7,6 +7,8 @@ import {useEffect, useState} from "react";
 import Accordion from "../../atomes/Accordion/Accordion.tsx";
 import CartMenuProduct from "../../atomes/CartMenuProduct/CartMenuProduct.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
+import useCreateOrder from "../../../services/hooks/useCreateOrder.tsx";
+import {useUser} from "../../../context/UserContext.tsx";
 
 type Cart = {
     id: string;
@@ -19,6 +21,8 @@ type Cart = {
 }
 
 export default function Payment() {
+    const CreateOrder = useCreateOrder();
+    const UserContext = useUser();
     const CartContext = useCart()
     const [cart, setCart] = useState<Cart[]>(CartContext ? CartContext.cart : []);
     const newDate = new Date();
@@ -55,14 +59,24 @@ export default function Payment() {
 
 
     const handleSubmit = async () => {
-        // setCart([]);
-        // CartContext?.setCart([]);
-        navigate("/confirmation")
+        if (UserContext?.user) {
+            await CreateOrder({
+                user: UserContext.user.userId,
+                recipes: CartContext?.cart.map(item => {
+                    return {
+                        id: item.id,
+                        quantity: item.quantity,
+                    }
+                }) || [],
+            })
+        }
+        setCart([]);
+        CartContext?.setCart([]);
+        navigate("/confirmation", {state: {from: "/paiement"}});
     }
     return (
         <>
             <HeaderMenu section={"paiement"}/>
-
             <main className={"tunnel_page"}>
                 <div className={"tunnel_page__content"}>
                     <div className={"tunnel_page__content__item"}>

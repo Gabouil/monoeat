@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
     orderNumber: {
-        type: String,
+        type: Number,
         required: [true, 'Order must have a number'],
         unique: true,
     },
@@ -13,9 +13,9 @@ const orderSchema = new mongoose.Schema({
     },
     recipes : [
         {
-            recipe: {
+            id: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Product',
+                ref: 'Recipe',
                 required: [true, 'Order must belong to a product']
             },
             quantity: {
@@ -27,16 +27,18 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['pending', 'paid', 'delivered', 'cancelled'],
-        default: 'pending'
+        default: 'pending',
+        required: [true, 'Order must have a status']
     },
-    total: {
+    totalPrice: {
         type: Number,
-        default: 0
+        default: 0,
+        required: [true, 'Order must have a total price']
     },
     deliveryInfo: {
         type: {
-            firstname: String,
-            lastname: String,
+            firstName: String,
+            lastName: String,
             email: String,
             phone: String,
             company: String,
@@ -46,7 +48,24 @@ const orderSchema = new mongoose.Schema({
             postalCode: String,
             city: String,
         },
+        required: [true, 'Order must have a delivery info']
     },
+    billingInfo: {
+        type: {
+            firstName: String,
+            lastName: String,
+            email: String,
+            phone: String,
+            company: String,
+            country: String,
+            address: String,
+            address2: String,
+            postalCode: String,
+            city: String,
+        },
+        required: [true, 'Order must have a billing info']
+
+    }
 }, {
     timestamps: true
 });

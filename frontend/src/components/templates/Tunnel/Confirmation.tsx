@@ -1,5 +1,4 @@
 import "./Tunnel.scss"
-import HeaderMenu from "../../molecules/menu/HeaderMenu/HeaderMenu.tsx";
 import Footer from "../../molecules/global/Footer/Footer.tsx";
 import useGetLastOrderByUserId from "../../../services/hooks/useGetLastOrderByUserId.tsx";
 import {useUser} from "../../../context/UserContext.tsx";
@@ -77,7 +76,7 @@ type Order = {
 export default function Confirmation() {
     const LastOrderByUser = useGetLastOrderByUserId();
     const UserContext = useUser();
-    const [order, setOrder] = useState<Order>(null);
+    const [order, setOrder] = useState<Order>();
 
 
     const navigate = useNavigate();
@@ -143,6 +142,109 @@ export default function Confirmation() {
                                 ))}
                                 </tbody>
                             </table>
+                            <div className={"tunnel_page__content__item__delivery"}>
+                                <table>
+                                    <thead>
+                                    <tr className={"table__color--1"}>
+                                        <th>Informations de facturation</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr className={"table__color--2"}>
+                                        <td>Prénom</td>
+                                        <td>{order.billingInfo.firstname}</td>
+                                    </tr>
+                                    <tr className={"table__color--1"}>
+                                        <td>Nom</td>
+                                        <td>{order.billingInfo.lastname}</td>
+                                    </tr>
+                                    <tr className={"table__color--2"}>
+                                        <td>Email</td>
+                                        <td>{order.billingInfo.email}</td>
+                                    </tr>
+                                    <tr className={"table__color--1"}>
+                                        <td>Téléphone</td>
+                                        <td>{order.billingInfo.phone}</td>
+                                    </tr>
+                                    <tr className={"table__color--2"}>
+                                        <td>Entreprise</td>
+                                        <td>{order.billingInfo.company}</td>
+                                    </tr>
+                                    <tr className={"table__color--1"}>
+                                        <td>Pays</td>
+                                        <td>{order.billingInfo.country}</td>
+                                    </tr>
+                                    <tr className={"table__color--2"}>
+                                        <td>Adresse</td>
+                                        <td>{order.billingInfo.address}</td>
+                                    </tr>
+                                    <tr className={"table__color--1"}>
+                                        <td>Adresse 2</td>
+                                        <td>{order.billingInfo.address2}</td>
+                                    </tr>
+                                    <tr className={"table__color--2"}>
+                                        <td>Code postal</td>
+                                        <td>{order.billingInfo.postalCode}</td>
+                                    </tr>
+                                    <tr className={"table__color--1"}>
+                                        <td>Ville</td>
+                                        <td>{order.billingInfo.city}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <table>
+                                    <thead>
+                                    <tr className={"table__color--1"}>
+                                        <th>Informations de livraison</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr className={"table__color--2"}>
+                                        <td>Prénom</td>
+                                        <td>{order.deliveryInfo.firstname}</td>
+                                    </tr>
+                                    <tr className={"table__color--1"}>
+                                        <td>Nom</td>
+                                        <td>{order.deliveryInfo.lastname}</td>
+                                    </tr>
+                                    <tr className={"table__color--2"}>
+                                        <td>Email</td>
+                                        <td>{order.deliveryInfo.email}</td>
+                                    </tr>
+                                    <tr className={"table__color--1"}>
+                                        <td>Téléphone</td>
+                                        <td>{order.deliveryInfo.phone}</td>
+                                    </tr>
+                                    <tr className={"table__color--2"}>
+                                        <td>Entreprise</td>
+                                        <td>{order.deliveryInfo.company}</td>
+                                    </tr>
+                                    <tr className={"table__color--1"}>
+                                        <td>Pays</td>
+                                        <td>{order.deliveryInfo.country}</td>
+                                    </tr>
+                                    <tr className={"table__color--2"}>
+                                        <td>Adresse</td>
+                                        <td>{order.deliveryInfo.address}</td>
+                                    </tr>
+                                    <tr className={"table__color--1"}>
+                                        <td>Adresse 2</td>
+                                        <td>{order.deliveryInfo.address2}</td>
+                                    </tr>
+                                    <tr className={"table__color--2"}>
+                                        <td>Code postal</td>
+                                        <td>{order.deliveryInfo.postalCode}</td>
+                                    </tr>
+                                    <tr className={"table__color--1"}>
+                                        <td>Ville</td>
+                                        <td>{order.deliveryInfo.city}</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
                             <div>
                                 <Button
                                     label={"Retour à l'accueil"}

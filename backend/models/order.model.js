@@ -37,8 +37,8 @@ const orderSchema = new mongoose.Schema({
     },
     deliveryInfo: {
         type: {
-            firstName: String,
-            lastName: String,
+            firstname: String,
+            lastname: String,
             email: String,
             phone: String,
             company: String,
@@ -52,8 +52,8 @@ const orderSchema = new mongoose.Schema({
     },
     billingInfo: {
         type: {
-            firstName: String,
-            lastName: String,
+            firstname: String,
+            lastname: String,
             email: String,
             phone: String,
             company: String,

@@ -27,19 +27,27 @@ const create = catchAsync(async (req, res) => {
     const user = await User.findById(order.user);
     order.deliveryInfo = user.deliveryInfo;
     order.billingInfo = user.billingInfo;
+    console.log("order = ", order.deliveryInfo);
+    console.log("order = ", order.billingInfo);
 
     const newOrder = await Order.create(order);
-    console.log("newOrder = ", newOrder);
-    res.send(newOrder);
+    console.log("newOrder = ", newOrder.deliveryInfo);
+    console.log("newOrder = ", newOrder.billingInfo);
+
+    if (newOrder) {
+        res.status(201).send(newOrder);
+    } else {
+        res.status(400).send('Bad Request');
+    }
 });
 
 const getAll = catchAsync(async (req, res) => {
-    const orders = await Order.find(req.query);
+    const orders = await Order.find(req.query).populate("user");
     res.send(orders);
 });
 
 const getByID = catchAsync(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate('user recipes.id');
     if (order) {
         res.send(order);
     } else {

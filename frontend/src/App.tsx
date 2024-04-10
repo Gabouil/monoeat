@@ -22,6 +22,7 @@ import Menu from "./components/templates/Menu/Menu.tsx";
 import Information from "./components/templates/Tunnel/Information.tsx";
 import Payment from "./components/templates/Tunnel/Payment.tsx";
 import Confirmation from "./components/templates/Tunnel/Confirmation.tsx";
+import BackofficeOrderId from "./components/templates/Backoffice/BackofficeOrderId.tsx";
 
 function App() {
 
@@ -96,6 +97,9 @@ function App() {
                 }/>
                 <Route path="/backoffice/ingredients/:id" element={
                     <BackofficeIngredientId/>
+                }/>
+                <Route path="/backoffice/orders/:id" element={
+                    <BackofficeOrderId/>
                 }/>
                 <Route path="/backoffice/orders" element={
                     <BackofficeOrders/>

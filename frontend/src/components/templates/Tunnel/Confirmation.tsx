@@ -70,8 +70,8 @@ type Order = {
     totalPrice: number;
     status: string;
     recipes: { id: Recipe, quantity: number }[],
-    deliveryInfo: Delivery[],
-    billingInfo: Delivery[],
+    deliveryInfo: Delivery,
+    billingInfo: Delivery,
 }
 export default function Confirmation() {
     const LastOrderByUser = useGetLastOrderByUserId();
@@ -84,18 +84,16 @@ export default function Confirmation() {
 
     useEffect(() => {
         const fromPath = location.state?.from
-        console.log("fromPath : ", fromPath);
         if (fromPath !== "/paiement" && fromPath !== "/confirmation") {
             navigate("/menu");
         }
-    }, []);
+    },[]);
 
     useEffect(() => {
         (async () => {
             const user = UserContext ? UserContext.user : null;
             if (user) {
                 const lastOrder = await LastOrderByUser(user.userId);
-                console.log("lastOrder : ", lastOrder);
                 setOrder(lastOrder);
             }
         })()
@@ -133,8 +131,12 @@ export default function Confirmation() {
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <tr className={"table__color--2"}>
+                                    <td colSpan={2}>Prix de livraison</td>
+                                    <td>5 €</td>
+                                </tr>
                                 {order.recipes.map((recipe, index) => (
-                                    <tr key={index} className={index % 2 === 0 ? "table__color--2" : "table__color--1"}>
+                                    <tr key={index} className={index % 2 === 0 ? "table__color--1" : "table__color--2"}>
                                         <td>{recipe.id.name}</td>
                                         <td>{recipe.quantity}</td>
                                         <td>{recipe.id.price} €</td>
@@ -146,8 +148,7 @@ export default function Confirmation() {
                                 <table>
                                     <thead>
                                     <tr className={"table__color--1"}>
-                                        <th>Informations de facturation</th>
-                                        <th></th>
+                                        <th colSpan={2}>Informations de facturation</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -196,8 +197,7 @@ export default function Confirmation() {
                                 <table>
                                     <thead>
                                     <tr className={"table__color--1"}>
-                                        <th>Informations de livraison</th>
-                                        <th></th>
+                                        <th colSpan={2}>Informations de livraison</th>
                                     </tr>
                                     </thead>
                                     <tbody>

@@ -27,10 +27,6 @@ export default function BackofficeIngredients() {
         })();
     }, []);
 
-    useEffect(() => {
-        console.log(ingredients);
-    }, [ingredients]);
-
     const handledeleteIngredient = async (e: React.FormEvent, id: string) => {
         e.preventDefault();
         const result = await deleteIngredient(id);

@@ -45,7 +45,6 @@ export default function Payment() {
 
     useEffect(() => {
         const fromPath = location.state?.from
-        console.log("fromPath : ", fromPath);
         if (fromPath !== "/information" && fromPath !== "/paiement") {
             navigate("/menu");
         }

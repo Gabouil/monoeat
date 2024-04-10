@@ -51,8 +51,6 @@ export default function Information() {
 
     useEffect(() => {
         const fromPath = location.state?.from
-        console.log("fromPath : ", fromPath);
-        console.log("location : ", location);
         if (fromPath !== "/menu" && fromPath !== "/information") {
             navigate("/menu");
         }
@@ -134,7 +132,6 @@ export default function Information() {
                 console.log("User not found");
                 setError(["Erreur lors de la mise à jour de l'utilisateur"]);
             } else {
-                console.log("User updated");
                 navigate("/paiement", { state: { from: "/information" } });
             }
         }

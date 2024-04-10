@@ -17,7 +17,6 @@ interface FormData {
 
 export default function useUpdateRecipeById() {
     return async (formData: FormData) => {
-        console.log(formData)
         try {
             const data = new FormData();
             data.append('name', formData.name);

@@ -1,7 +1,7 @@
 import "./Backoffice.scss"
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import useGetOrderById from "../../../services/hooks/useGetOrderById.tsx";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import BackofficeSection from "../../organismes/Backoffice/BackofficeSection.tsx";
 import SelectInput from "../../atomes/inputs/Input/SelectInput.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
@@ -102,7 +102,7 @@ export default function BackofficeOrderId() {
     const [statutSelected, setStatutSelected] = useState(0)
 
     const [error, setError] = useState<string[]>([]);
-
+    const navigate = useNavigate();
     useEffect(() => {
         (async () => {
             if (GetOrderById) {
@@ -134,6 +134,8 @@ export default function BackofficeOrderId() {
         })
         if (res.status === 404) {
             setError(res.error)
+        } else {
+            navigate("/backoffice/orders")
         }
     }
     return (

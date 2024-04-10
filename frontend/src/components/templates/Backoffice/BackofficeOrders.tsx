@@ -43,7 +43,6 @@ export default function BackofficeOrders() {
     React.useEffect(() => {
         GetAllOrders().then((res: Order[]) => {
             setOrders(res);
-            console.log(res);
         })
     }, [])
 

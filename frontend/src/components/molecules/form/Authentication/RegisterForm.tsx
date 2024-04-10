@@ -23,7 +23,7 @@ type defaultProps = {
     confirmPassword: string,
     setConfirmPassword: React.Dispatch<React.SetStateAction<string>>
     backoffice?: boolean
-    comeFrom: string
+    comeFrom?: string
 }
 
 export default function RegisterForm({

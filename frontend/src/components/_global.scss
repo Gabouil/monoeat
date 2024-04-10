@@ -22,8 +22,10 @@
   --success: #AEFFB6;
 }
 
-#root {
+body {
   background: var(--primary);
+}
+#root {
   color: var(--secondary);
   overflow-X: hidden;
   //transition: background-color 0.3s linear;

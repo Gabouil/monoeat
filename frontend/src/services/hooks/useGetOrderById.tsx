@@ -10,7 +10,6 @@ export default function useGetOrderById() {
                     'Content-Type': 'application/json'
                 },
             });
-            console.log(res.data);
             return res.data;
         } catch (err:any) {
             return err.response;

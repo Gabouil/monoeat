@@ -14,8 +14,6 @@ interface FormData {
 export default function useCreateIngredient() {
     return async (formData: FormData) => {
         try {
-            console.log(formData)
-
             const res = await AxiosInstance({
                 url: '/ingredients',
                 method: 'post',

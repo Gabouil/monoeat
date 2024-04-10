@@ -1,7 +1,7 @@
 import './components/_reset.scss'
 import './components/_global.scss'
 import Home from "./components/templates/Home/Home.tsx";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useLocation} from "react-router-dom";
 import Login from "./components/templates/Login/Login.tsx";
 import Register from "./components/templates/Register/Register.tsx";
 import NotFound from "./components/templates/404/404.tsx";
@@ -23,8 +23,16 @@ import Information from "./components/templates/Tunnel/Information.tsx";
 import Payment from "./components/templates/Tunnel/Payment.tsx";
 import Confirmation from "./components/templates/Tunnel/Confirmation.tsx";
 import BackofficeOrderId from "./components/templates/Backoffice/BackofficeOrderId.tsx";
+import {useEffect} from "react";
 
 function App() {
+
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        console.log('scroll to top');
+        window.scrollTo(0, 0);
+    }, [pathname]);
 
     return (
         <>

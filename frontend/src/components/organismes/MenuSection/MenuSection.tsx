@@ -107,6 +107,14 @@ export default function MenuSection({type, date}: MenuSectionProps) {
         }
     }, [])
 
+
+    useEffect(() => {
+        document.documentElement.classList.add("scroll-behavior-smooth");
+        return () => {
+            document.documentElement.classList.remove("scroll-behavior-smooth");
+        };
+    }, []);
+
     const getMenu = useGetMenuByDate();
     const getUserById = useGetUserById();
     const updateUserById = useUpdateUserById();

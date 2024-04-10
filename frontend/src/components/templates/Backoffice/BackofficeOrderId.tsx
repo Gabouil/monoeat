@@ -205,8 +205,7 @@ export default function BackofficeOrderId() {
                                     <table>
                                         <thead>
                                         <tr className={"table__color--1"}>
-                                            <th>Informations de facturation</th>
-                                            <th></th>
+                                            <th colSpan={2}>Informations de facturation</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -255,8 +254,7 @@ export default function BackofficeOrderId() {
                                     <table>
                                         <thead>
                                         <tr className={"table__color--1"}>
-                                            <th>Informations de livraison</th>
-                                            <th></th>
+                                            <th  colSpan={2}>Informations de livraison</th>
                                         </tr>
                                         </thead>
                                         <tbody>

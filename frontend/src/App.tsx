@@ -24,13 +24,13 @@ import Payment from "./components/templates/Tunnel/Payment.tsx";
 import Confirmation from "./components/templates/Tunnel/Confirmation.tsx";
 import BackofficeOrderId from "./components/templates/Backoffice/BackofficeOrderId.tsx";
 import {useEffect} from "react";
+import Profile from "./components/templates/Profile/Profile.tsx";
 
 function App() {
 
     const { pathname } = useLocation();
 
     useEffect(() => {
-        console.log('scroll to top');
         window.scrollTo(0, 0);
     }, [pathname]);
 
@@ -46,6 +46,9 @@ function App() {
                 }/>
                 <Route path="/inscription" element={
                     <Register/>
+                }/>
+                <Route path="/profil" element={
+                    <Profile/>
                 }/>
                 <Route path="/menu" element={
                     <Menu/>
@@ -69,9 +72,6 @@ function App() {
                     <Home/>
                 }/>
                 <Route path="/mentions-legales" element={
-                    <Home/>
-                }/>
-                <Route path="/profile" element={
                     <Home/>
                 }/>
 

@@ -55,16 +55,27 @@ const getByID = catchAsync(async (req, res) => {
     }
 });
 
-const getLastOrderByUser = catchAsync(async (req, res) => {
-    const order = await Order.find({user: req.params.id})
-        .sort({orderNumber: -1})
-        .limit(1)
-        .populate('recipes.id');
-
-    if (order) {
-        res.send(order[0]);
+const getOrderByUser = catchAsync(async (req, res) => {
+    console.log("req.query.all = ", req.query);
+    if (req.query.all === 'true') {
+        const orders = await Order.find({user: req.params.id}).populate('user recipes.id');
+        console.log("orders = ", orders);
+        if (orders) {
+            res.send(orders);
+        } else {
+            res.status(404).send('Not Found');
+        }
     } else {
-        res.status(404).send('Not Found');
+        const order = await Order.find({user: req.params.id})
+            .sort({orderNumber: -1})
+            .limit(1)
+            .populate('recipes.id');
+
+        if (order) {
+            res.send(order[0]);
+        } else {
+            res.status(404).send('Not Found');
+        }
     }
 });
 
@@ -94,7 +105,7 @@ module.exports = {
     create,
     getAll,
     getByID,
-    getLastOrderByUser,
+    getOrderByUser,
     updateByID,
     deleteByID,
 }

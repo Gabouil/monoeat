@@ -76,7 +76,7 @@ export default function Header() {
                             </nav>
                             <div className="header__container__content__nav__profile">
                                 {userContext.user ? (
-                                    <NavLink to={"/profile"} className="header__container__content__nav__profile--link">
+                                    <NavLink to={"/profil"} className="header__container__content__nav__profile--link">
                                         <ProfileIcon />
                                     </NavLink>
                                 ) : (

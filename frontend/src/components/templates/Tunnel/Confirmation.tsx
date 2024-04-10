@@ -1,6 +1,6 @@
 import "./Tunnel.scss"
 import Footer from "../../molecules/global/Footer/Footer.tsx";
-import useGetLastOrderByUserId from "../../../services/hooks/useGetLastOrderByUserId.tsx";
+import useGetOrderByUserId from "../../../services/hooks/useGetOrderByUserId.tsx";
 import {useUser} from "../../../context/UserContext.tsx";
 import {useEffect, useState} from "react";
 import Header from "../../molecules/global/Header/Header.tsx";
@@ -74,7 +74,7 @@ type Order = {
     billingInfo: Delivery,
 }
 export default function Confirmation() {
-    const LastOrderByUser = useGetLastOrderByUserId();
+    const LastOrderByUser = useGetOrderByUserId();
     const UserContext = useUser();
     const [order, setOrder] = useState<Order>();
 

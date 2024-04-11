@@ -69,7 +69,7 @@ const getOrderByUser = catchAsync(async (req, res) => {
         const order = await Order.find({user: req.params.id})
             .sort({orderNumber: -1})
             .limit(1)
-            .populate('recipes.id');
+            .populate('user recipes.id');
 
         if (order) {
             res.send(order[0]);

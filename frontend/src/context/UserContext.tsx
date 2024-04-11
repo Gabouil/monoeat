@@ -1,4 +1,4 @@
-import {createContext, useContext, useState, useEffect, ReactNode} from "react";
+import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import Cookies from "js-cookie";
 import {jwtDecode} from "jwt-decode";
 
@@ -18,8 +18,7 @@ function checkForValidCookie() {
     const cookie = Cookies.get('token');
     if (cookie) {
         try {
-            const user = jwtDecode(cookie);
-            return user;
+            return jwtDecode(cookie);
         } catch (err) {
             Cookies.remove('token');
         }
@@ -33,16 +32,23 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<IUserContext['user']>(null);
 
     useEffect(() => {
-        const userFromCookie = checkForValidCookie();
-        if (userFromCookie) {
-            setUser(userFromCookie as IUserContext['user']);
-        } else {
-            setUser(null);
-        }
+        const checkCookie = () => {
+            const userFromCookie = checkForValidCookie();
+            if (userFromCookie) {
+                setUser(userFromCookie as IUserContext['user']);
+            } else {
+                setUser(null);
+            }
+        };
+        checkCookie();
+        const intervalId = setInterval(checkCookie, 1000);
+        return () => {
+            clearInterval(intervalId);
+        };
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser  }}>
+        <UserContext.Provider value={{ user, setUser }}>
             {children}
         </UserContext.Provider>
     );

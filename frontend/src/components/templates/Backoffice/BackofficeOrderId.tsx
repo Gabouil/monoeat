@@ -7,6 +7,7 @@ import SelectInput from "../../atomes/inputs/Input/SelectInput.tsx";
 import Button from "../../atomes/buttons/Button/Button.tsx";
 import useUpdateOrderById from "../../../services/hooks/useUpdateOrderById.tsx";
 import Notification from "../../atomes/Notification/Notification.tsx";
+import OrderDetails from "../../organismes/OrderDetails/OrderDetails.tsx";
 
 
 type Recipe = {
@@ -103,6 +104,7 @@ export default function BackofficeOrderId() {
 
     const [error, setError] = useState<string[]>([]);
     const navigate = useNavigate();
+
     useEffect(() => {
         (async () => {
             if (GetOrderById) {
@@ -155,7 +157,6 @@ export default function BackofficeOrderId() {
                             <section className={"backoffice__orders"}>
                                 <h2>Changer le statut de la commande</h2>
                                 <div className={"backoffice__orders__row"}>
-
                                     <SelectInput
                                         optionSelected={statutSelected}
                                         setOptionSelected={setStatutSelected}
@@ -168,140 +169,7 @@ export default function BackofficeOrderId() {
                                         onclick={changeStatut}
                                     />
                                 </div>
-                                <h2>Détails de la commande</h2>
-                                <div className={"backoffice__orders__row"}>
-                                    <div>
-                                        <p>Numéro de commande : {order.orderNumber}</p>
-                                        <p>Créé le
-                                            : {new Date(order.createdAt).toLocaleDateString()} à {new Date(order.createdAt).toLocaleTimeString()}</p>
-                                        <p>Prix total : {order.totalPrice} €</p>
-                                    </div>
-                                    <div>
-                                        <p>Statut : {order.status}</p>
-                                        <p>Utilisateur : {order.user.firstname} {order.user.lastname}</p>
-                                        <p>Email : {order.user.email}</p>
-                                    </div>
-                                </div>
-                                <table>
-                                    <thead>
-                                    <tr className={"table__color--1"}>
-                                        <th>Recettes</th>
-                                        <th>Quantité</th>
-                                        <th>Prix</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {order.recipes.map((recipe, index) => (
-                                        <tr key={index}
-                                            className={index % 2 === 0 ? "table__color--2" : "table__color--1"}>
-                                            <td>{recipe.id.name}</td>
-                                            <td>{recipe.quantity}</td>
-                                            <td>{recipe.id.price} €</td>
-                                        </tr>
-                                    ))}
-                                    </tbody>
-                                </table>
-                                <div className={"backoffice__orders__row"}>
-                                    <table>
-                                        <thead>
-                                        <tr className={"table__color--1"}>
-                                            <th colSpan={2}>Informations de facturation</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr className={"table__color--2"}>
-                                            <td>Prénom</td>
-                                            <td>{order.billingInfo.firstname}</td>
-                                        </tr>
-                                        <tr className={"table__color--1"}>
-                                            <td>Nom</td>
-                                            <td>{order.billingInfo.lastname}</td>
-                                        </tr>
-                                        <tr className={"table__color--2"}>
-                                            <td>Email</td>
-                                            <td>{order.billingInfo.email}</td>
-                                        </tr>
-                                        <tr className={"table__color--1"}>
-                                            <td>Téléphone</td>
-                                            <td>{order.billingInfo.phone}</td>
-                                        </tr>
-                                        <tr className={"table__color--2"}>
-                                            <td>Entreprise</td>
-                                            <td>{order.billingInfo.company}</td>
-                                        </tr>
-                                        <tr className={"table__color--1"}>
-                                            <td>Pays</td>
-                                            <td>{order.billingInfo.country}</td>
-                                        </tr>
-                                        <tr className={"table__color--2"}>
-                                            <td>Adresse</td>
-                                            <td>{order.billingInfo.address}</td>
-                                        </tr>
-                                        <tr className={"table__color--1"}>
-                                            <td>Adresse 2</td>
-                                            <td>{order.billingInfo.address2}</td>
-                                        </tr>
-                                        <tr className={"table__color--2"}>
-                                            <td>Code postal</td>
-                                            <td>{order.billingInfo.postalCode}</td>
-                                        </tr>
-                                        <tr className={"table__color--1"}>
-                                            <td>Ville</td>
-                                            <td>{order.billingInfo.city}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <table>
-                                        <thead>
-                                        <tr className={"table__color--1"}>
-                                            <th  colSpan={2}>Informations de livraison</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr className={"table__color--2"}>
-                                            <td>Prénom</td>
-                                            <td>{order.deliveryInfo.firstname}</td>
-                                        </tr>
-                                        <tr className={"table__color--1"}>
-                                            <td>Nom</td>
-                                            <td>{order.deliveryInfo.lastname}</td>
-                                        </tr>
-                                        <tr className={"table__color--2"}>
-                                            <td>Email</td>
-                                            <td>{order.deliveryInfo.email}</td>
-                                        </tr>
-                                        <tr className={"table__color--1"}>
-                                            <td>Téléphone</td>
-                                            <td>{order.deliveryInfo.phone}</td>
-                                        </tr>
-                                        <tr className={"table__color--2"}>
-                                            <td>Entreprise</td>
-                                            <td>{order.deliveryInfo.company}</td>
-                                        </tr>
-                                        <tr className={"table__color--1"}>
-                                            <td>Pays</td>
-                                            <td>{order.deliveryInfo.country}</td>
-                                        </tr>
-                                        <tr className={"table__color--2"}>
-                                            <td>Adresse</td>
-                                            <td>{order.deliveryInfo.address}</td>
-                                        </tr>
-                                        <tr className={"table__color--1"}>
-                                            <td>Adresse 2</td>
-                                            <td>{order.deliveryInfo.address2}</td>
-                                        </tr>
-                                        <tr className={"table__color--2"}>
-                                            <td>Code postal</td>
-                                            <td>{order.deliveryInfo.postalCode}</td>
-                                        </tr>
-                                        <tr className={"table__color--1"}>
-                                            <td>Ville</td>
-                                            <td>{order.deliveryInfo.city}</td>
-                                        </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <OrderDetails order={order}/>
                             </section>
                         )}
                     </>

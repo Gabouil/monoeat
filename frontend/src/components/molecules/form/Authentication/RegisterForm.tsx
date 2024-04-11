@@ -81,7 +81,6 @@ export default function RegisterForm({
                     console.error('Login error:', loginResult);
                     setError([loginResult]);
                 } else {
-                    console.log(loginResult);
                     Cookies.set('token', loginResult.token, {expires: 14});
                     navigate(navigateTo(), comeFrom === "menu" ? {state: {from: "/menu"}} : {});
                 }

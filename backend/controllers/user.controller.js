@@ -2,6 +2,7 @@ const { fakerFR } = require('@faker-js/faker');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const Order = require('../models/order.model');
 const catchAsync = require('../helpers/catchAsync');
 const create = catchAsync(async (req, res) => {
     console.log("req.body = ", req.body);
@@ -57,8 +58,9 @@ const updateByID = catchAsync( async (req, res) => {
 });
 
 const deleteByID = catchAsync(async (req, res) => {
+    const order = await Order.deleteMany({user: req.params.id});
     const user = await User.findByIdAndDelete(req.params.id);
-    if (user) {
+    if (user && order) {
         console.log("user delete = ", user);
         res.send(user);
     } else {

@@ -25,6 +25,7 @@ import Confirmation from "./components/templates/Tunnel/Confirmation.tsx";
 import BackofficeOrderId from "./components/templates/Backoffice/BackofficeOrderId.tsx";
 import {useEffect} from "react";
 import Profile from "./components/templates/Profile/Profile.tsx";
+import ProfileOrderDetails from "./components/templates/Profile/ProfileOrderDetails.tsx";
 
 function App() {
 
@@ -49,6 +50,9 @@ function App() {
                 }/>
                 <Route path="/profil" element={
                     <Profile/>
+                }/>
+                <Route path="/profil/commandes/:id" element={
+                    <ProfileOrderDetails/>
                 }/>
                 <Route path="/menu" element={
                     <Menu/>

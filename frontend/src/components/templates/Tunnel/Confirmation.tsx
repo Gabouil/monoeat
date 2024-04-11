@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import Header from "../../molecules/global/Header/Header.tsx";
 import {useLocation, useNavigate} from "react-router-dom";
 import Button from "../../atomes/buttons/Button/Button.tsx";
+import OrderDetails from "../../organismes/OrderDetails/OrderDetails.tsx";
 
 type Recipe = {
     _id: string;
@@ -61,18 +62,29 @@ type Delivery = {
     city: string;
 }
 
+
+type User = {
+    _id: string;
+    email: string;
+    firstname: string;
+    lastname: string;
+    phone: string;
+    isAdmin: boolean;
+}
+
 type Order = {
     _id: string;
     orderNumber: number;
-    user: string;
+    user: User;
     updatedAt: string;
     createdAt: string;
     totalPrice: number;
-    status: string;
+    status: "pending" | "paid" | "delivered" | "cancelled";
     recipes: { id: Recipe, quantity: number }[],
     deliveryInfo: Delivery,
     billingInfo: Delivery,
 }
+
 export default function Confirmation() {
     const LastOrderByUser = useGetOrderByUserId();
     const UserContext = useUser();
@@ -116,135 +128,7 @@ export default function Confirmation() {
                                     onclick={() => navigate("/")}
                                 />
                             </div>
-                            <div>
-                                <p>Numéro de commande : {order.orderNumber}</p>
-                                <p>Créé le
-                                    : {new Date(order.createdAt).toLocaleDateString()} à {new Date(order.createdAt).toLocaleTimeString()}</p>
-                                <p>Prix total : {order.totalPrice} €</p>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr className={"table__color--1"}>
-                                    <th>Recettes</th>
-                                    <th>Quantité</th>
-                                    <th>Prix</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr className={"table__color--2"}>
-                                    <td colSpan={2}>Prix de livraison</td>
-                                    <td>5 €</td>
-                                </tr>
-                                {order.recipes.map((recipe, index) => (
-                                    <tr key={index} className={index % 2 === 0 ? "table__color--1" : "table__color--2"}>
-                                        <td>{recipe.id.name}</td>
-                                        <td>{recipe.quantity}</td>
-                                        <td>{recipe.id.price} €</td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </table>
-                            <div className={"tunnel_page__content__item__delivery"}>
-                                <table>
-                                    <thead>
-                                    <tr className={"table__color--1"}>
-                                        <th colSpan={2}>Informations de facturation</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr className={"table__color--2"}>
-                                        <td>Prénom</td>
-                                        <td>{order.billingInfo.firstname}</td>
-                                    </tr>
-                                    <tr className={"table__color--1"}>
-                                        <td>Nom</td>
-                                        <td>{order.billingInfo.lastname}</td>
-                                    </tr>
-                                    <tr className={"table__color--2"}>
-                                        <td>Email</td>
-                                        <td>{order.billingInfo.email}</td>
-                                    </tr>
-                                    <tr className={"table__color--1"}>
-                                        <td>Téléphone</td>
-                                        <td>{order.billingInfo.phone}</td>
-                                    </tr>
-                                    <tr className={"table__color--2"}>
-                                        <td>Entreprise</td>
-                                        <td>{order.billingInfo.company}</td>
-                                    </tr>
-                                    <tr className={"table__color--1"}>
-                                        <td>Pays</td>
-                                        <td>{order.billingInfo.country}</td>
-                                    </tr>
-                                    <tr className={"table__color--2"}>
-                                        <td>Adresse</td>
-                                        <td>{order.billingInfo.address}</td>
-                                    </tr>
-                                    <tr className={"table__color--1"}>
-                                        <td>Adresse 2</td>
-                                        <td>{order.billingInfo.address2}</td>
-                                    </tr>
-                                    <tr className={"table__color--2"}>
-                                        <td>Code postal</td>
-                                        <td>{order.billingInfo.postalCode}</td>
-                                    </tr>
-                                    <tr className={"table__color--1"}>
-                                        <td>Ville</td>
-                                        <td>{order.billingInfo.city}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table>
-                                    <thead>
-                                    <tr className={"table__color--1"}>
-                                        <th colSpan={2}>Informations de livraison</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr className={"table__color--2"}>
-                                        <td>Prénom</td>
-                                        <td>{order.deliveryInfo.firstname}</td>
-                                    </tr>
-                                    <tr className={"table__color--1"}>
-                                        <td>Nom</td>
-                                        <td>{order.deliveryInfo.lastname}</td>
-                                    </tr>
-                                    <tr className={"table__color--2"}>
-                                        <td>Email</td>
-                                        <td>{order.deliveryInfo.email}</td>
-                                    </tr>
-                                    <tr className={"table__color--1"}>
-                                        <td>Téléphone</td>
-                                        <td>{order.deliveryInfo.phone}</td>
-                                    </tr>
-                                    <tr className={"table__color--2"}>
-                                        <td>Entreprise</td>
-                                        <td>{order.deliveryInfo.company}</td>
-                                    </tr>
-                                    <tr className={"table__color--1"}>
-                                        <td>Pays</td>
-                                        <td>{order.deliveryInfo.country}</td>
-                                    </tr>
-                                    <tr className={"table__color--2"}>
-                                        <td>Adresse</td>
-                                        <td>{order.deliveryInfo.address}</td>
-                                    </tr>
-                                    <tr className={"table__color--1"}>
-                                        <td>Adresse 2</td>
-                                        <td>{order.deliveryInfo.address2}</td>
-                                    </tr>
-                                    <tr className={"table__color--2"}>
-                                        <td>Code postal</td>
-                                        <td>{order.deliveryInfo.postalCode}</td>
-                                    </tr>
-                                    <tr className={"table__color--1"}>
-                                        <td>Ville</td>
-                                        <td>{order.deliveryInfo.city}</td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
+                            <OrderDetails order={order}/>
                             <div>
                                 <Button
                                     label={"Retour à l'accueil"}

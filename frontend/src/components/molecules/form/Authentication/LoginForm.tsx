@@ -46,7 +46,9 @@ export default function LoginForm({
             setError([result.data.error]);
         } else {
             Cookies.set('token', result.token, {expires: 14});
-            navigate(navigateTo(), comeFrom === "menu" ? {state: {from: "/menu"}} : {});
+            setTimeout(() => {
+                navigate(navigateTo(), comeFrom === "menu" ? {state: {from: "/menu"}} : {});
+            }, 1000);
         }
     }
 

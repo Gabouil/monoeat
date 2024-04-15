@@ -1,7 +1,7 @@
 module.exports = {
     apps: [{
         name: "Monoeat",
-        script: "/home/debian/www/Monoeat/source/build/Monoeat/index.js",
+        script: "/home/debian/www/Monoeat/source/frontend/build/Monoeat/index.js",
         env: {
             NODE_ENV: "development",
         },

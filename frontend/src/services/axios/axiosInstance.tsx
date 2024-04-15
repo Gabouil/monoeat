@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = 'https://api.monoeat.gabrielgoldbronn.com/'
+const baseURL = 'http://gabrielgoldbronn.com:3000/'
 
 export const AxiosInstance = axios.create({
     baseURL: baseURL,

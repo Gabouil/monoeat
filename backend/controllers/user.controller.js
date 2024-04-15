@@ -77,12 +77,18 @@ const login = catchAsync(async (req, res) => {
     const user = await User.findOne({ email: email.toLowerCase() });
     console.log("user = ", user);
     if (user===null) {
-        return res.status(401).json({ error: 'L\'email ou le mot de passe est incorrect.' });
+        setTimeout(() => {
+            res.status(401).json({ error: 'L\'email ou le mot de passe est incorrect.' });
+        }, 2000);
+        return;
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
     console.log("passwordMatch = ", passwordMatch)
     if (!passwordMatch) {
-        return res.status(401).json({ error: 'L\'email ou le mot de passe est incorrect.' });
+        setTimeout(() => {
+            res.status(401).json({ error: 'L\'email ou le mot de passe est incorrect.' });
+        }, 2000);
+        return
     }
     const token = jwt.sign({ userId: user._id, email: user.email, firstname: user.firstname, lastname: user.lastname, phone: user.phone, role: user.role }, 'your-secret-key', { expiresIn: '14d' });
     res.json({ token });

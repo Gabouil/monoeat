@@ -32,7 +32,7 @@ const updateByID = catchAsync( async (req, res) => {
         email: data.email ? data.email : undefined,
         phone: data.phone ? data.phone : undefined,
         password: data.password ? await bcrypt.hash(data.password, 10) : undefined,
-        favorites: data.favorites !== 'undefined' ? JSON.parse(data.favorites) : undefined,
+        favorites: data.favorites ? JSON.parse(data.favorites) : undefined,
         role: data.role ? data.role : undefined,
         billingInfo: data.billingInfo !== 'undefined' ? JSON.parse(data.billingInfo) : undefined,
         deliveryInfo: data.deliveryInfo !== 'undefined' ? JSON.parse(data.deliveryInfo) : undefined,

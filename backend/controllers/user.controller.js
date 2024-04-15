@@ -34,8 +34,8 @@ const updateByID = catchAsync( async (req, res) => {
         password: data.password ? await bcrypt.hash(data.password, 10) : undefined,
         favorites: data.favorites ? JSON.parse(data.favorites) : undefined,
         role: data.role ? data.role : undefined,
-        billingInfo: data.billingInfo !== 'undefined' ? JSON.parse(data.billingInfo) : undefined,
-        deliveryInfo: data.deliveryInfo !== 'undefined' ? JSON.parse(data.deliveryInfo) : undefined,
+        billingInfo: data.billingInfo ? JSON.parse(data.billingInfo) : undefined,
+        deliveryInfo: data.deliveryInfo ? JSON.parse(data.deliveryInfo) : undefined,
     });
 
     const updated = await User.findByIdAndUpdate(req.params.id, {

@@ -14,12 +14,11 @@ const cors = require('cors');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors({
-    origin: ['https://monoeat.gabrielgoldbronn.com', 'https://api.monoeat.gabrielgoldbronn.com'],
-    optionsSuccessStatus: 200,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    origin: 'https://api.monoeat.gabrielgoldbronn.com',
 }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 app.use(fileUpload());
 
 mongoose.connect('mongodb://127.0.0.1:27017/monoeat')

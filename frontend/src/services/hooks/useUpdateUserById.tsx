@@ -36,10 +36,16 @@ export default function useUpdateUserById() {
             data.append('email', formData.email || '');
             data.append('phone', formData.phone || '');
             data.append('password', formData.password || '');
-            data.append('favorites', JSON.stringify(formData.favorites || undefined));
+            if (formData.favorites) {
+                data.append('favorites', JSON.stringify(formData.favorites));
+            }
             data.append('role', formData.role || '');
-            data.append('billingInfo', JSON.stringify(formData.billingInfo || undefined));
-            data.append('deliveryInfo', JSON.stringify(formData.deliveryInfo || undefined));
+            if (formData.billingInfo) {
+                data.append('billingInfo', JSON.stringify(formData.billingInfo));
+            }
+            if (formData.deliveryInfo) {
+                data.append('deliveryInfo', JSON.stringify(formData.deliveryInfo));
+            }
 
             const res = await AxiosInstance({
                 url: '/users/' + formData.id,

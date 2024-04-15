@@ -26,6 +26,7 @@ const getByID = catchAsync(async (req, res) => {
 
 const updateByID = catchAsync( async (req, res) => {
     const data = req.body;
+    console.log("data = ", data);
     console.log("updatedUser = ", {
         firstname: data.firstname ? data.firstname : undefined,
         lastname: data.lastname ? data.lastname : undefined,

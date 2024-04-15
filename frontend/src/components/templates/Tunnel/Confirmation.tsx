@@ -101,14 +101,20 @@ export default function Confirmation() {
         }
     },[]);
 
+    const [hasRun, setHasRun] = useState(false);
+
     useEffect(() => {
-        (async () => {
-            const user = UserContext ? UserContext.user : null;
-            if (user) {
-                const lastOrder = await LastOrderByUser(user.userId);
-                setOrder(lastOrder);
-            }
-        })()
+        if (UserContext && !hasRun) {
+            (async () => {
+                const user = UserContext ? UserContext.user : null;
+                if (user) {
+                    const lastOrder = await LastOrderByUser(user.userId);
+                    setOrder(lastOrder);
+                    setHasRun(true);
+                }
+                console.log(user)
+            })()
+        }
     }, [UserContext]);
 
     return (

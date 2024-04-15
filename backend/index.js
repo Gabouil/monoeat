@@ -15,7 +15,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use(cors({
-    origin: ['https://monoeat.gabrielgoldbronn.com', 'https://api.monoeat.gabrielgoldbronn.com'],
+    origin: ['https://monoeat.gabrielgoldbronn.com', 'https://api.monoeat.gabrielgoldbronn.com', 'http://localhost:5173'],
     optionsSuccessStatus: 200,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ['Content-Type', 'Authorization'],

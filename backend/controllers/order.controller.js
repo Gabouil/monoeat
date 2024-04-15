@@ -56,7 +56,6 @@ const getByID = catchAsync(async (req, res) => {
 });
 
 const getOrderByUser = catchAsync(async (req, res) => {
-    console.log("req.query.all = ", req.query);
     if (req.query.all === 'true') {
         const orders = await Order.find({user: req.params.id}).populate('user recipes.id');
         console.log("orders = ", orders);

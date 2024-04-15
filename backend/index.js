@@ -11,13 +11,12 @@ const menuRoutes = require('./routes/menu.routes');
 const app = express();
 const cors = require('cors');
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cors({
     origin: 'https://api.monoeat.gabrielgoldbronn.com',
 }));
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 
 app.use(fileUpload());
 

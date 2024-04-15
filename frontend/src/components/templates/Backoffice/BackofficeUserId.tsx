@@ -81,14 +81,27 @@ export default function BackofficeUserId() {
     const handleUpdateUser = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("update user");
-        const result = await updateUser({
-            id: id,
-            firstname: firstname,
-            lastname: lastname,
-            email: email,
-            phone: phone,
-            role: role
-        });
+        let result;
+        if (role === "admin") {
+            result = await updateUser({
+                id: id,
+                firstname: firstname,
+                lastname: lastname,
+                email: email,
+                phone: phone,
+                role: "admin"
+            });
+        } else {
+            result = await updateUser({
+                id: id,
+                firstname: firstname,
+                lastname: lastname,
+                email: email,
+                phone: phone,
+                role: "user"
+            });
+        }
+
         if (result.status === 401 || result.status === 400) {
             console.error('Update user error:', result.data.error);
         } else {

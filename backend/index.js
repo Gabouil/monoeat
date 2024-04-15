@@ -14,7 +14,7 @@ const cors = require('cors');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors({
-    origin: 'http://localhost:5173'
+    origin: 'monoeat.gabrielgoldbronn.com',
 }));
 app.use(fileUpload());
 

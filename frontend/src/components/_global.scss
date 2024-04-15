@@ -22,6 +22,11 @@
   --success: #AEFFB6;
 }
 
+@font-face {
+  font-family: 'Gabarito';
+  src: url('../assets/Gabarito-VariableFont.ttf') format('truetype');
+}
+
 body {
   background: var(--primary);
 }
@@ -29,7 +34,7 @@ body {
   color: var(--secondary);
   overflow-X: hidden;
   //transition: background-color 0.3s linear;
-  font-family: Gotham, serif;
+  font-family: Gabarito, serif;
   padding-top: 4rem;
 }
 

@@ -47,6 +47,9 @@ export default function useUpdateUserById() {
                 data.append('deliveryInfo', JSON.stringify(formData.deliveryInfo));
             }
 
+            console.log(data.get('favorites'))
+            console.log(data.get('id'))
+
             const res = await AxiosInstance({
                 url: '/users/' + formData.id,
                 method: 'patch',

@@ -14,7 +14,11 @@ const cors = require('cors');
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cors({
-    origin: 'https://api.monoeat.gabrielgoldbronn.com',
+    origin: ['https://monoeat.gabrielgoldbronn.com', 'https://api.monoeat.gabrielgoldbronn.com'],
+    optionsSuccessStatus: 200,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 
 

@@ -25,7 +25,7 @@ module.exports = {
             repo: "git@github.com:Gabouil/monoeat.git",
             path: "/home/debian/www/Monoeat",
             'pre-deploy-local': '',
-            "post-deploy": "cd frontend && npm install && npm run build && cd build && cd Monoeat && npm install && pm2 startOrRestart ecosystem.config.js --env production",
+            "post-deploy": "cd frontend && npm install && npm run build && cd build && cd Monoeat && npm install && pm2 startOrRestart monoeat.config.js --env production",
             'pre-setup': ''
         }
     }

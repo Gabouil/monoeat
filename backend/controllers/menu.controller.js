@@ -18,7 +18,7 @@ const getMenu = catchAsync(async (req, res) => {
                 }
             });
             menu.recipes.forEach(recipe => {
-                recipe.image = "http://localhost:3000/images/" + recipe.image;
+                recipe.image = "https://api.monoeat.gabrielgoldbronn.com/images/" + recipe.image;
             });
             res.status(200).json(menu);
         } else {
@@ -31,7 +31,7 @@ const getMenu = catchAsync(async (req, res) => {
             });
             const recipes = menu.recipes.filter((recipe) => recipe.category === req.query.category);
             recipes.forEach(recipe => {
-                recipe.image = "http://localhost:3000/images/" + recipe.image;
+                recipe.image = "https://api.monoeat.gabrielgoldbronn.com/images/" + recipe.image;
             });
             res.status(200).json(recipes);
         }

@@ -60,7 +60,7 @@ const getAll = catchAsync(async (req, res) => {
 
 const getByID = catchAsync(async (req, res) => {
     const recipe = await Recipe.findById(req.params.id);
-    recipe.image = "http://localhost:3000/images/" + recipe.image;
+    recipe.image = "https://api.monoeat.gabrielgoldbronn.com/images/" + recipe.image;
     console.log(recipe);
 
     if (recipe) {

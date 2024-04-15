@@ -14,7 +14,7 @@ const cors = require('cors');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors({
-    origin: 'https://monoeat.gabrielgoldbronn.com',
+    origin: ['https://monoeat.gabrielgoldbronn.com', 'https://api.monoeat.gabrielgoldbronn.com'],
     optionsSuccessStatus: 200,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ['Content-Type', 'Authorization'],

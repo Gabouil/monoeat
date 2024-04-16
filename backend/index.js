@@ -8,6 +8,8 @@ const userRoutes = require('./routes/user.routes');
 const orderRoutes = require('./routes/order.routes');
 const menuRoutes = require('./routes/menu.routes');
 
+const authMiddleware = require('./helpers/authMiddleware');
+
 const app = express();
 const cors = require('cors');
 
@@ -22,7 +24,6 @@ app.use(cors({
     credentials: true
 }));
 
-
 app.use(fileUpload());
 
 mongoose.connect('mongodb://127.0.0.1:27017/monoeat')
@@ -34,11 +35,11 @@ app.get('/', (req, res) => {
 });
 
 app.use('/images', express.static('public/uploads/images/recipes'));
-app.use('/ingredients', ingredientRoutes);
-app.use('/recipes', recipeRoutes);
-app.use('/users', userRoutes);
-app.use('/orders', orderRoutes);
-app.use('/menus', menuRoutes);
+app.use('/ingredients', authMiddleware, ingredientRoutes);
+app.use('/recipes', authMiddleware, recipeRoutes);
+app.use('/users', authMiddleware, userRoutes);
+app.use('/orders', authMiddleware, orderRoutes);
+app.use('/menus', authMiddleware, menuRoutes);
 
 app.use((req, res, next) => {
     res.status(404).send('Not Found');

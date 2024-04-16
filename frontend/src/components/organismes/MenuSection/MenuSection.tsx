@@ -137,11 +137,13 @@ export default function MenuSection({type, date}: MenuSectionProps) {
         })();
     }, [date]);
 
+    const [hasRun, setHasRun] = useState(false);
     useEffect(() => {
         (async () => {
-            if (userContext.user) {
+            if (userContext.user && !hasRun) {
                 const user = await getUserById(userContext.user.userId);
                 setUser(user);
+                setHasRun(true);
             }
         })()
     }, [userContext]);

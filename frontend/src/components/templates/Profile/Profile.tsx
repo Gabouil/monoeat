@@ -99,10 +99,13 @@ export default function Profile() {
     const GetOrders = useGetOrderByUserId();
     const [orders, setOrders] = useState<Order[]>([]);
     const [popupIsOpen, setPopupIsOpen] = useState(false);
+
+    const [hasRun, setHasRun] = useState(false);
     useEffect(() => {
-        if (userContext.user) {
+        if (userContext.user && !hasRun) {
             GetOrders(userContext.user.userId, "all").then((res) => {
                 setOrders(res);
+                setHasRun(true);
             });
         }
     }, [userContext.user]);

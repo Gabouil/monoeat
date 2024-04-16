@@ -56,9 +56,10 @@ export default function Information() {
         }
     }, []);
 
+    const [hasRun, setHasRun] = useState(false);
     useEffect(() => {
             (async () => {
-                if (UserContext && UserContext.user?.userId) {
+                if (UserContext && UserContext.user?.userId && !hasRun) {
                     const user = await GetUsers(UserContext.user.userId);
                     setFirstname(user.billingInfo.firstname || "");
                     setLastname(user.billingInfo.lastname || "");
@@ -80,6 +81,8 @@ export default function Information() {
                     setLivraisonCity(user.deliveryInfo.city || "");
                     setLivraisonPhone(user.deliveryInfo.phone || "");
                     setLivraisonEmail(user.deliveryInfo.email || "");
+
+                    setHasRun(true);
                 }
             })();
     }, [UserContext])

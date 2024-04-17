@@ -23,6 +23,7 @@ npm run serve
 - [ ] Améliorer les filtres de recherche
 - [ ] Ajouter un système de notation
 - [ ] Ajouter un système de commentaire
+- [ ] Ajouter le traitement des ingrédients optionnel
 
 ### Backend
 - [ ] Rajouter un tovkens JWT unique pour chaque utilisateur

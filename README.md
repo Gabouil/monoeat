@@ -25,5 +25,5 @@ npm run serve
 - [ ] Ajouter un système de commentaire
 
 ### Backend
-- [ ] Rajouter un tovkens JWT unique pour chaque utilisateur
+- [ ] Rajouter un tokens JWT unique pour chaque utilisateur
 - [ ] Améliorer la gestion des erreurs

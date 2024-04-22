@@ -13,8 +13,10 @@ export default function HeroHeaderHomeSection() {
         <>
             <section className="hero_header">
                 <div className="hero_header__background">
-                    <img src={Banner} alt="Bannière de Monoeat"/>
-                    <span className="hero_header__background__border"/>
+                    <a href={"https://www.famileat.fr/"}>
+                        <img src={Banner} alt="Bannière de Monoeat"/>
+                    </a>
+                        <span className="hero_header__background__border"/>
                 </div>
                 <div className="hero_header__content">
                     <h1 className="hero_header__content__title">

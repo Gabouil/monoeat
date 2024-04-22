@@ -10,7 +10,9 @@ export default function FeatureSection() {
                     Des recettes faciles à suivre pour des repas savoureux à la maison
                 </h2>
                 <div className="feature_section__banner">
-                    <img src={Banner} alt="Banner"/>
+                    <a href={"https://www.famileat.fr/"}>
+                        <img src={Banner} alt="Banner"/>
+                    </a>
                 </div>
                 <div className="feature_section__content">
                     <div className="feature_section__content__item">

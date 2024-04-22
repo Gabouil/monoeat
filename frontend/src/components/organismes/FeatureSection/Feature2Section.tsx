@@ -10,7 +10,9 @@ export default function Feature2Section() {
                     Découvrez la fraîcheur de nos ingrédients
                 </h2>
                 <div className="feature_section__banner">
-                    <img src={Banner} alt="Banner"/>
+                    <a href={"https://www.hellofresh.fr/"}>
+                        <img src={Banner} alt="Banner"/>
+                    </a>
                 </div>
                 <div className="feature_section__content--list">
                     <div className="feature_section__content__item">

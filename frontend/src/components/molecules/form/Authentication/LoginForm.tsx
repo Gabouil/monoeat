@@ -62,8 +62,6 @@ export default function LoginForm({
                     setContent={setError}
                     type={"alert"}
                 />
-                <div className="authentication__form__ligne">
-                </div>
                 <Input
                     label={"Email"}
                     type={"email"}

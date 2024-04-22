@@ -1,11 +1,11 @@
 .home__page {
   display: flex;
   flex-direction: column;
-  gap: 20vh;
+  gap: 10vh;
   justify-content: center;
   align-items: center;
 
   @media (min-width: 1000px) {
-    gap: 20vh;
+    gap: 10vh;
   }
 }

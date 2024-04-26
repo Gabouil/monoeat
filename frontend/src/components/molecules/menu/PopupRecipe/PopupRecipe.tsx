@@ -176,10 +176,11 @@ export default function PopupRecipe({date, recipe, setPreviewIsOpen}: {
                         className="popup_recipe__container__content__infos popup_recipe__container__content__ingredients">
                         <h3>Ingrédients</h3>
                         <span>Les ingredients <span className={"badges badges--danger"}>optionnel</span> ne sont pas inclus dans le prix et sont à ajouter si besoin après avoir valider le panier.</span>
+                        <span>Les ingredients contenant des <span className={"strong"}>allergènes</span> sont indiqués en gras.</span>
                         <ul>
                             {recipe.ingredients.map((ingredient, id) => {
                                 return (
-                                    <li key={"ingredient_" + id}>
+                                    <li key={"ingredient_" + id} className={ingredient.ingredient.allergens ? "strong" : ""}>
                                         {ingredient.quantity * nbPeople} {ingredient.ingredient.unit} {ingredient.ingredient.name} {ingredient.ingredient.optional &&
                                         <span className={"badges badges--danger"}>optionnel</span>}
                                     </li>
